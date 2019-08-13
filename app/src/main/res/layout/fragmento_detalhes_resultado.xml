@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:context=".resultados.FragmentoDetalhesResultado">
+
+    <TextView
+            android:text="Dezenas sorteadas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView7"
+            app:layout_constraintTop_toBottomOf="@+id/button_concurso"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+            android:layout_marginTop="16dp"/>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:padding="8dp"
+            android:id="@+id/linearLayout" app:layout_constraintTop_toBottomOf="@+id/textView7">
+
+        <TextView
+                android:id="@+id/textViewNum1"
+                android:text="09"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:padding="8dp"
+                android:background="@color/cor_megasena_1"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+
+        <TextView
+                android:id="@+id/textViewNum2"
+                android:text="15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:padding="8dp"
+                android:background="@color/cor_megasena_1"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+
+        <TextView
+                android:id="@+id/textViewNum3"
+                android:text="26"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:padding="8dp"
+                android:background="@color/cor_megasena_1"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+
+        <TextView
+                android:id="@+id/textViewNum4"
+                android:text="31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:padding="8dp"
+                android:background="@color/cor_megasena_1"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+
+        <TextView
+                android:id="@+id/textViewNum5"
+                android:text="49"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:padding="8dp"
+                android:background="@color/cor_megasena_1"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+
+        <TextView
+                android:id="@+id/textViewNum6"
+                android:text="53"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_margin="4dp"
+                android:padding="8dp"
+                android:background="@color/cor_megasena_1"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+    </LinearLayout>
+    <TextView
+            android:text="Data do sorteio:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout"
+    />
+    <TextView
+            android:text="02/08/2019"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView10"
+            app:layout_constraintTop_toTopOf="@+id/textView8" app:layout_constraintBottom_toBottomOf="@+id/textView8"
+            app:layout_constraintStart_toEndOf="@+id/textView8" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"
+    />
+    <TextView
+            android:text="Ganhadores:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView11" app:layout_constraintStart_toStartOf="@+id/textView8"
+            app:layout_constraintTop_toBottomOf="@+id/textView8" android:layout_marginTop="8dp"/>
+    <TextView
+            android:text="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView_ganhadores"
+            app:layout_constraintTop_toTopOf="@+id/textView11"
+            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintStart_toEndOf="@+id/textView11" android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp"/>
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Gerenciamento de Jogos</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="texto_abrir_menu">Abrir menu</string>
+    <string name="texto_fechar_menu">Fechar menu</string>
+</resources>
