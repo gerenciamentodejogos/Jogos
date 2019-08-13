@@ -5,4 +5,30 @@
     <color name="colorAccent">#D81B60</color>
     <color name="branco">#FFFFFF</color>
     <color name="cor_megasena_1">#39880E</color>
+
+    <array name="cores_primarias">
+        <item>#209869</item>
+        <item>#260085</item>
+        <item>#930089</item>
+        <item>#F78100</item>
+        <item>#A61324</item>
+        <item>#103099</item>
+        <item>#CB852B</item>
+        <item>#00FF48</item>
+        <item>#FB1f00</item>
+        <item>#0086B7</item>
+    </array>
+
+    <array name="cores_secundarias">
+        <item>#209869</item>
+        <item>#260085</item>
+        <item>#930089</item>
+        <item>#F78100</item>
+        <item>#A61324</item>
+        <item>#103099</item>
+        <item>#CB852B</item>
+        <item>#00FF48</item>
+        <item>#FB1f00</item>
+        <item>#0086B7</item>
+    </array>
 </resources>

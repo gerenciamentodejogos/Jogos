@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer-array name="dezenas_sorteadas">
+        <item>6</item>
+        <item>5</item>
+        <item>15</item>
+        <item>20</item>
+        <item>6</item>
+        <item>0</item>
+        <item>7</item>
+        <item>7</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array name="dezenas_minima">
+        <item>6</item>
+        <item>5</item>
+        <item>15</item>
+        <item>50</item>
+        <item>6</item>
+        <item>0</item>
+        <item>7</item>
+        <item>10</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array name="dezenas_maxima">
+        <item>15</item>
+        <item>15</item>
+        <item>18</item>
+        <item>50</item>
+        <item>15</item>
+        <item>0</item>
+        <item>15</item>
+        <item>10</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array name="dezenas_total">
+        <item>60</item>
+        <item>80</item>
+        <item>25</item>
+        <item>100</item>
+        <item>50</item>
+        <item>0</item>
+        <item>31</item>
+        <item>80</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <string-array name="acertos">
+        <item>4-5-6</item>
+        <item>2-3-4-5</item>
+        <item>11-12-13-14-15</item>
+        <item>0-15-16-17-18-19-20</item>
+        <item>3-4-5-6</item>
+        <item>-</item>
+        <item>4-5-6-7</item>
+        <item>3-4-5-6-7</item>
+        <item>-</item>
+        <item>-</item>
+    </string-array>
+
+</resources>

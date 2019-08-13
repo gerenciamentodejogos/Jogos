@@ -4,4 +4,17 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="texto_abrir_menu">Abrir menu</string>
     <string name="texto_fechar_menu">Fechar menu</string>
+
+    <string-array name="nomes_jogos">
+        <item>MEGA-SENA</item>
+        <item>QUINA</item>
+        <item>LOTOFÁCIL</item>
+        <item>LOTOMANIA</item>
+        <item>DUPLA SENA</item>
+        <item>FEDERAL</item>
+        <item>DIA DE SORTE</item>
+        <item>TIMEMANIA</item>
+        <item>LOTECA</item>
+        <item>LOTOGOL</item>
+    </string-array>
 </resources>
