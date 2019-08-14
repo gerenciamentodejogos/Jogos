@@ -33,6 +33,7 @@ class FragmentoResultados : Fragment() {
         setUpListeners()
 
         viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageFragmentAdapter(PROXIMO_CONCURSO, childFragmentManager)
+        viewpage_detalhes_sorteio.offscreenPageLimit = 1
 
         subscribe()
     }
