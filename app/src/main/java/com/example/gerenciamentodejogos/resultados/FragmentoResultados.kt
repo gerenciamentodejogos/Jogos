@@ -18,7 +18,7 @@ import java.time.LocalDate
 
 class FragmentoResultados : Fragment() {
 
-    var PROXIMO_CONCURSO = 9
+    var PROXIMO_CONCURSO = 2000
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

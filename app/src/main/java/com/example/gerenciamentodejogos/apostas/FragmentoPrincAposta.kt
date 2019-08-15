@@ -1,20 +1,21 @@
 package com.example.gerenciamentodejogos.apostas
 
 
-import android.Manifest
-import android.content.pm.PackageManager
+import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.ContextCompat.checkSelfPermission
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 
-import com.example.gerenciamentodejogos.dados_web.DadosWeb
 import kotlinx.android.synthetic.main.fragmento_princ_aposta.*
 import com.example.gerenciamentodejogos.R
+import com.example.gerenciamentodejogos.dados_web.*
+import java.io.*
+import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 
 class FragmentoPrincAposta : Fragment() {
@@ -34,11 +35,7 @@ class FragmentoPrincAposta : Fragment() {
 
     fun setUpListeners() {
         button_nova_aposta.setOnClickListener {
-            acessarWeb()
-        }
-    }
 
-    fun acessarWeb() {
-        Log.d("GOOGLE - ", DadosWeb(2000).ObterResultados())
+        }
     }
 }

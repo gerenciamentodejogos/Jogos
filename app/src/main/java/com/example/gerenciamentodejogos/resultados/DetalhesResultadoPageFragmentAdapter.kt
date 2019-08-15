@@ -6,12 +6,9 @@ import android.support.v4.app.FragmentStatePagerAdapter
 import com.example.gerenciamentodejogos.dados.PAGINA_ATUAL
 import com.example.gerenciamentodejogos.dados.PAGINA_CARREGADA
 
-class DetalhesResultadoPageFragmentAdapter(val proximoConcurso: Int, fm: FragmentManager): FragmentStatePagerAdapter(fm) {
+class DetalhesResultadoPageFragmentAdapter(private val proximoConcurso: Int, fm: FragmentManager): FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
-        PAGINA_CARREGADA = if (PAGINA_ATUAL == position) PAGINA_ATUAL else position + 1
-
-        //return FragmentoDetalhesResultado.newInstance(position + 1)
-        return FragmentoDetalhesResultado()
+        return FragmentoDetalhesResultado.newInstance(position + 1)
     }
 
     override fun getCount() = proximoConcurso
