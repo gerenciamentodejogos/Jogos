@@ -15,6 +15,7 @@ import android.view.MotionEvent
 import android.widget.Toast
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.apostas.FragmentoApostas
+import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
 import com.example.gerenciamentodejogos.dados_web.DadosWeb
 import com.example.gerenciamentodejogos.fragmentos.FragmentoPrincipal
 import com.example.gerenciamentodejogos.resultados.FragmentoResultados
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navView)
 
         setUpListeners()
+        PROXIMO_CONCURSO = 2180
 
     }
 

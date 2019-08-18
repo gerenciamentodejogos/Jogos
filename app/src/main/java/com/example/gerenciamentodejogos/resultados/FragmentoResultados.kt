@@ -11,14 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.example.gerenciamentodejogos.R
-import com.example.gerenciamentodejogos.dados.PAGINA_ATUAL
-import com.example.gerenciamentodejogos.dados.resultado_concurso
+import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
 import kotlinx.android.synthetic.main.fragmento_resultados.*
 import java.time.LocalDate
 
 class FragmentoResultados : Fragment() {
-
-    var PROXIMO_CONCURSO = 2000
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,28 +36,16 @@ class FragmentoResultados : Fragment() {
     }
 
     fun subscribe() {
-        viewpage_detalhes_sorteio.currentItem = 3
+        viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO - 1) - 1
     }
 
     fun setUpListeners() {
-
-        button_concurso.setOnClickListener {
-
-        }
 
         viewpage_detalhes_sorteio.addOnPageChangeListener (object: ViewPager.OnPageChangeListener{
 
             override fun onPageScrollStateChanged(p0: Int) {}
             override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {}
-            override fun onPageSelected(position: Int) {
-                resultado_concurso = position + 1
-                PAGINA_ATUAL = position + 1
-                if (position + 1 == viewpage_detalhes_sorteio.adapter?.count) {
-                    button_concurso.text = "ESTE É O PRÓXIMO"
-                } else {
-                    button_concurso.text = (position + 1).toString()
-                }
-            }
+            override fun onPageSelected(position: Int) {}
         })
     }
 }
