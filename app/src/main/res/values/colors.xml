@@ -6,29 +6,25 @@
     <color name="branco">#FFFFFF</color>
     <color name="cor_megasena_1">#39880E</color>
 
-    <array name="cores_primarias">
-        <item>#209869</item>
-        <item>#260085</item>
-        <item>#930089</item>
-        <item>#F78100</item>
-        <item>#A61324</item>
-        <item>#103099</item>
-        <item>#CB852B</item>
-        <item>#00FF48</item>
-        <item>#FB1f00</item>
-        <item>#0086B7</item>
-    </array>
+    <color name="cor_primaria_0">#209869</color>
+    <color name="cor_primaria_1">#260085</color>
+    <color name="cor_primaria_2">#930089</color>
+    <color name="cor_primaria_3">#F78100</color>
+    <color name="cor_primaria_4">#A61324</color>
+    <color name="cor_primaria_5">#103099</color>
+    <color name="cor_primaria_6">#CB852B</color>
+    <color name="cor_primaria_7">#00FF48</color>
+    <color name="cor_primaria_8">#FB1f00</color>
+    <color name="cor_primaria_9">#0086B7</color>
 
-    <array name="cores_secundarias">
-        <item>#209869</item>
-        <item>#260085</item>
-        <item>#930089</item>
-        <item>#F78100</item>
-        <item>#A61324</item>
-        <item>#103099</item>
-        <item>#CB852B</item>
-        <item>#00FF48</item>
-        <item>#FB1f00</item>
-        <item>#0086B7</item>
-    </array>
+    <color name="cor_secundaria_0">#209869</color>
+    <color name="cor_secundaria_1">#260085</color>
+    <color name="cor_secundaria_2">#930089</color>
+    <color name="cor_secundaria_3">#F78100</color>
+    <color name="cor_secundaria_4">#A61324</color>
+    <color name="cor_secundaria_5">#103099</color>
+    <color name="cor_secundaria_6">#CB852B</color>
+    <color name="cor_secundaria_7">#00FF48</color>
+    <color name="cor_secundaria_8">#FB1f00</color>
+    <color name="cor_secundaria_9">#0086B7</color>
 </resources>

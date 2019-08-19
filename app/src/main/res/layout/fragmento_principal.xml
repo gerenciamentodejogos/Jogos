@@ -3,13 +3,13 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              tools:context=".fragmentos.FragmentoPrincipal"
+              tools:context=".principal.FragmentoPrincipal"
               android:orientation="vertical">
 
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:name="com.example.gerenciamentodejogos.resultados.FragmentoPrincResultados"
+                android:name="com.example.gerenciamentodejogos.principal.FragmentoPrincResultados"
                 android:id="@+id/area_fragmento_1" tools:layout="@layout/fragmento_princ_resultados"/>
 
         <View
@@ -21,7 +21,7 @@
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:name="com.example.gerenciamentodejogos.resultados.FragmentoPrincProxJogo"
+                android:name="com.example.gerenciamentodejogos.principal.FragmentoPrincProxJogo"
                 android:id="@+id/area_fragmento_2" tools:layout="@layout/fragmento_princ_prox_jogo"/>
 
         <View
@@ -33,7 +33,7 @@
         <fragment
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:name="com.example.gerenciamentodejogos.apostas.FragmentoPrincAposta"
+                android:name="com.example.gerenciamentodejogos.principal.FragmentoPrincAposta"
                 android:id="@+id/area_fragmento_3" tools:layout="@layout/fragmento_princ_aposta"/>
 
 </LinearLayout>

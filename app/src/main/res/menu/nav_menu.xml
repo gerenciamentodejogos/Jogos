@@ -3,12 +3,12 @@
 
     <group android:checkableBehavior="single">
         <item android:id="@+id/menu_item_inicio"
-              android:title="Início"/>
+              android:title="@string/texto_menu_inicio"/>
 
         <item android:id="@+id/menu_item_apostas"
-              android:title="Apostas"/>
+              android:title="@string/texto_menu_apostas"/>
 
         <item android:id="@+id/menu_item_resultados"
-              android:title="Resultados"/>
+              android:title="@string/texto_menu_resultados"/>
     </group>
 </menu>

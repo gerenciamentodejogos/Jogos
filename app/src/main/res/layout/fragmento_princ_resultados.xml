@@ -5,12 +5,11 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:context=".resultados.FragmentoPrincResultados"
+        tools:context=".principal.FragmentoPrincResultados"
         android:padding="16dp">
 
     <TextView
             android:id="@+id/textView_nome_jogo"
-            android:text="MEGA-SENA"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
@@ -29,68 +28,74 @@
         <TextView
                 android:id="@+id/textViewNum1"
                 android:text="09"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/tamanho_dezenhas"
+                android:layout_height="@dimen/tamanho_dezenhas"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
                 android:padding="8dp"
-                android:background="@color/cor_megasena_1"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+                android:background="@drawable/shape_redondo"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
+                android:backgroundTint="@color/cor_megasena_1"/>
 
         <TextView
                 android:id="@+id/textViewNum2"
                 android:text="15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/tamanho_dezenhas"
+                android:layout_height="@dimen/tamanho_dezenhas"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
                 android:padding="8dp"
-                android:background="@color/cor_megasena_1"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+                android:background="@drawable/shape_redondo"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
+                android:backgroundTint="@color/cor_megasena_1"/>
 
         <TextView
                 android:id="@+id/textViewNum3"
                 android:text="26"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/tamanho_dezenhas"
+                android:layout_height="@dimen/tamanho_dezenhas"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
                 android:padding="8dp"
-                android:background="@color/cor_megasena_1"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+                android:background="@drawable/shape_redondo"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
+                android:backgroundTint="@color/cor_megasena_1"/>
 
         <TextView
                 android:id="@+id/textViewNum4"
                 android:text="31"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/tamanho_dezenhas"
+                android:layout_height="@dimen/tamanho_dezenhas"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
                 android:padding="8dp"
-                android:background="@color/cor_megasena_1"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+                android:background="@drawable/shape_redondo"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
+                android:backgroundTint="@color/cor_megasena_1"/>
 
         <TextView
                 android:id="@+id/textViewNum5"
                 android:text="49"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/tamanho_dezenhas"
+                android:layout_height="@dimen/tamanho_dezenhas"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
                 android:padding="8dp"
-                android:background="@color/cor_megasena_1"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+                android:background="@drawable/shape_redondo"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
+                android:backgroundTint="@color/cor_megasena_1"/>
 
         <TextView
                 android:id="@+id/textViewNum6"
                 android:text="53"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/tamanho_dezenhas"
+                android:layout_height="@dimen/tamanho_dezenhas"
                 android:layout_weight="1"
                 android:layout_margin="4dp"
                 android:padding="8dp"
-                android:background="@color/cor_megasena_1"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"/>
+                android:background="@drawable/shape_redondo"
+                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
+                android:backgroundTint="@color/cor_megasena_1"/>
     </LinearLayout>
     <TextView
             android:id="@+id/textViewNumConcurso"

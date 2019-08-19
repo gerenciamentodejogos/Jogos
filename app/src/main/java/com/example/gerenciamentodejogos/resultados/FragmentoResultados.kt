@@ -17,35 +17,39 @@ import java.time.LocalDate
 
 class FragmentoResultados : Fragment() {
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    var tipoJogo = 0
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragmento_resultados, container, false)
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let {
+            tipoJogo = it.getInt(TIPO_JOGO)
+        }
+
         setUpListeners()
-
-        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageFragmentAdapter(PROXIMO_CONCURSO, childFragmentManager)
-        viewpage_detalhes_sorteio.offscreenPageLimit = 1
-
-        subscribe()
+        setUpPageView()
     }
 
-    fun subscribe() {
-        viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO - 1) - 1
+    private fun setUpPageView() {
+        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageFragmentAdapter(PROXIMO_CONCURSO[tipoJogo], tipoJogo, childFragmentManager)
+        viewpage_detalhes_sorteio.offscreenPageLimit = 1
+
+        viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO[tipoJogo] - 1) - 1
     }
 
     fun setUpListeners() {
-
         viewpage_detalhes_sorteio.addOnPageChangeListener (object: ViewPager.OnPageChangeListener{
-
             override fun onPageScrollStateChanged(p0: Int) {}
             override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {}
             override fun onPageSelected(position: Int) {}
         })
+    }
+
+    companion object {
+        val TIPO_JOGO = "tipo_jogo"
     }
 }

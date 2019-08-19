@@ -1,11 +1,14 @@
 package com.example.gerenciamentodejogos.modelos
 
+import android.content.res.Resources
+import android.content.res.Resources.getSystem
+import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados_web.DadosWeb
-import org.json.JSONArray
 import org.json.JSONObject
+import java.util.*
 
 
-class Jogo(val numConcurso: Int, tipoJogo: Int = 0) {
+class Jogo(val numConcurso: Int, val tipoJogo: Int = 0, val url: String, val parametro1: String, val parametro2: String) {
     var encerrado = false
     var premioEstimado = 0
 
@@ -19,8 +22,9 @@ class Jogo(val numConcurso: Int, tipoJogo: Int = 0) {
             //Obter os dados localmente
             DadosResultado("")
         } else {
-            var url_caixa = "http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjA0sjIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQE-F4ca/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KO6H80AU71KG7J0072/res/id=buscaResultado/c=cacheLevelPage/=/?timestampAjax=1565677735698&concurso="
-            url_caixa = url_caixa.plus(numConcurso.toString())
+            //var url_caixa = "http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjA0sjIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQE-F4ca/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KO6H80AU71KG7J0072/res/id=buscaResultado/c=cacheLevelPage/=/"
+            val url_caixa = url + parametro1 + Date().time + parametro2 + numConcurso
+
             val dadosJSON = DadosWeb(url_caixa).ObterResultados()
             DadosResultado(dadosJSON)
         }

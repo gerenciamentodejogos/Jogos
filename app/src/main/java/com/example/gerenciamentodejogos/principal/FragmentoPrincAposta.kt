@@ -1,4 +1,4 @@
-package com.example.gerenciamentodejogos.apostas
+package com.example.gerenciamentodejogos.principal
 
 
 import android.os.AsyncTask

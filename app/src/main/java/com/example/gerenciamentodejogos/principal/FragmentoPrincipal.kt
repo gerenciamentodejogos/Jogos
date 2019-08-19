@@ -1,4 +1,4 @@
-package com.example.gerenciamentodejogos.fragmentos
+package com.example.gerenciamentodejogos.principal
 
 
 import android.os.Bundle
