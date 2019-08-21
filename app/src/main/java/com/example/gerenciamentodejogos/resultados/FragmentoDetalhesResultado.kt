@@ -4,22 +4,22 @@ package com.example.gerenciamentodejogos.resultados
 import android.arch.lifecycle.ViewModelProviders
 import android.content.res.Resources
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v4.content.res.ResourcesCompat.getColor
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.example.gerenciamentodejogos.R
+
 import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
 import com.example.gerenciamentodejogos.modelos.Jogo
 import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
-import kotlinx.android.synthetic.main.fragmento_princ_prox_jogo.*
 import kotlinx.android.synthetic.main.fragmento_resultados.*
+
 
 class FragmentoDetalhesResultado : Fragment() {
     private lateinit var resultadosViewModel: ResultadosViewModel
@@ -58,36 +58,50 @@ class FragmentoDetalhesResultado : Fragment() {
         }
     }
 
+    private fun calcularDezenasQueCabem(): Int {
+        return 1
+    }
+
     private fun atualizarDadosNaTela(dadosJogo: Jogo) {
         with(dadosJogo) {
-            if (dadosResultado.acumulado == "true") {
+            if (dadosResultado.acumulado) {
                 textView_acumulou.visibility = View.VISIBLE
             }
 
-//            textView_nome_jogo.setBackgroundColor(when (tipoJogo) {
-//                0 -> R.color.cor_primaria_0
-//                1 -> R.color.cor_primaria_1
-//                2 -> R.color.cor_primaria_2
-//                3 -> R.color.cor_primaria_3
-//                4 -> R.color.cor_primaria_4
-//                5 -> R.color.cor_primaria_5
-//                6 -> R.color.cor_primaria_6
-//                7 -> R.color.cor_primaria_7
-//                8 -> R.color.cor_primaria_8
-//                9 -> R.color.cor_primaria_9
-//                else -> R.color.cor_primaria_0
-//            })
+            val cor = Color.parseColor(resources.getStringArray(R.array.cores_primarias)[tipoJogo])
 
-            textViewNum1.text = dadosResultado.resultadoOrdenado.split('-')[0]
-            textViewNum2.text = dadosResultado.resultadoOrdenado.split('-')[1]
-            textViewNum3.text = dadosResultado.resultadoOrdenado.split('-')[2]
-            textViewNum4.text = dadosResultado.resultadoOrdenado.split('-')[3]
-            textViewNum5.text = dadosResultado.resultadoOrdenado.split('-')[4]
-            textViewNum6.text = dadosResultado.resultadoOrdenado.split('-')[5]
+            val linearLayoutContainerRes = linearlayout_container_res
 
-            textView_concurso.text = dadosResultado.concurso
-            textView_data_sorteio.text = dadosResultado.dataStr
-            textView_ganhadores.text = dadosResultado.ganhadores
+            val dezenasQueCabem = calcularDezenasQueCabem()
+            val linhasNecessarias = dezenasSorteadas / dezenasQueCabem
+            val dezenasPorLinha = dezenasSorteadas / linhasNecessarias
+
+            var dezenasAdicionadas = 0
+            for (linear in 1..linhasNecessarias) {
+                val linearLayoutDezena = LayoutInflater.from(context).inflate(R.layout.linearlayout_dezenas, null)
+
+                if (linearLayoutDezena is LinearLayout) {
+                    for (d in 1..dezenasPorLinha) {
+                        val textViewDezena = LayoutInflater.from(context).inflate(R.layout.textview_dezena, null)
+                        if (textViewDezena is TextView) {
+                            textViewDezena.setBackgroundColor(cor)
+                            textViewDezena.text = dadosResultado.resultado[dezenasAdicionadas++].toString()
+                            linearLayoutDezena.addView(textViewDezena)
+                        }
+                        if (dezenasAdicionadas == dezenasSorteadas) break
+                    }
+                }
+                linearLayoutContainerRes.addView(linearLayoutDezena)
+            }
+
+            activity?.let {
+                val textViewNomeJogo = it.findViewById<TextView>(R.id.textView_nome_jogo)
+                textViewNomeJogo.setTextColor(cor)
+            }
+
+            textView_concurso.text = dadosResultado.concurso.toString()
+            textView_data_sorteio.text = dadosResultado.data
+            textView_ganhadores.text = dadosResultado.ganhadores.toString()
         }
 
     }

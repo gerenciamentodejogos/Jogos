@@ -28,30 +28,29 @@
     </string-array>
 
     <string-array name="cores_primarias">
-        <item>@color/cor_primaria_0</item>
-        <item>@color/cor_primaria_1</item>
-        <item>@color/cor_primaria_2</item>
-        <item>@color/cor_primaria_3</item>
-        <item>@color/cor_primaria_4</item>
-        <item>@color/cor_primaria_5</item>
-        <item>@color/cor_primaria_6</item>
-        <item>@color/cor_primaria_7</item>
-        <item>@color/cor_primaria_8</item>
-        <item>@color/cor_primaria_9</item>
+        <item>#209869</item>
+        <item>#260085</item>
+        <item>#930089</item>
+        <item>#F78100</item>
+        <item>#A61324</item>
+        <item>#103099</item>
+        <item>#CB852B</item>
+        <item>#00FF48</item>
+        <item>#FB1f00</item>
+        <item>#0086B7</item>
     </string-array>
 
-
     <string-array name="cores_secundarias">
-        <item>@color/cor_secundaria_0</item>
-        <item>@color/cor_secundaria_1</item>
-        <item>@color/cor_secundaria_2</item>
-        <item>@color/cor_secundaria_3</item>
-        <item>@color/cor_secundaria_4</item>
-        <item>@color/cor_secundaria_5</item>
-        <item>@color/cor_secundaria_6</item>
-        <item>@color/cor_secundaria_7</item>
-        <item>@color/cor_secundaria_8</item>
-        <item>@color/cor_secundaria_9</item>
+        <item>#209869</item>
+        <item>#260085</item>
+        <item>#930089</item>
+        <item>#F78100</item>
+        <item>#A61324</item>
+        <item>#103099</item>
+        <item>#CB852B</item>
+        <item>#00FF48</item>
+        <item>#FB1f00</item>
+        <item>#0086B7</item>
     </string-array>
 
     <string-array name="url_jogos">
@@ -65,5 +64,70 @@
         <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/timemania/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA1MzIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VASrq9qk!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0JGJVA0AKLR5T3K00M4/res/id=buscaResultado/c=cacheLevelPage/=/</item>
         <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/loteca/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA3cDYEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAbNnwlU!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KOCO10AFFGUTGU0004/res/id=buscaResultado/c=cacheLevelPage/=/</item>
         <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotogol/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjE18zYAKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQFTuNFd/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KGBQD0ARPT1QLG1041/res/id=buscaResultado/c=cacheLevelPage/=/</item>
+    </string-array>
+
+    <integer-array name="dezenas_sorteadas">
+        <item>6</item>
+        <item>5</item>
+        <item>15</item>
+        <item>20</item>
+        <item>6</item>
+        <item>0</item>
+        <item>7</item>
+        <item>7</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array name="dezenas_minima">
+        <item>6</item>
+        <item>5</item>
+        <item>15</item>
+        <item>50</item>
+        <item>6</item>
+        <item>0</item>
+        <item>7</item>
+        <item>10</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array name="dezenas_maxima">
+        <item>15</item>
+        <item>15</item>
+        <item>18</item>
+        <item>50</item>
+        <item>15</item>
+        <item>0</item>
+        <item>15</item>
+        <item>10</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <integer-array name="dezenas_total">
+        <item>60</item>
+        <item>80</item>
+        <item>25</item>
+        <item>100</item>
+        <item>50</item>
+        <item>0</item>
+        <item>31</item>
+        <item>80</item>
+        <item>0</item>
+        <item>0</item>
+    </integer-array>
+
+    <string-array name="acertos">
+        <item>4-5-6</item>
+        <item>2-3-4-5</item>
+        <item>11-12-13-14-15</item>
+        <item>0-15-16-17-18-19-20</item>
+        <item>3-4-5-6</item>
+        <item>-</item>
+        <item>4-5-6-7</item>
+        <item>3-4-5-6-7</item>
+        <item>-</item>
+        <item>-</item>
     </string-array>
 </resources>

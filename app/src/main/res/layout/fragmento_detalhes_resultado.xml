@@ -8,87 +8,13 @@
         tools:context=".resultados.FragmentoDetalhesResultado">
 
     <LinearLayout
-            android:orientation="horizontal"
+            android:id="@+id/linearlayout_container_res"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            android:padding="8dp"
-            android:id="@+id/linearLayout" app:layout_constraintTop_toBottomOf="@+id/textView_acumulou"
-            android:layout_marginTop="8dp">
-
-        <TextView
-                android:id="@+id/textViewNum1"
-                android:layout_width="@dimen/tamanho_dezenhas"
-                android:layout_height="@dimen/tamanho_dezenhas"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:padding="8dp"
-                android:textAlignment="center"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
-                android:background="@drawable/shape_redondo"
-                android:backgroundTint="@color/cor_megasena_1"/>
-
-        <TextView
-                android:id="@+id/textViewNum2"
-                android:layout_width="@dimen/tamanho_dezenhas"
-                android:layout_height="@dimen/tamanho_dezenhas"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:padding="8dp"
-
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
-                android:background="@drawable/shape_redondo"
-                android:backgroundTint="@color/cor_megasena_1"/>
-
-        <TextView
-                android:id="@+id/textViewNum3"
-                android:layout_width="@dimen/tamanho_dezenhas"
-                android:layout_height="@dimen/tamanho_dezenhas"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:padding="8dp"
-                android:textAlignment="center"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
-                android:background="@drawable/shape_redondo"
-                android:backgroundTint="@color/cor_megasena_1"/>
-
-        <TextView
-                android:id="@+id/textViewNum4"
-                android:layout_width="@dimen/tamanho_dezenhas"
-                android:layout_height="@dimen/tamanho_dezenhas"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:padding="8dp"
-                android:textAlignment="center"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
-                android:background="@drawable/shape_redondo"
-                android:backgroundTint="@color/cor_megasena_1"/>
-
-        <TextView
-                android:id="@+id/textViewNum5"
-                android:layout_width="@dimen/tamanho_dezenhas"
-                android:layout_height="@dimen/tamanho_dezenhas"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:padding="8dp"
-                android:textAlignment="center"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
-                android:background="@drawable/shape_redondo"
-                android:backgroundTint="@color/cor_megasena_1"/>
-
-        <TextView
-                android:id="@+id/textViewNum6"
-                android:layout_width="@dimen/tamanho_dezenhas"
-                android:layout_height="@dimen/tamanho_dezenhas"
-                android:layout_weight="1"
-                android:layout_margin="4dp"
-                android:padding="8dp"
-                android:textAlignment="center"
-                android:textColor="@color/branco" android:textStyle="bold" android:textSize="25sp"
-                android:background="@drawable/shape_redondo"
-                android:backgroundTint="@color/cor_megasena_1"/>
-
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="8dp" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView_acumulou">
 
     </LinearLayout>
 
@@ -98,8 +24,8 @@
 
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/linearlayout_container_res"
             app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"/>
     <TextView
             android:id="@+id/textView_concurso"

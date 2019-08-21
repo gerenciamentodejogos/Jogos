@@ -9,10 +9,8 @@ import java.util.*
 
 
 class Jogo(val numConcurso: Int, val tipoJogo: Int = 0, val url: String, val parametro1: String, val parametro2: String) {
-    var encerrado = false
-    var premioEstimado = 0
-
     val dadosResultado = ObterDados()
+    val dezenasSorteadas = dadosResultado.resultado.count()
 
     private fun ObterDados(): DadosResultado {
 
@@ -37,6 +35,7 @@ class Jogo(val numConcurso: Int, val tipoJogo: Int = 0, val url: String, val par
 }
 
 class DadosResultado(private var stringJSON: String) {
+    //TODO - AJUSTAR ISSO TUDO
 
     private var dadosJSON = JSONObject()
 
@@ -47,46 +46,51 @@ class DadosResultado(private var stringJSON: String) {
         dadosJSON = JSONObject(stringJSON)
     }
 
-    val proximoConcurso = dadosJSON.get("proximoConcurso").toString()
-    val concursoAnterior = dadosJSON.get("concursoAnterior").toString()
-    val concurso = dadosJSON.get("concurso").toString()
-    val data = dadosJSON.get("data").toString()
-    val resultado = dadosJSON.get("resultado").toString()
-    val ganhadores = dadosJSON.get("ganhadores").toString()
-    val ganhadores_quina = dadosJSON.get("ganhadores_quina").toString()
-    val ganhadores_quadra = dadosJSON.get("ganhadores_quadra").toString()
-    val valor = dadosJSON.get("valor").toString()
-    val valor_quina = dadosJSON.get("valor_quina").toString()
-    val valor_quadra = dadosJSON.get("valor_quadra").toString()
-    val acumulado = dadosJSON.get("acumulado").toString()
-    val valor_acumulado = dadosJSON.get("valor_acumulado").toString()
-    val dtinclusao = dadosJSON.get("dtinclusao").toString()
-    val prox_final_zero = dadosJSON.get("prox_final_zero").toString()
-    val ac_final_zero = dadosJSON.get("ac_final_zero").toString()
-    val proxConcursoFinal = dadosJSON.get("proxConcursoFinal").toString()
-    val observacao = dadosJSON.get("observacao").toString()
-    val ic_conferido = dadosJSON.get("ic_conferido").toString()
-    val de_local_sorteio = dadosJSON.get("de_local_sorteio").toString()
-    val no_cidade = dadosJSON.get("no_cidade").toString()
-    val sg_uf = dadosJSON.get("sg_uf").toString()
-    val vr_estimativa = dadosJSON.get("vr_estimativa").toString()
-    val dt_proximo_concurso = dadosJSON.get("dt_proximo_concurso").toString()
-    val vr_acumulado_especial = dadosJSON.get("vr_acumulado_especial").toString()
-    val vr_arrecadado = dadosJSON.get("vr_arrecadado").toString()
-    val ic_concurso_especial = dadosJSON.get("ic_concurso_especial").toString()
-    val rateioProcessamento = dadosJSON.get("rateioProcessamento").toString()
-    val sorteioAcumulado = dadosJSON.get("sorteioAcumulado").toString()
-    val concursoEspecial = dadosJSON.get("concursoEspecial").toString()
-    val resultadoOrdenado = dadosJSON.get("resultadoOrdenado").toString()
-    val dataStr = dadosJSON.get("dataStr").toString()
-    val dt_proximo_concursoStr = dadosJSON.get("dt_proximo_concursoStr").toString()
+    val concurso: Int = dadosJSON.get("concurso").toString().toInt()
+    val data: String = dadosJSON.get("data").toString()
+
+    val resultado: List<Int> = listarDezenas(dadosJSON.get("resultado").toString())
+    val resultadoOrdenado: List<Int> = listarDezenas(dadosJSON.get("resultadoOrdenado").toString())
+
+    val ganhadores: Int = dadosJSON.get("ganhadores").toString().toInt()
+    val ganhadores_quina: Int = dadosJSON.get("ganhadores_quina").toString().toInt()
+    val ganhadores_quadra: Int = dadosJSON.get("ganhadores_quadra").toString().toInt()
+
+    val valor: Float = dadosJSON.get("valor").toString().toFloat()
+    val valor_quina: Float = dadosJSON.get("valor_quina").toString().toFloat()
+    val valor_quadra: Float = dadosJSON.get("valor_quadra").toString().toFloat()
+
+    val acumulado: Boolean = dadosJSON.get("acumulado").toString().toBoolean()
+
+    val valor_acumulado: Float = dadosJSON.get("valor_acumulado").toString().toFloat()
+    val dtinclusao: String = dadosJSON.get("dtinclusao").toString()
+    val prox_final_zero: Int = dadosJSON.get("prox_final_zero").toString().toInt()
+    val ac_final_zero: Float = dadosJSON.get("ac_final_zero").toString().toFloat()
+    val proxConcursoFinal: Int = dadosJSON.get("proxConcursoFinal").toString().toInt()
+    val observacao: String = dadosJSON.get("observacao").toString()
+    val ic_conferido: String = dadosJSON.get("ic_conferido").toString()
+    val de_local_sorteio: String = dadosJSON.get("de_local_sorteio").toString()
+    val no_cidade: String = dadosJSON.get("no_cidade").toString()
+    val sg_uf: String = dadosJSON.get("sg_uf").toString()
+    val vr_estimativa: Float = dadosJSON.get("vr_estimativa").toString().toFloat()
+    val dt_proximo_concurso: String = dadosJSON.get("dt_proximo_concurso").toString()
+    val vr_acumulado_especial: Float = dadosJSON.get("vr_acumulado_especial").toString().toFloat()
+    val vr_arrecadado: Float = dadosJSON.get("vr_arrecadado").toString().toFloat()
+    val ic_concurso_especial: String = dadosJSON.get("ic_concurso_especial").toString()
+    val rateioProcessamento: String = dadosJSON.get("rateioProcessamento").toString()
+    val sorteioAcumulado: String = dadosJSON.get("sorteioAcumulado").toString()
+    val concursoEspecial: Boolean = dadosJSON.get("concursoEspecial").toString().toBoolean()
 
     val ganhadoresPorUf = listarDadosGanhadores(dadosJSON.get("ganhadoresPorUf"))
 
+    private fun listarDezenas(dados: String, separador: Char = '-'): List<Int> {
+        var lista = mutableListOf<Int>()
+        for (d in dados.split(separador)){
+            lista.add(d.toInt())
+        }
 
-    //val forward = dadosJSON.get("forward").toString()
-    //val rowguid = dadosJSON.get("rowguid").toString()
-    //val error = dadosJSON.get("error").toString()
+        return lista
+    }
 
     private fun listarDadosGanhadores(dados: Any): List<DadosGanhador> {
         var listaGanhadores = mutableListOf<DadosGanhador>()
