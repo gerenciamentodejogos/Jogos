@@ -16,17 +16,18 @@ import android.widget.TextView
 import com.example.gerenciamentodejogos.R
 
 import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
-import com.example.gerenciamentodejogos.modelos.Jogo
+import com.example.gerenciamentodejogos.modelos.*
 import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
 import kotlinx.android.synthetic.main.fragmento_resultados.*
+import kotlin.math.absoluteValue
 
 
 class FragmentoDetalhesResultado : Fragment() {
     private lateinit var resultadosViewModel: ResultadosViewModel
-    private lateinit var dadosDoJogo: Jogo
+    //private lateinit var dadosDoJogo: Jogo
+    private lateinit var tipoJogo: TipoDeJogo
 
     var numeroConcurso = 0
-    var tipoJogo = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         activity?.let {
@@ -34,21 +35,32 @@ class FragmentoDetalhesResultado : Fragment() {
         }
 
         return inflater.inflate(R.layout.fragmento_detalhes_resultado, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         subscribe()
-        retainInstance = true
     }
 
     fun subscribe() {
         arguments?.let {
             numeroConcurso = it.getInt(NUMERO_CONCURSO)
-            tipoJogo = it.getInt(TIPO_JOGO)
+            tipoJogo = when (it.getInt(TIPO_JOGO)) {
+                0 -> TipoDeJogo.MEGA_SENA
+                1 -> TipoDeJogo.QUINA
+                2 -> TipoDeJogo.LOTOFACIL
+                3 -> TipoDeJogo.LOTOMANIA
+                4 -> TipoDeJogo.DUPLA_SENA
+                5 -> TipoDeJogo.FEDERAL
+                6 -> TipoDeJogo.DIA_DE_SORTE
+                7 -> TipoDeJogo.TIMEMANIA
+                8 -> TipoDeJogo.LOTECA
+                9 -> TipoDeJogo.LOTOGOL
+
+                else ->  TipoDeJogo.MEGA_SENA
+            }
         }
-        if (numeroConcurso != PROXIMO_CONCURSO[tipoJogo]) {
+        if (numeroConcurso != PROXIMO_CONCURSO[tipoJogo.value]) {
             DownloadTask().execute(numeroConcurso).get()
         } else {
             //CARREGAR INFORMAÇÕES DO PRÓXIMO CONCURSO
@@ -58,52 +70,63 @@ class FragmentoDetalhesResultado : Fragment() {
         }
     }
 
-    private fun calcularDezenasQueCabem(): Int {
-        return 1
+    private fun calcularDezenasQueCabem(linear: View): Int {
+        val textView = LayoutInflater.from(context).inflate(R.layout.textview_dezena, null) as TextView
+        textView.text = "00"
+
+        var larguraTotal  = 0
+        if (linear is LinearLayout) {
+            larguraTotal += linear.width
+        }
+
+        if (textView is TextView) {
+            larguraTotal += textView.width
+        }
+
+        return larguraTotal
     }
 
-    private fun atualizarDadosNaTela(dadosJogo: Jogo) {
-        with(dadosJogo) {
-            if (dadosResultado.acumulado) {
+    private fun atualizarDadosNaTela(jogo: Jogo) {
+        with(jogo) {
+            if (acumulou) {
                 textView_acumulou.visibility = View.VISIBLE
             }
 
-            val cor = Color.parseColor(resources.getStringArray(R.array.cores_primarias)[tipoJogo])
+            val cor = Color.parseColor(resources.getStringArray(R.array.cores_primarias)[tipoJogo.value])
 
             val linearLayoutContainerRes = linearlayout_container_res
-
-            val dezenasQueCabem = calcularDezenasQueCabem()
+            val dezenasQueCabem = calcularDezenasQueCabem(linearLayoutContainerRes)
             val linhasNecessarias = dezenasSorteadas / dezenasQueCabem
             val dezenasPorLinha = dezenasSorteadas / linhasNecessarias
 
-            var dezenasAdicionadas = 0
-            for (linear in 1..linhasNecessarias) {
-                val linearLayoutDezena = LayoutInflater.from(context).inflate(R.layout.linearlayout_dezenas, null)
+            if (jogo is MegaSena) {
+                var dezenasAdicionadas = 0
+                for (linear in 1..linhasNecessarias) {
+                    val linearLayoutDezena = LayoutInflater.from(context).inflate(R.layout.linearlayout_dezenas, null)
 
-                if (linearLayoutDezena is LinearLayout) {
-                    for (d in 1..dezenasPorLinha) {
-                        val textViewDezena = LayoutInflater.from(context).inflate(R.layout.textview_dezena, null)
-                        if (textViewDezena is TextView) {
-                            textViewDezena.setBackgroundColor(cor)
-                            textViewDezena.text = dadosResultado.resultado[dezenasAdicionadas++].toString()
-                            linearLayoutDezena.addView(textViewDezena)
+                    if (linearLayoutDezena is LinearLayout) {
+                        for (d in 1..dezenasPorLinha) {
+                            val textViewDezena = LayoutInflater.from(context).inflate(R.layout.textview_dezena, null)
+                            if (textViewDezena is TextView) {
+                                textViewDezena.setBackgroundColor(cor)
+                                textViewDezena.text = jogo.resultado[dezenasAdicionadas++].toString()
+                                linearLayoutDezena.addView(textViewDezena)
+                            }
+                            if (dezenasAdicionadas == dezenasSorteadas) break
                         }
-                        if (dezenasAdicionadas == dezenasSorteadas) break
                     }
+                    linearLayoutContainerRes.addView(linearLayoutDezena)
                 }
-                linearLayoutContainerRes.addView(linearLayoutDezena)
             }
-
             activity?.let {
                 val textViewNomeJogo = it.findViewById<TextView>(R.id.textView_nome_jogo)
                 textViewNomeJogo.setTextColor(cor)
             }
 
-            textView_concurso.text = dadosResultado.concurso.toString()
-            textView_data_sorteio.text = dadosResultado.data
-            textView_ganhadores.text = dadosResultado.ganhadores.toString()
+            textView_concurso.text = concurso.toString()
+            textView_data_sorteio.text = dataConcurso.toString()
+            textView_ganhadores.text = ganhadores.toString()
         }
-
     }
 
     inner class DownloadTask: AsyncTask<Int, Unit, Jogo>() {
@@ -114,7 +137,20 @@ class FragmentoDetalhesResultado : Fragment() {
             if (!isCancelled && numConcursos.isNotEmpty()) {
                 val concurso = numConcursos[0]?: 1
                 try {
-                    result = Jogo(concurso, tipoJogo, resources.getStringArray(R.array.url_jogos)[tipoJogo], getString(R.string.url_parametro_1), getString(R.string.url_parametro_2))
+                    result = when (tipoJogo) {
+                        TipoDeJogo.MEGA_SENA -> MegaSena(numeroConcurso, resources)
+                        TipoDeJogo.QUINA -> Quina(numeroConcurso, resources)
+                        TipoDeJogo.LOTOFACIL -> Lotofacil(numeroConcurso, resources)
+                        TipoDeJogo.LOTOMANIA -> Lotomania(numeroConcurso, resources)
+                        TipoDeJogo.DUPLA_SENA -> DuplaSena(numeroConcurso, resources)
+                        TipoDeJogo.FEDERAL -> Federal(numeroConcurso, resources)
+                        TipoDeJogo.DIA_DE_SORTE -> DiaDeSorte(numeroConcurso, resources)
+                        TipoDeJogo.TIMEMANIA -> Timemania(numeroConcurso, resources)
+                        TipoDeJogo.LOTECA -> Loteca(numeroConcurso, resources)
+                        TipoDeJogo.LOTOGOL -> Lotogol(numeroConcurso, resources)
+                        else ->  null
+                    }
+
                 } catch (e: Exception) {
                     Log.d("ERRO", e.message)
                     e.message
@@ -125,7 +161,7 @@ class FragmentoDetalhesResultado : Fragment() {
 
         override fun onPostExecute(result: Jogo?) {
             result?.let {
-                atualizarDadosNaTela(result)
+                atualizarDadosNaTela(it)
             }
         }
     }
@@ -134,11 +170,11 @@ class FragmentoDetalhesResultado : Fragment() {
         val NUMERO_CONCURSO = "numero_concurso"
         val TIPO_JOGO = "tipo_jogo"
 
-        fun newInstance(numConcurso: Int, tipoJogo: Int = 0): FragmentoDetalhesResultado {
+        fun newInstance(numConcurso: Int, tipoJogo: TipoDeJogo): FragmentoDetalhesResultado {
             val fragmentoDetalhesResultado = FragmentoDetalhesResultado()
             fragmentoDetalhesResultado.arguments = Bundle().apply {
                 putInt(NUMERO_CONCURSO, numConcurso)
-                putInt(TIPO_JOGO, tipoJogo)
+                putInt(TIPO_JOGO, tipoJogo.value)
             }
             return fragmentoDetalhesResultado
         }

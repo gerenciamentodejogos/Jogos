@@ -1,23 +1,21 @@
 package com.example.gerenciamentodejogos.resultados
 
 
-import android.arch.lifecycle.Observer
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
+import com.example.gerenciamentodejogos.modelos.TipoDeJogo
 import kotlinx.android.synthetic.main.fragmento_resultados.*
-import java.time.LocalDate
 
 class FragmentoResultados : Fragment() {
 
-    var tipoJogo = 0
+    private var tipoJogo: TipoDeJogo = TipoDeJogo.MEGA_SENA
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragmento_resultados, container, false)
@@ -27,7 +25,20 @@ class FragmentoResultados : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.let {
-            tipoJogo = it.getInt(TIPO_JOGO)
+            tipoJogo = when (it.getInt(TIPO_JOGO)) {
+                0 -> TipoDeJogo.MEGA_SENA
+                1 -> TipoDeJogo.QUINA
+                2 -> TipoDeJogo.LOTOFACIL
+                3 -> TipoDeJogo.LOTOMANIA
+                4 -> TipoDeJogo.DUPLA_SENA
+                5 -> TipoDeJogo.FEDERAL
+                6 -> TipoDeJogo.DIA_DE_SORTE
+                7 -> TipoDeJogo.TIMEMANIA
+                8 -> TipoDeJogo.LOTECA
+                9 -> TipoDeJogo.LOTOGOL
+
+                else ->  TipoDeJogo.MEGA_SENA
+            }
         }
 
         setUpListeners()
@@ -35,10 +46,10 @@ class FragmentoResultados : Fragment() {
     }
 
     private fun setUpPageView() {
-        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageFragmentAdapter(PROXIMO_CONCURSO[tipoJogo], tipoJogo, childFragmentManager)
+        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageFragmentAdapter(PROXIMO_CONCURSO[tipoJogo.value], tipoJogo, childFragmentManager)
         viewpage_detalhes_sorteio.offscreenPageLimit = 1
 
-        viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO[tipoJogo] - 1) - 1
+        viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO[tipoJogo.value] - 1) - 1
     }
 
     fun setUpListeners() {
