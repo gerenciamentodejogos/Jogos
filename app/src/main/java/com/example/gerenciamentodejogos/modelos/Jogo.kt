@@ -5,96 +5,111 @@ import android.graphics.Color
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados_web.DadosWeb
 import org.json.JSONObject
+import java.lang.Exception
 import java.util.*
 
-
-//class Jogos(val numConcurso: Int, val tipoJogo: Int = 0, val url: String, val parametro1: String, val parametro2: String) {
-//    val dadosResultado = ObterDados()
-//    val dezenasSorteadas = dadosResultado.resultado.count()
-//
-//    private fun ObterDados(): DadosResultado {
-//
-//        val TEM_NO_BANCO_DE_DADOS = false
-//
-//        return if (TEM_NO_BANCO_DE_DADOS) {
-//            //Obter os dados localmente
-//            DadosResultado("")
-//        } else {
-//            //var url_caixa = "http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjA0sjIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQE-F4ca/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KO6H80AU71KG7J0072/res/id=buscaResultado/c=cacheLevelPage/=/"
-//            val url_caixa = url + parametro1 + Date().time + parametro2 + numConcurso
-//
-//            val dadosJSON = DadosWeb(url_caixa).ObterResultados()
-//            DadosResultado(dadosJSON)
-//        }
-//    }
-//}
-//
-//class DadosResultado(private var stringJSON: String) {
-//    private var dadosJSON = JSONObject()
-//
-//    init {
-//        stringJSON = stringJSON.substringAfter("<body>", stringJSON)
-//        stringJSON = stringJSON.substringBefore("</body>", stringJSON).trim()
-//
-//        dadosJSON = JSONObject(stringJSON)
-//    }
-//
-//    val concurso: Int = dadosJSON.get("concurso").toString().toInt()
-//    val data: String = dadosJSON.get("data").toString()
-//    val resultado: List<Int> = listarDezenas(dadosJSON.get("resultado").toString())
-//    val ganhadores: Int = dadosJSON.get("ganhadores").toString().toInt()
-//    val acumulado: Boolean = dadosJSON.get("acumulado").toString().toBoolean()
-//
-//    private fun listarDezenas(dados: String, separador: Char = '-'): List<Int> {
-//        var lista = mutableListOf<Int>()
-//        for (d in dados.split(separador)){
-//            lista.add(d.toInt())
-//        }
-//        return lista
-//    }
-//}
-
-enum class TipoDeJogo(val value: Int){
-    MEGA_SENA(0),
-    QUINA(1),
-    LOTOFACIL(2),
-    LOTOMANIA(3),
-    DUPLA_SENA(4),
-    FEDERAL(5),
-    DIA_DE_SORTE(6),
-    TIMEMANIA(7),
-    LOTECA(8),
-    LOTOGOL(9)
+class TipoDeJogo {
+    val MEGA_SENA = 0
+    val QUINA = 1
+    val LOTOFACIL = 2
+    val LOTOMANIA = 3
+    val DUPLA_SENA = 4
+    val FEDERAL = 5
+    val DIA_DE_SORTE = 6
+    val TIMEMANIA = 7
+    val LOTECA = 8
+    val LOTOGOL = 9
 }
 
-open class DadosDoJogo(val tipoJogo: TipoDeJogo, val recursos: Resources) {
-    val nome: String = recursos.getStringArray(R.array.nomes_jogos)[tipoJogo.value]
-    val nomeEspecial: String = recursos.getStringArray(R.array.nomes_especiais)[tipoJogo.value]
-    val url_resultado: String = recursos.getStringArray(R.array.urls_resultados)[tipoJogo.value]
-    val corPrimaria:Int = Color.parseColor(recursos.getStringArray(R.array.cores_primarias)[tipoJogo.value])
-    val corSecundaria:Int = Color.parseColor(recursos.getStringArray(R.array.cores_primarias)[tipoJogo.value])
+open class DadosDoJogo(val tipoJogo: Int, val recursos: Resources) {
+    val nome: String = recursos.getStringArray(R.array.nomes_jogos)[tipoJogo]
+    val nomeEspecial: String = recursos.getStringArray(R.array.nomes_especiais)[tipoJogo]
+    val url_resultado: String = recursos.getStringArray(R.array.urls_resultados)[tipoJogo]
+    val corPrimaria:Int = Color.parseColor(recursos.getStringArray(R.array.cores_primarias)[tipoJogo])
+    val corSecundaria:Int = Color.parseColor(recursos.getStringArray(R.array.cores_primarias)[tipoJogo])
 
-    val dezenasSorteadas: Int = recursos.getIntArray(R.array.dezenas_sorteadas)[tipoJogo.value]
-    val dezenasMinima: Int = recursos.getIntArray(R.array.dezenas_minima)[tipoJogo.value]
-    val dezenasMaxima: Int = recursos.getIntArray(R.array.dezenas_maxima)[tipoJogo.value]
-    val dezenasTotal: Int = recursos.getIntArray(R.array.dezenas_total)[tipoJogo.value]
+    val dezenasSorteadas: Int = recursos.getIntArray(R.array.dezenas_sorteadas)[tipoJogo]
+    val dezenasMinima: Int = recursos.getIntArray(R.array.dezenas_minima)[tipoJogo]
+    val dezenasMaxima: Int = recursos.getIntArray(R.array.dezenas_maxima)[tipoJogo]
+    val dezenasTotal: Int = recursos.getIntArray(R.array.dezenas_total)[tipoJogo]
 
     val acertos: List<Int>
         get() {
             val retorno = mutableListOf<Int>()
-            val lista_acertos = recursos.getStringArray(R.array.acertos)[tipoJogo.value]
-            for (a in lista_acertos) {
+            val lista_acertos = recursos.getStringArray(R.array.acertos)[tipoJogo]
+            for (a in lista_acertos.split('-')) {
                 retorno.add(a.toInt())
             }
             return retorno
         }
 
+    val chaveDataConcurso: String get() {return recursos.getStringArray(R.array.dataConcurso)[tipoJogo]}
+    val chaveDataProximoConcurso: String get() {return recursos.getStringArray(R.array.dataProximoConcurso)[tipoJogo]}
+    val chaveGanhadores: String get() {return recursos.getStringArray(R.array.ganhadores)[tipoJogo]}
+    val chaveValorPremioPrincipal: String get() {return recursos.getStringArray(R.array.valorPremioPrincipal)[tipoJogo]}
+    val chaveAcumulou: String get() {return recursos.getStringArray(R.array.acumulou)[tipoJogo]}
+    val chaveLocalSorteio: String get() {return recursos.getStringArray(R.array.localSorteio)[tipoJogo]}
+    val chaveCidadeSorteio: String get() {return recursos.getStringArray(R.array.cidadeSorteio)[tipoJogo]}
+    val chaveUfSorteio: String get() {return recursos.getStringArray(R.array.ufSorteio)[tipoJogo]}
+    val chaveValorArrecadado: String get() {return recursos.getStringArray(R.array.valorArrecadado)[tipoJogo]}
+    val chaveObservacao: String get() {return recursos.getStringArray(R.array.observacao)[tipoJogo]}
+    val chaveErro: String get() {return recursos.getStringArray(R.array.erro)[tipoJogo]}
+    val chaveValorAcumuladoProxConcurso: String get() {return recursos.getStringArray(R.array.valorAcumuladoProxConcurso)[tipoJogo]}
+    val chaveEstimativaProxConcurso: String get() {return recursos.getStringArray(R.array.estimativaProxConcurso)[tipoJogo]}
+    val chaveMensagens: String get() {return recursos.getStringArray(R.array.mensagens)[tipoJogo]}
+    val chaveInfoGanhadores: String get() {return recursos.getStringArray(R.array.infoGanhadores)[tipoJogo]}
 }
 
-open class Jogo(val concurso: Int, tipoJogo: TipoDeJogo, recursos: Resources): DadosDoJogo(tipoJogo, recursos) {
+class DadosJSON(stringJSON: String) {
+
+    private val dados: JSONObject = JSONObject(stringJSON)
+
+    fun getString(chave: String): String{
+        return try {
+            dados.getString(chave)
+        } catch (erro: Exception) {
+            "ERRO!"
+        }
+    }
+
+    fun getInt(chave: String): Int {
+        return try {
+            dados.getInt(chave)
+        } catch (erro: Exception) {
+            -1
+        }
+    }
+
+    fun getDouble(chave: String): Double {
+        return try {
+            dados.getDouble(chave)
+        } catch (erro: Exception) {
+            -1.1
+        }
+    }
+
+    fun getBoolean(chave: String): Boolean {
+        return try {
+            dados.getBoolean(chave)
+        } catch (erro: Exception) {
+            false
+        }
+    }
+
+    fun getLong(chave: String): Long {
+        return try {
+            dados.getLong(chave)
+        } catch (erro: Exception) {
+            -1
+        }
+    }
+}
+
+
+open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJogo(tipoJogo, recursos) {
     data class InfoGanhadores(val uf: String, val cidade: String, val quantidade: Int, val meioEletronico: Boolean)
 
-    protected var dadosJSON: JSONObject = JSONObject()
+    protected var dadosJSON: DadosJSON
 
     init {
         var stringJSON = buscalDadosLocalmente()
@@ -103,26 +118,28 @@ open class Jogo(val concurso: Int, tipoJogo: TipoDeJogo, recursos: Resources): D
             salvarDadosLocalmente(stringJSON)
         }
 
-        dadosJSON = JSONObject(stringJSON)
+        dadosJSON = DadosJSON(stringJSON)
     }
 
-    val dataConcurso: Int = dadosJSON[""].toString().toInt()
-    val dataProximoConcurso: Int = dadosJSON[""].toString().toInt()
-    val ganhadores: Int = dadosJSON[""].toString().toInt()
-    val valorPremioPrincipal: Double = dadosJSON[""].toString().toDouble()
-    val valorTotalPremioPrincipal: Double = dadosJSON[""].toString().toDouble()
-    val acumulou: Boolean = dadosJSON[""].toString().toBoolean()
-    val localSorteio: String = dadosJSON[""].toString()
-    val cidadeSorteio: String = dadosJSON[""].toString()
-    val ufSorteio: String = dadosJSON[""].toString()
-    val valorArrecadado: Double = dadosJSON[""].toString().toDouble()
-    val observacao: String = dadosJSON[""].toString()
-    val erro: String = dadosJSON[""].toString()
-    val valorAcumuladoProxConcurso: Double = dadosJSON[""].toString().toDouble()
-    val estimativaProxConcurso: Double = dadosJSON[""].toString().toDouble()
+    val dataConcurso: Long = dadosJSON.getLong(chaveDataConcurso)
+    val dataProximoConcurso: Long = dadosJSON.getLong(chaveDataProximoConcurso)
+
+    val ganhadores: Int = dadosJSON.getInt(chaveGanhadores)
+    val valorPremioPrincipal: Double = dadosJSON.getDouble("valor")
+    val acumulou: Boolean = dadosJSON.getBoolean(chaveAcumulou)
+    val localSorteio: String = dadosJSON.getString("de_local_sorteio")
+    val cidadeSorteio: String = dadosJSON.getString("no_cidade")
+    val ufSorteio: String = dadosJSON.getString("sg_uf")
+    val valorArrecadado: Double = dadosJSON.getDouble("vrArrecadado")
+    val observacao: String = dadosJSON.getString("observacao")
+    val erro: String = dadosJSON.getString("error")
+    val valorAcumuladoProxConcurso: Double = dadosJSON.getDouble("vrAcumulado")
+    val estimativaProxConcurso: Double = dadosJSON.getDouble("vrEstimado")
+
+    val valorTotalPremioPrincipal: Double get() = valorPremioPrincipal * ganhadores
 
     //    TODO - DEFINIR COMO SERÁ O RETORNO DE 'encerrado'
-    val encerrado: Boolean = false
+    val encerrado: Boolean = true
 
 
 //    TODO - OBTER LISTA DE MENSAGENS E INFORMAÇÕES DOS GANHADORES
@@ -163,132 +180,66 @@ open class Jogo(val concurso: Int, tipoJogo: TipoDeJogo, recursos: Resources): D
 }
 
 
-class MegaSena(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.MEGA_SENA, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
+class MegaSena(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().MEGA_SENA, recursos) {
+    val resultado: List<String> = listarResultado(dadosJSON.getString("resultado"))
+    val resultadoOrdenado: List<String> = listarResultado(dadosJSON.getString("resultadoOrdenado"))
+
+    val ganhadoresQuina: Int = dadosJSON.getInt("ganhadores_quina")
+    val ganhadoresQuadra: Int = dadosJSON.getInt("ganhadores_quadra")
+    val valorQuina: Double = dadosJSON.getDouble("valor_quina")
+    val valorQuadra : Double = dadosJSON.getDouble("valor_quadra")
+
+    val concursoEspecial: Int = dadosJSON.getInt("concursoEspecial")
+    val acumuladoEapecial: Double = dadosJSON.getDouble("vr_acumulado_especial")
+
+    val valorTotalQuina: Double get() = valorQuina * ganhadoresQuina
+    val valorTotalQuadra: Double get() = valorQuadra * ganhadoresQuadra
 }
 
-class Quina(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.QUINA, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
+class Quina(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().QUINA, recursos) {
+    val resultado: List<String> = listarResultado(dadosJSON.getString("resultado"))
+    val resultadoOrdenado: List<String> = listarResultado(dadosJSON.getString("resultadoOrdenado"))
+
+    val ganhadoresQuadra: Int = dadosJSON.getInt("ganhadores_quadra")
+    val ganhadoresTerno: Int = dadosJSON.getInt("ganhadores_terno")
+    val ganhadoresDuque: Int = dadosJSON.getInt("qt_ganhador_duque")
+
+    val valorQuadra: Double = dadosJSON.getDouble("valor_quadra")
+    val valorTerno: Double = dadosJSON.getDouble("valor_terno")
+    val valorDuque: Double = dadosJSON.getDouble("vr_rateio_duque")
+
+    val concursoEspecial: Boolean = dadosJSON.getBoolean("quinaSaoJoao")
+    val acumuladoEapecial: Double = dadosJSON.getDouble("vrAcumuladoEspecial")
+
+    val valorTotalQuadra: Double get() = valorQuadra * ganhadoresQuadra
+    val valorTotalTerno: Double get() = valorTerno * ganhadoresTerno
+    val valorTotalDuque: Double get() = valorDuque * ganhadoresDuque
 }
 
-class Lotofacil(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.LOTOFACIL, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
-}
+class Lotofacil(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().LOTOFACIL, recursos)
+class Lotomania(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().LOTOMANIA, recursos)
+class DuplaSena(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().DUPLA_SENA, recursos)
+class Federal(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().FEDERAL, recursos)
+class DiaDeSorte(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().DIA_DE_SORTE, recursos)
+class Timemania(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().TIMEMANIA, recursos)
+class Loteca(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().LOTECA, recursos)
+class Lotogol(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().LOTOGOL, recursos)
 
-class Lotomania(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.LOTOMANIA, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
-}
+final class InstanciarJogo {
 
-class DuplaSena(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.DUPLA_SENA, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
-}
-
-class Federal(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.FEDERAL, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
-}
-
-class DiaDeSorte(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.DIA_DE_SORTE, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
-}
-
-class Timemania(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.TIMEMANIA, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
-}
-
-class Loteca(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.LOTECA, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
-}
-
-class Lotogol(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo.LOTOGOL, recursos) {
-    val resultado: List<String> = listarResultado(dadosJSON["resultado"].toString())
-    val resultadoOrdenado: List<String> = listarResultado(dadosJSON["resultadoOrdenado"].toString())
-    val ganhadoresQuina: Int = dadosJSON["ganhadoresQuina"].toString().toInt()
-    val ganhadoresQuadra: Int = dadosJSON["ganhadoresQuadra"].toString().toInt()
-    val valorQuina: Double = dadosJSON["valorQuina"].toString().toDouble()
-    val valorTotalQuina: Double = dadosJSON["valorTotalQuina"].toString().toDouble()
-    val valorQuadra : Double = dadosJSON["valorQuadra"].toString().toDouble()
-    val valorTotalQuadra: Double = dadosJSON["valorTotalQuadra"].toString().toDouble()
-    val concursoEspecial: Boolean = dadosJSON["concursoEspecial"].toString().toBoolean()
-    val acumuladoEapecial: Double = dadosJSON["acumuladoEapecial"].toString().toDouble()
+    fun get(numConcurso: Int, tipoJogo: Int, recursos: Resources): Jogo {
+        return when (tipoJogo) {
+            TipoDeJogo().MEGA_SENA -> MegaSena(numConcurso, recursos)
+            TipoDeJogo().QUINA -> Quina(numConcurso, recursos)
+            TipoDeJogo().LOTOFACIL -> Lotofacil(numConcurso, recursos)
+            TipoDeJogo().LOTOMANIA -> Lotomania(numConcurso, recursos)
+            TipoDeJogo().DUPLA_SENA -> DuplaSena(numConcurso, recursos)
+            TipoDeJogo().FEDERAL -> Federal(numConcurso, recursos)
+            TipoDeJogo().DIA_DE_SORTE -> DiaDeSorte(numConcurso, recursos)
+            TipoDeJogo().TIMEMANIA -> Timemania(numConcurso, recursos)
+            TipoDeJogo().LOTECA -> Loteca(numConcurso, recursos)
+            TipoDeJogo().LOTOGOL -> Lotogol(numConcurso, recursos)
+            else -> MegaSena(numConcurso, recursos)
+        }
+    }
 }

@@ -6,7 +6,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".resultados.FragmentoResultados"
-        android:padding="16dp">
+        android:padding="8dp">
+
+    <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/spinner_jogo_res" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView_nome_jogo" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
 
     <TextView
             android:id="@+id/textView_nome_jogo"
@@ -19,11 +25,10 @@
             android:textSize="30sp" android:textStyle="bold"/>
 
     <android.support.v4.view.ViewPager
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/viewpage_detalhes_sorteio"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/textView_nome_jogo"/>
+            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/spinner_jogo_res"/>
 </android.support.constraint.ConstraintLayout>

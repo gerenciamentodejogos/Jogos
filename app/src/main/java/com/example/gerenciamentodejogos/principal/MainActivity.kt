@@ -1,5 +1,6 @@
 package com.example.gerenciamentodejogos.principal
 
+import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -10,8 +11,8 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.apostas.FragmentoApostas
-import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
 import com.example.gerenciamentodejogos.resultados.FragmentoResultados
+import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 
 class MainActivity : AppCompatActivity() {
 
@@ -19,15 +20,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
 
+    private lateinit var VMResultados: ResultadosViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        //configurarVMResultados()
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.container_fragmentos,
             FragmentoPrincipal()
         )
         fragmentTransaction.commit()
+
 
         drawerLayout = findViewById(R.id.activity_main)
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.texto_abrir_menu, R.string.texto_fechar_menu)
@@ -41,6 +47,10 @@ class MainActivity : AppCompatActivity() {
         setUpListeners()
         //PROXIMO_CONCURSO = 2180
 
+    }
+
+    private fun configurarVMResultados() {
+        VMResultados = ViewModelProviders.of(this).get(ResultadosViewModel::class.java)
     }
 
     private fun setUpListeners() {

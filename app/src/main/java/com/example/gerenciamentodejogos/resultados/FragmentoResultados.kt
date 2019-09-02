@@ -1,21 +1,25 @@
 package com.example.gerenciamentodejogos.resultados
 
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
-import com.example.gerenciamentodejogos.modelos.TipoDeJogo
+import com.example.gerenciamentodejogos.modelos.DadosDoJogo
+import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_resultados.*
 
-class FragmentoResultados : Fragment() {
-
-    private var tipoJogo: TipoDeJogo = TipoDeJogo.MEGA_SENA
+class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
+    private lateinit var VMResultados: ResultadosViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragmento_resultados, container, false)
@@ -24,32 +28,42 @@ class FragmentoResultados : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
-            tipoJogo = when (it.getInt(TIPO_JOGO)) {
-                0 -> TipoDeJogo.MEGA_SENA
-                1 -> TipoDeJogo.QUINA
-                2 -> TipoDeJogo.LOTOFACIL
-                3 -> TipoDeJogo.LOTOMANIA
-                4 -> TipoDeJogo.DUPLA_SENA
-                5 -> TipoDeJogo.FEDERAL
-                6 -> TipoDeJogo.DIA_DE_SORTE
-                7 -> TipoDeJogo.TIMEMANIA
-                8 -> TipoDeJogo.LOTECA
-                9 -> TipoDeJogo.LOTOGOL
+        setUpListeners()
+        configurarVMResultados()
+        setUpPageView()
+        configurarSpiner()
+    }
 
-                else ->  TipoDeJogo.MEGA_SENA
+    private fun configurarVMResultados() {
+        activity?.let {
+            VMResultados = ViewModelProviders.of(it).get(ResultadosViewModel::class.java)
+            VMResultados.tipoJogoAtual.observe(it, Observer {tipoJogo ->
+                tipoJogo?.let {it ->
+                    val dadosJogo = DadosDoJogo(tipoJogo, resources)
+
+                    textView_nome_jogo.text = dadosJogo.nome
+                    textView_nome_jogo.setTextColor(dadosJogo.corPrimaria)
+                }
+            })
+        }
+    }
+
+    private fun configurarSpiner() {
+        context?.let {
+            ArrayAdapter.createFromResource(it, R.array.nomes_jogos, android.R.layout.simple_spinner_item).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner_jogo_res.adapter = adapter
+                spinner_jogo_res.onItemSelectedListener = this
+                spinner_jogo_res.setSelection(VMResultados.tipoJogoAtual.value?: 0)
             }
         }
-
-        setUpListeners()
-        setUpPageView()
     }
 
     private fun setUpPageView() {
-        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageFragmentAdapter(PROXIMO_CONCURSO[tipoJogo.value], tipoJogo, childFragmentManager)
-        viewpage_detalhes_sorteio.offscreenPageLimit = 1
+        val tipoJogo = VMResultados.tipoJogoAtual.value?: 0
+        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageAdapter(PROXIMO_CONCURSO[tipoJogo], tipoJogo, childFragmentManager)
+        viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO[tipoJogo] - 1) - 1
 
-        viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO[tipoJogo.value] - 1) - 1
     }
 
     fun setUpListeners() {
@@ -60,7 +74,12 @@ class FragmentoResultados : Fragment() {
         })
     }
 
-    companion object {
-        val TIPO_JOGO = "tipo_jogo"
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        VMResultados.tipoJogoAtual.value = p2
+        //setUpPageView()
     }
 }
