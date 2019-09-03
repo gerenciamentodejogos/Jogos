@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<android.support.v4.widget.NestedScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         tools:context=".resultados.FragmentoDetalhesResultado">
+
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="16dp">
 
     <ProgressBar
             style="?android:attr/progressBarStyle"
@@ -16,73 +23,176 @@
             app:layout_constraintTop_toTopOf="parent" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
-            android:visibility="visible"/>
-    <LinearLayout
-            android:id="@+id/linearlayout_container_res"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:gravity="center"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="4dp"
-            android:paddingBottom="4dp"
-            app:layout_constraintTop_toBottomOf="@+id/textView_acumulou">
-
-    </LinearLayout>
+            android:visibility="visible" tools:visibility="gone"/>
 
     <TextView
             android:id="@+id/textView9"
             android:text="@string/label_concurso"
-
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="24dp"
-            android:layout_marginTop="8dp" app:layout_constraintTop_toBottomOf="@+id/linearlayout_container_res"/>
+            android:textSize="12dp"
+            android:layout_marginEnd="4dp" app:layout_constraintEnd_toStartOf="@+id/textView_concurso"
+            app:layout_constraintBaseline_toBaselineOf="@+id/textView_concurso"/>
     <TextView
             android:id="@+id/textView_concurso"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/textView9" app:layout_constraintBottom_toBottomOf="@+id/textView9"
-            app:layout_constraintStart_toEndOf="@id/textView9" android:layout_marginStart="8dp"/>
+            android:text="1234"
+            android:textSize="20dp" android:textColor="@color/cor_megasena_1"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
 
+    <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:id="@+id/materialCardView" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/textView_concurso" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            android:layout_margin="4dp">
 
-    <TextView
-            android:id="@+id/textView8"
-            android:text="@string/label_data_sorteio"
-            android:layout_width="wrap_content"
+        <LinearLayout
+                android:id="@+id/linearlayout_container_res"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginTop="4dp"
+                android:paddingBottom="8dp">
+
+            <TextView
+                    android:id="@+id/textView_ganhadores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/texto_acumulou"
+                    android:textSize="24sp" android:textStyle="bold"
+                    android:textColor="@color/cor_megasena_1"
+                    android:layout_marginBottom="8dp"
+                    android:visibility="gone"/>
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.constraint.ConstraintLayout
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/textView9"
-            app:layout_constraintStart_toStartOf="@+id/textView9"
-            android:layout_marginTop="8dp"/>
-    <TextView
-            android:id="@+id/textView_data_sorteio"
-            android:layout_width="wrap_content"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/materialCardView" android:paddingBottom="8dp"
+            android:layout_margin="8dp" android:id="@+id/constraintLayout">
+
+        <TextView
+                android:id="@+id/textView_data_sorteio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp" app:layout_constraintStart_toStartOf="@+id/textView8"
+                app:layout_constraintTop_toBottomOf="@+id/textView8"
+        />
+        <TextView
+                android:id="@+id/textView8"
+                android:text="@string/label_data_sorteio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" android:textSize="12sp"/>
+        <TextView
+                android:text="Informações sobre o sorteio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView7" android:layout_marginTop="4dp"
+                app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginEnd="8dp" android:textSize="12sp"/>
+        <TextView
+                android:text="Local:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView10"
+                android:layout_marginTop="4dp"
+                app:layout_constraintTop_toBottomOf="@+id/textView7" android:textSize="12sp"
+                android:layout_marginEnd="8dp" app:layout_constraintEnd_toEndOf="parent"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView_local_sorteio"
+                android:textSize="12sp"
+                app:layout_constraintTop_toBottomOf="@+id/textView10" app:layout_constraintEnd_toEndOf="@+id/textView10"
+                android:textAlignment="textEnd"
+        />
+    </android.support.constraint.ConstraintLayout>
+
+    <android.support.v7.widget.CardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/textView8" app:layout_constraintBottom_toBottomOf="@+id/textView8"
-            app:layout_constraintStart_toEndOf="@+id/textView8"
-            android:layout_marginStart="8dp"/>
-    <TextView
-            android:text="@string/label_ganhadores"
-            android:layout_width="wrap_content"
+            android:layout_margin="16dp" app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="16dp"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@+id/constraintLayout" android:layout_marginEnd="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp" android:id="@+id/cardView">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            <TextView
+                    android:text="Premiações"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView12" android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:id="@+id/textView11" app:layout_constraintStart_toStartOf="@+id/textView8"
-            app:layout_constraintTop_toBottomOf="@+id/textView8" android:layout_marginTop="8dp"/>
-    <TextView
-            android:id="@+id/textView_ganhadores"
-            android:layout_width="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp" android:layout_marginEnd="8dp" app:layout_constraintTop_toBottomOf="@+id/cardView"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" android:id="@+id/cardView2">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="200dp">
+
+            <TextView
+                    android:text="@string/label_ganhadores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/textView11"
-            app:layout_constraintBottom_toBottomOf="@+id/textView11"
-            app:layout_constraintStart_toEndOf="@+id/textView11"
-            android:layout_marginStart="8dp"/>
-    <TextView
-            android:id="@+id/textView_acumulou"
-            android:text="@string/texto_acumulou"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:layout_constraintTop_toTopOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="8dp" app:layout_constraintStart_toStartOf="parent"
-            android:layout_marginStart="8dp" android:textSize="24sp" android:textStyle="bold"
-            android:textColor="@color/cor_megasena_1" android:visibility="gone"/>
+            android:layout_margin="16dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp" app:layout_constraintTop_toBottomOf="@+id/cardView2"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp">
+
+        <android.support.constraint.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+            <TextView
+                    android:text="Valores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="8dp"/>
+        </android.support.constraint.ConstraintLayout>
+    </android.support.v7.widget.CardView>
+
 </android.support.constraint.ConstraintLayout>
+</android.support.v4.widget.NestedScrollView>

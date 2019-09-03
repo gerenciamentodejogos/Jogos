@@ -6,7 +6,7 @@
     <string name="texto_menu_inicio">Início</string>
     <string name="texto_menu_apostas">Apostas</string>
     <string name="texto_menu_resultados">Resultados</string>
-    <string name="label_data_sorteio">Data do sorteio:</string>
+    <string name="label_data_sorteio">Data:</string>
     <string name="label_ganhadores">Ganhadores:</string>
     <string name="label_concurso">Concurso:</string>
     <string name="texto_acumulou">Acumulou!</string>
