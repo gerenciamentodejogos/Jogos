@@ -6,8 +6,9 @@ import com.example.gerenciamentodejogos.modelos.Jogo
 
 class ResultadosViewModel: ViewModel() {
     val jogos = MutableLiveData<List<Jogo>>()
-    val tipoJogoAtual = MutableLiveData<Int>().apply { value = 0 }
-    val concursoAtual = MutableLiveData<Int>().apply { value = 1 }
+    val tipoJogoAtual = MutableLiveData<Int>()
+    val tipoJogoSelecionado = MutableLiveData<Int>()
+    val concursoAtual = MutableLiveData<Int>()
 
     fun getJogos(tipo: Int): List<Jogo>? {
         return jogos.value?.filterIndexed { index, jogo ->  jogo.tipoJogo == tipo}

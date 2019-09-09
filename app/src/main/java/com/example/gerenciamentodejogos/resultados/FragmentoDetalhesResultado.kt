@@ -7,6 +7,7 @@ import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.CardView
+import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,7 +20,7 @@ import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
 import com.example.gerenciamentodejogos.modelos.*
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
-import kotlinx.android.synthetic.main.fragmento_princ_prox_jogo.*
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 
 
@@ -51,19 +52,19 @@ class FragmentoDetalhesResultado : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         criarDezenas()
+        configurarRecyclerView()
         adicionarDezenas()
         configurarVMResultados()
 
         activity?.let {
             VMResultados.tipoJogoAtual.observe(it, Observer {
-                //configurarVMResultados()
+
             })
         }
     }
 
     private fun configurarVMResultados() {
         activity?.let {
-            //VMResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
             val jogo = VMResultados.getJogo(tipoJogo, numeroConcurso)
             if (jogo == null) {
                 DownloadTask().execute()
@@ -94,7 +95,7 @@ class FragmentoDetalhesResultado : Fragment() {
         textViewDezena = layoutInflater.inflate(R.layout.textview_dezena2, linear,false) as CardView
         //textViewDezena.text = dezenas.count().plus(1).toString()
 //        dezenasPorLinha = calcularDezenasQueCabem(linear, textViewDezena)
-        dezenasPorLinha = 5
+        dezenasPorLinha = 6
         linhasNecessarias = dezenasTotal.toDouble().div(dezenasPorLinha)
 
         quantasLinhas = if (linhasNecessarias - linhasNecessarias.toInt() != 0.0) {
@@ -140,37 +141,71 @@ class FragmentoDetalhesResultado : Fragment() {
         return 5
     }
 
+    private fun configurarRecyclerView(){
+        recyclerview_premiacoes.adapter = PremiacoesAdapter()
+        recyclerview_premiacoes.layoutManager = LinearLayoutManager(context)
+
+        recyclerview_ganhadores.adapter = GanhadoresAdapter()
+        recyclerview_ganhadores.layoutManager = LinearLayoutManager(context)
+
+        recyclerview_valores.adapter = ValoresAdapter()
+        recyclerview_valores.layoutManager = LinearLayoutManager(context)
+    }
+
     private fun atualizarDadosNaTela(jogo: Jogo) {
         textView_ganhadores.setTextColor(jogo.corPrimaria)
         textView_concurso.setTextColor(jogo.corPrimaria)
+
+        textview_total_premiacoes.setTextColor(jogo.corPrimaria)
+        textView_label_total_premiacoes.setTextColor(jogo.corPrimaria)
+
+//        textView_acumulado_proximo.setTextColor(jogo.corPrimaria)
+//        textView_acumulado_final.setTextColor(jogo.corPrimaria)
+//        textView_acumulado_especial.setTextColor(jogo.corPrimaria)
+//        textView_arrecadacao.setTextColor(jogo.corPrimaria)
 
         //TODO -  RETIRAR '&& jogo.concurso < PROXIMO_CONCURSO[tipoJogo]'
         if (jogo.encerrado && jogo.concurso < PROXIMO_CONCURSO[tipoJogo]) {
             //adicionarDezenas()
 
-
             textView_ganhadores.text = if (jogo.acumulou) {
                  getText(R.string.texto_acumulou)
             } else {
-                "${jogo.ganhadores.toString()} GANHADORES!"
+                "${jogo.premiacoes[0].numGanhadores} Ganhadores!"
             }
-            textView_ganhadores.visibility = View.VISIBLE
 
             try {
-                if (jogo is MegaSena) {
-                    for (d in 0..jogo.resultadoOrdenado.count() - 1) {
-                        val text = dezenas2[d].findViewById<TextView>(R.id.tv_dezena)
-                        text.text = jogo.resultadoOrdenado[d]
-                        text.setBackgroundColor(jogo.corPrimaria)
-                    }
+                for (d in 0..jogo.resultadoOrdenado.count() - 1) {
+                    val text = dezenas2[d].findViewById<TextView>(R.id.tv_dezena)
+                    text.text = jogo.resultadoOrdenado[d]
+                    text.setBackgroundColor(jogo.corPrimaria)
                 }
 
-                if (jogo is Quina) {
-                    for (d in 0..jogo.resultadoOrdenado.count() - 1) {
-                        val text = dezenas2[d].findViewById<TextView>(R.id.tv_dezena)
-                        text.text = jogo.resultadoOrdenado[d]
-                        text.setBackgroundColor(jogo.corPrimaria)
+                val valores_adapter = recyclerview_valores.adapter
+                if (valores_adapter is ValoresAdapter) {
+                    valores_adapter.cor = jogo.corPrimaria
+                    valores_adapter.alterarDados(jogo.ListaValoresTotais())
+                }
+
+//                textView_acumulado_proximo.text = NumberFormat.getCurrencyInstance().format(jogo.valorAcumuladoProxConcurso)
+//                textView_acumulado_final.text = NumberFormat.getCurrencyInstance().format(jogo.valorAcumuladoFinalX)
+//                textView_acumulado_especial.text = NumberFormat.getCurrencyInstance().format(jogo.valorAcumuladoEspecial)
+//                textView_arrecadacao.text = NumberFormat.getCurrencyInstance().format(jogo.valorArrecadado)
+//
+                val premiacoes_adapter = recyclerview_premiacoes.adapter
+                if (premiacoes_adapter is PremiacoesAdapter) {
+                    premiacoes_adapter.alterarDados(jogo.premiacoes)
+                }
+                textview_total_premiacoes.text = NumberFormat.getCurrencyInstance().format(jogo.valorTotalPremiacoes)
+
+                if (jogo.premiacoes[0].numGanhadores != 0) {
+                    val ganhadores_adapter = recyclerview_ganhadores.adapter
+                    if (ganhadores_adapter is GanhadoresAdapter) {
+                        ganhadores_adapter.alterarDados(jogo.ganhadores)
                     }
+                    cardView_ganhadores.visibility = View.VISIBLE
+                } else {
+                    cardView_ganhadores.visibility = View.GONE
                 }
             } catch (erro: Exception) {
 
@@ -179,6 +214,9 @@ class FragmentoDetalhesResultado : Fragment() {
             textView_concurso.text = jogo.concurso.toString()
             textView_data_sorteio.text = formatarData(jogo.dataConcurso)
             textView_local_sorteio.text = "${jogo.cidadeSorteio} - ${jogo.ufSorteio}\n${jogo.localSorteio}"
+
+            constraintLayout_info_sorteio.visibility = View.VISIBLE
+
         } else {
             //CARREGAR INFORMAÇÕES DO PRÓXIMO CONCURSO
             textView_concurso.text = "PROXIMO CONCURSO"
@@ -189,11 +227,6 @@ class FragmentoDetalhesResultado : Fragment() {
         progressBar_detalhes_res.visibility = View.GONE
     }
 
-//    inner class CriarDezenas: AsyncTask<Unit, Unit, Unit>() {
-//        override fun doInBackground(vararg params: Unit?) {
-//            criarDezenas()
-//        }
-//    }
     inner class DownloadTask: AsyncTask<Unit, Unit, Jogo>() {
 
         override fun onPreExecute() {
@@ -206,7 +239,7 @@ class FragmentoDetalhesResultado : Fragment() {
 
             if (!isCancelled) {
                 try {
-                    result = InstanciarJogo().get(numeroConcurso, tipoJogo, resources)
+                    result = Jogo(numeroConcurso, tipoJogo, resources)
                 } catch (e: Exception) {
                     Log.d("ERRO", e.message)
                     e.message
@@ -216,9 +249,12 @@ class FragmentoDetalhesResultado : Fragment() {
         }
 
         override fun onPostExecute(result: Jogo?) {
-            result?.let {
-                VMResultados.adicionarJogo(it)
-                atualizarDadosNaTela(it)
+            if (result != null) {
+                VMResultados.adicionarJogo(result)
+                atualizarDadosNaTela(result)
+            } else {
+                textView_concurso.text = "ERRO"
+                progressBar_detalhes_res.visibility = View.GONE
             }
         }
     }

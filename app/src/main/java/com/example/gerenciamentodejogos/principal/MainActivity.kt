@@ -1,5 +1,6 @@
 package com.example.gerenciamentodejogos.principal
 
+import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        //configurarVMResultados()
+        configurarVMResultados()
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
         fragmentTransaction.add(R.id.container_fragmentos,
@@ -40,17 +41,25 @@ class MainActivity : AppCompatActivity() {
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
 
+
+
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
         navigationView = findViewById(R.id.navView)
 
         setUpListeners()
-        //PROXIMO_CONCURSO = 2180
-
     }
 
     private fun configurarVMResultados() {
         VMResultados = ViewModelProviders.of(this).get(ResultadosViewModel::class.java)
+        VMResultados.tipoJogoSelecionado.observe(this, Observer {tipoJogo ->
+            tipoJogo?.let {it ->
+                val fragmentTransaction = supportFragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.container_fragmentos, FragmentoResultados())
+                fragmentTransaction.commit()
+            }
+        })
+
     }
 
     private fun setUpListeners() {

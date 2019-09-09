@@ -1,3 +1,3 @@
 package com.example.gerenciamentodejogos.dados
 
-var PROXIMO_CONCURSO = listOf(2180, 5000, 500, 200, 100, 50, 40, 30, 20, 10)
+var PROXIMO_CONCURSO = listOf(2186, 5067, 1862, 2003, 1967, 5422, 199, 1380, 867, 1055)

@@ -3,14 +3,17 @@ package com.example.gerenciamentodejogos.resultados
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
+import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.Toast
 
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
@@ -37,12 +40,13 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
     private fun configurarVMResultados() {
         activity?.let {
             VMResultados = ViewModelProviders.of(it).get(ResultadosViewModel::class.java)
-            VMResultados.tipoJogoAtual.observe(it, Observer {tipoJogo ->
-                tipoJogo?.let {it ->
-                    val dadosJogo = DadosDoJogo(tipoJogo, resources)
-
-                    textView_nome_jogo.text = dadosJogo.nome
-                    textView_nome_jogo.setTextColor(dadosJogo.corPrimaria)
+            VMResultados.tipoJogoSelecionado.observe(it, Observer {tipoJogo ->
+                if (tipoJogo != null) {
+                    context?.let {
+                        val dados = DadosDoJogo(tipoJogo, it.resources)
+                        textView_nome_jogo_resultados.text = dados.nome
+                        textView_nome_jogo_resultados.setTextColor(dados.corPrimaria)
+                    }
                 }
             })
         }
@@ -72,6 +76,20 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
             override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {}
             override fun onPageSelected(position: Int) {}
         })
+
+        textView_nome_jogo_resultados.setOnClickListener {
+            context?.let {
+
+                val builder = AlertDialog.Builder(it)
+                builder.setTitle("Selecione um tipo de jogo")
+                    .setItems(R.array.nomes_jogos, DialogInterface.OnClickListener { dialog, idJogo ->
+                        VMResultados.tipoJogoSelecionado.value = idJogo
+                        VMResultados.tipoJogoAtual.value = idJogo
+                    })
+                builder.create()
+                builder.show()
+            }
+        }
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {

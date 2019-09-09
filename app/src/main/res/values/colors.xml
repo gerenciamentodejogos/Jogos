@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimary">#209869</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
     <color name="branco">#FFFFFF</color>
-    <color name="cor_megasena_1">#39880E</color>
+    <color name="cor_megasena_1">#209869</color>
+    <color name="cor_megasena_2">#22209869</color>
 
 </resources>
