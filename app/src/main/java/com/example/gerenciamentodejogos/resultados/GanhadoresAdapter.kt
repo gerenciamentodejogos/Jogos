@@ -16,6 +16,10 @@ class GanhadoresAdapter(var items: List<Jogo.Ganhadores> = mutableListOf()): Rec
         notifyDataSetChanged()
     }
 
+    override fun getItemViewType(position: Int): Int {
+        return super.getItemViewType(position)
+    }
+
     override fun getItemCount() = items.count()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

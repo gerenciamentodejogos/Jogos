@@ -4,16 +4,21 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.ResultReceiver
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.apostas.FragmentoApostas
-import com.example.gerenciamentodejogos.resultados.FragmentoResultados
+import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
+import com.example.gerenciamentodejogos.resultados.*
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -30,9 +35,7 @@ class MainActivity : AppCompatActivity() {
         configurarVMResultados()
 
         val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.container_fragmentos,
-            FragmentoPrincipal()
-        )
+        fragmentTransaction.add(R.id.container_fragmentos, FragmentoPrincipal())
         fragmentTransaction.commit()
 
 
@@ -40,8 +43,6 @@ class MainActivity : AppCompatActivity() {
         actionBarDrawerToggle = ActionBarDrawerToggle(this, drawerLayout, R.string.texto_abrir_menu, R.string.texto_fechar_menu)
         drawerLayout.addDrawerListener(actionBarDrawerToggle)
         actionBarDrawerToggle.syncState()
-
-
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
@@ -60,6 +61,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        VMResultados.ultimoConcurso.value = obterUltimosConcursos()
     }
 
     private fun setUpListeners() {
@@ -94,5 +96,9 @@ class MainActivity : AppCompatActivity() {
         } else {
             super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun obterUltimosConcursos(): List<Int> {
+        return PROXIMO_CONCURSO
     }
 }

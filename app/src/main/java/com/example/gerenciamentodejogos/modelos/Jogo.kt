@@ -5,12 +5,8 @@ import android.graphics.Color
 import android.util.Log
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados_web.DadosWeb
-import com.google.gson.Gson
-import com.google.gson.internal.`$Gson$Types`
-import com.google.gson.internal.`$Gson$Types`.*
 import org.json.JSONArray
 import org.json.JSONObject
-import retrofit2.converter.gson.GsonConverterFactory
 import java.lang.Exception
 import java.util.*
 
@@ -39,6 +35,7 @@ open class DadosDoJogo(val tipoJogo: Int, val recursos: Resources) {
     val dezenasMaxima: Int = recursos.getIntArray(R.array.dezenas_maxima)[tipoJogo]
     val dezenasTotal: Int = recursos.getIntArray(R.array.dezenas_total)[tipoJogo]
 
+    val textoEstimativaProximoConcurso: String = recursos.getString(R.string.texto_estimativa_proximo_concurso)
     val textoAcumuladoProximoConcurso: String = recursos.getString(R.string.texto_acumulado_proximo_concurso)
     val textoAcumuladoFinalX: String = recursos.getString(R.string.texto_acumulado_final_x)
     val textoAcumuladoConcursoEspecial: String = recursos.getString(R.string.texto_acumulado_especial)
@@ -73,6 +70,10 @@ open class DadosDoJogo(val tipoJogo: Int, val recursos: Resources) {
 
     protected val chaveResultado: String get() {return recursos.getStringArray(R.array.resultado)[tipoJogo]}
     protected val chaveResultadoOrdenado: String get() {return recursos.getStringArray(R.array.resultado_ordenado)[tipoJogo]}
+    protected val chaveResultadoAdicional: String get() {return recursos.getStringArray(R.array.resultado_adicional)[tipoJogo]}
+
+    protected val chaveParametrosLoteca: Array<String> get() {return recursos.getStringArray(R.array.parametros_loteca)}
+    protected val chaveParametrosLotogol: Array<String> get() {return recursos.getStringArray(R.array.parametros_lotogol)}
 
     protected val chaveConcursoEspecial: String get() {return recursos.getStringArray(R.array.concurso_especial)[tipoJogo]}
     protected val chaveValorAcumuladoEspecial: String get() {return recursos.getStringArray(R.array.valor_acumulado_especial)[tipoJogo]}
@@ -81,8 +82,13 @@ open class DadosDoJogo(val tipoJogo: Int, val recursos: Resources) {
     protected val chaveProximoConcursoFinalX: String get() {return recursos.getStringArray(R.array.proximo_concurso_final_x)[tipoJogo]}
 }
 
-class DadosJSON(stringJSON: String) {
-    private val dados: JSONObject = JSONObject(stringJSON)
+class DadosJSON(stringJSON: String, lista: Boolean = false) {
+    private val dados: JSONObject = if (lista) {
+        val array = JSONArray(stringJSON)
+        JSONObject(array.getJSONObject(0).toString())
+    } else {
+        JSONObject(stringJSON)
+    }
     private var erro = false
 
     fun getString(chave: String): String{
@@ -127,11 +133,7 @@ class DadosJSON(stringJSON: String) {
         return try {
             dados.getBoolean(chave)
         } catch (erro: Exception) {
-            if (getInt(chave) == 1) {
-                true
-            } else {
-                false
-            }
+            getInt(chave) == 1
         }
     }
 
@@ -153,22 +155,30 @@ class DadosJSON(stringJSON: String) {
 }
 
 open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJogo(tipoJogo, recursos) {
+    data class ResultadoLotecaLotogol(val time1: String, val time2: String, val gols_time1: Int, val gols_time2: Int, val diaDaSemana: String)
     data class Valores(val texto: String, val valor: Double)
     data class Ganhadores(val uf: String, val cidade: String, val quantidade: Int, val meioEletronico: Boolean)
     data class Premiacoes(val numAcertos: Int, val textoFaixa: String, val numGanhadores: Int, val valorIndividual: Double) {
         val totalPago = numGanhadores * valorIndividual
     }
 
-    protected var dadosJSON: DadosJSON
+    private var dadosJSON: DadosJSON
+    private var stringJSON: String
     init {
-        var stringJSON = buscalDadosLocalmente()
+        stringJSON = buscalDadosLocalmente()
         if (stringJSON.isEmpty()) {
             stringJSON = buscarDadosWeb()
             salvarDadosLocalmente(stringJSON)
         }
 
-        dadosJSON = DadosJSON(stringJSON)
+        if (tipoJogo == TipoDeJogo().LOTOGOL) {
+            dadosJSON = DadosJSON(stringJSON, true)
+        } else {
+            dadosJSON = DadosJSON(stringJSON)
+        }
     }
+
+    private val resAdicional: String = dadosJSON.getString(chaveResultadoAdicional)
 
     private fun obterFaixasPremiacoes(): List<Int> {
         val faixasPremiacoes: List<String> = chaveFaixasPremiacoes.split("|")
@@ -248,6 +258,45 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
         return lista
 
     }
+
+    private fun gerarResultadosLotecaLotogol(): List<ResultadoLotecaLotogol>{
+        val lista: MutableList<ResultadoLotecaLotogol> = mutableListOf()
+
+        when (tipoJogo) {
+            TipoDeJogo().LOTECA -> {
+                val listaJogos = dadosJSON.getLista(chaveResultado)
+
+                for (j in 0..listaJogos.length() - 1) {
+                    val dados = DadosJSON(listaJogos.getJSONObject(j).toString())
+
+                    val time1 = dados.getString(chaveParametrosLoteca[0])
+                    val time2 = dados.getString(chaveParametrosLoteca[1])
+                    val gols_time1 = dados.getString(chaveParametrosLoteca[2])
+                    val gols_time2 = dados.getString(chaveParametrosLoteca[3])
+                    val diaDaSemana = dados.getString(chaveParametrosLoteca[4])
+
+                    lista.add(ResultadoLotecaLotogol(time1, time2, gols_time1.toInt(), gols_time2.toInt(), diaDaSemana))
+                }
+            }
+            TipoDeJogo().LOTOGOL -> {
+                val listaJogos = JSONArray(stringJSON)
+
+                for (j in 0..listaJogos.length() - 1) {
+                    val dados = DadosJSON(listaJogos.getJSONObject(j).toString())
+
+                    val time1 = dados.getString(chaveParametrosLotogol[0])
+                    val time2 = dados.getString(chaveParametrosLotogol[1])
+                    val gols_time1 = dados.getString(chaveParametrosLotogol[2])
+                    val gols_time2 = dados.getString(chaveParametrosLotogol[3])
+                    val diaDaSemana = dados.getString(chaveParametrosLotogol[4])
+
+                    lista.add(ResultadoLotecaLotogol(time1, time2, gols_time1.toInt(), gols_time2.toInt(), diaDaSemana))
+                }
+            }
+        }
+        return lista
+    }
+
     private fun gerarListaResultados(ordenado: Boolean = true, separador: Char = '-'): List<String> {
         return if (ordenado) {
             dadosJSON.getString(chaveResultadoOrdenado)
@@ -257,7 +306,11 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
     }
     fun ListaValoresTotais(): List<Valores> {
         val lista = mutableListOf<Valores>()
-        var valor = Valores(textoAcumuladoProximoConcurso, valorAcumuladoProxConcurso)
+
+        var valor = Valores(textoEstimativaProximoConcurso, estimativaProxConcurso)
+        lista.add(valor)
+
+        valor = Valores(textoAcumuladoProximoConcurso, valorAcumuladoProxConcurso)
 
         lista.add(valor)
         if (temConcursoFinalX) {
@@ -300,6 +353,9 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 
     val resultado: List<String> = gerarListaResultados(false)
     val resultadoOrdenado: List<String> = gerarListaResultados(true)
+    val resultadoAdicional: String = if (resAdicional != "ERRO!") resAdicional else ""
+
+    val resultadoLotogolLoteca: List<ResultadoLotecaLotogol> = gerarResultadosLotecaLotogol()
 
     val temConcursoEspecial: Boolean = (chaveConcursoEspecial != CARECTER_NULO)
     val concursoEspecial: Boolean = dadosJSON.getBoolean(chaveConcursoEspecial)
@@ -340,39 +396,3 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
         return url_temp
     }
 }
-
-
-class MegaSena(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().MEGA_SENA, recursos)
-class Quina(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().QUINA, recursos)
-class Lotofacil(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().LOTOFACIL, recursos)
-class Lotomania(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().LOTOMANIA, recursos)
-class DuplaSena(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().DUPLA_SENA, recursos)
-class Federal(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().FEDERAL, recursos)
-class DiaDeSorte(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().DIA_DE_SORTE, recursos)
-class Timemania(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().TIMEMANIA, recursos)
-class Loteca(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().LOTECA, recursos)
-class Lotogol(val numConcurso: Int, recursos: Resources): Jogo(numConcurso, TipoDeJogo().LOTOGOL, recursos)
-
-//final class InstanciarJogo {
-//
-//    fun get(numConcurso: Int, tipoJogo: Int, recursos: Resources): Jogo {
-//        return when (tipoJogo) {
-//            TipoDeJogo().MEGA_SENA -> MegaSena(numConcurso, recursos)
-//            TipoDeJogo().QUINA -> Quina(numConcurso, recursos)
-//            TipoDeJogo().LOTOFACIL -> Lotofacil(numConcurso, recursos)
-//            TipoDeJogo().LOTOMANIA -> Lotomania(numConcurso, recursos)
-//            TipoDeJogo().DUPLA_SENA -> DuplaSena(numConcurso, recursos)
-//            TipoDeJogo().FEDERAL -> Federal(numConcurso, recursos)
-//            TipoDeJogo().DIA_DE_SORTE -> DiaDeSorte(numConcurso, recursos)
-//            TipoDeJogo().TIMEMANIA -> Timemania(numConcurso, recursos)
-//            TipoDeJogo().LOTECA -> Loteca(numConcurso, recursos)
-//            TipoDeJogo().LOTOGOL -> Lotogol(numConcurso, recursos)
-//            else -> MegaSena(numConcurso, recursos)
-//        }
-//    }
-//}
-
-//public interface APICaixa {
-//    @GET("/asdasd/asdasdsa")
-//    Call<String> retorno;
-//}

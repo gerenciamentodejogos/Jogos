@@ -10,6 +10,8 @@ class ResultadosViewModel: ViewModel() {
     val tipoJogoSelecionado = MutableLiveData<Int>()
     val concursoAtual = MutableLiveData<Int>()
 
+    val ultimoConcurso = MutableLiveData<List<Int>>()
+
     fun getJogos(tipo: Int): List<Jogo>? {
         return jogos.value?.filterIndexed { index, jogo ->  jogo.tipoJogo == tipo}
     }

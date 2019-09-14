@@ -11,11 +11,11 @@
     <string name="label_concurso">Concurso:</string>
     <string name="texto_acumulou">Acumulou!</string>
 
+    <string name="texto_estimativa_proximo_concurso">Estimativa para o próximo concurso:</string>
     <string name="texto_acumulado_proximo_concurso">Acumulado para o próximo concurso:</string>
-    <string name="texto_acumulado_final_x">Acumulado para o próximo concurso final </string>
-    <string name="texto_acumulado_especial">Acumulado para o concurso especial </string>
+    <string name="texto_acumulado_final_x">Acumulado para o próximo concurso final</string>
+    <string name="texto_acumulado_especial">Acumulado para o concurso especial</string>
     <string name="texto_valor_arrecadado">Total arrecadado neste concurso:</string>
-
 
     <string name="url_parametro_1">\?timestampAjax=</string>
     <string name="url_parametro_2">&amp;concurso=</string>
@@ -33,16 +33,16 @@
         <item>LOTOGOL</item>
     </string-array>
     <string-array name="nomes_especiais">
-        <item>Mega da Virada</item>     <!--MEGA-SENA-->
-        <item>Quina de São João</item>     <!--QUINA-->
-        <item>Lotofácil da Independência</item>      <!--LOTOFÁCIL-->
+        <item>Mega da Virada</item>
+        <item>Quina de São João</item>
+        <item>Lotofácil da Independência</item>
         <item>#</item>      <!--LOTOMANIA-->
         <item>Dupla Sena de Páscoa</item>     <!--DUPLA SENA-->
         <item>#</item>        <!--FEDERAL-->
         <item>#</item>       <!--DIA DE SORTE-->
         <item>#</item>      <!--TIMEMANIA-->
         <item>#</item>     <!--LOTECA-->
-        <item>------LOTOGOL------</item>        <!--LOTOGOL-->
+        <item>#</item>        <!--LOTOGOL-->
     </string-array>
     <string-array name="cores_primarias">
         <item>#FF209869</item>      <!--MEGA-SENA-->
@@ -104,16 +104,16 @@
 
     -->
 
-<!--MEGA-SENA-->
-<!--QUINA-->
-<!--LOTOFÁCIL-->
-<!--LOTOMANIA-->
-<!--DUPLA SENA-->
-<!--FEDERAL-->
-<!--DIA DE SORTE-->
-<!--TIMEMANIA-->
-<!--LOTECA-->
-<!--LOTOGOL-->
+    <!--MEGA-SENA-->
+    <!--QUINA-->
+    <!--LOTOFÁCIL-->
+    <!--LOTOMANIA-->
+    <!--DUPLA SENA-->
+    <!--FEDERAL-->
+    <!--DIA DE SORTE-->
+    <!--TIMEMANIA-->
+    <!--LOTECA-->
+    <!--LOTOGOL-->
 
     <integer-array name="dezenas_sorteadas">
         <item>6</item>      <!--MEGA-SENA-->
@@ -165,16 +165,36 @@
     </integer-array>
 
     <string-array name="urls_resultados">
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjA0sjIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQE-F4ca/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KO6H80AU71KG7J0072/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/quina/!ut/p/a1/jc69DoIwAATgZ_EJepS2wFgoaUswsojYxXQyTfgbjM9vNS4Oordd8l1yxJGBuNnfw9XfwjL78dmduIikhYFGA0tzSFZ3tG_6FCmP4BxBpaVhWQuA5RRWlUZlxR6w4r89vkTi1_5E3CfRXcUhD6osEAHA32Dr4gtsfFin44Bgdw9WWSwj/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0J0VSC0AC4GLFAD20G6/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotofacil/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA0sTIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAcySpRM!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0J0VSC0AC4GLFAD2003/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotomania/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA38jYEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAajYsZo!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0JGJVA0AKLR5T3K00V0/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/duplasena/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjA2cDIAKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQGgnyPS/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0J0I280A4EP2VJV30N4/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/federal/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA0MzIAKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAYe29yM!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KGBB50QICV9UPL3086/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/diadesorte/!ut/p/a1/jc5BDsIgFATQs3gCptICXdKSfpA2ujFWNoaVIdHqwnh-sXFr9c_qJ2-SYYGNLEzxmc7xkW5TvLz_IE6WvCoUwZPwArpTnZWD4SCewTGDlrQtZQ-gVGs401gj6wFw4r8-vpzGr_6BhZmIoocFYUO7toLemqYGz0H1AUsTZ7Cw4X7dj0hu9QIyUWUw/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KO5GE0Q8PTB11800G3/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/timemania/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA1MzIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VASrq9qk!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0JGJVA0AKLR5T3K00M4/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/loteca/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA3cDYEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAbNnwlU!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KOCO10AFFGUTGU0004/res/id=buscaResultado/c=cacheLevelPage/=/</item>
-        <item>http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotogol/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjE18zYAKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQFTuNFd/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KGBQD0ARPT1QLG1041/res/id=buscaResultado/c=cacheLevelPage/=/</item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjA0sjIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQE-F4ca/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KO6H80AU71KG7J0072/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/quina/!ut/p/a1/jc69DoIwAATgZ_EJepS2wFgoaUswsojYxXQyTfgbjM9vNS4Oordd8l1yxJGBuNnfw9XfwjL78dmduIikhYFGA0tzSFZ3tG_6FCmP4BxBpaVhWQuA5RRWlUZlxR6w4r89vkTi1_5E3CfRXcUhD6osEAHA32Dr4gtsfFin44Bgdw9WWSwj/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0J0VSC0AC4GLFAD20G6/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotofacil/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA0sTIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAcySpRM!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0J0VSC0AC4GLFAD2003/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotomania/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA38jYEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAajYsZo!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0JGJVA0AKLR5T3K00V0/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/duplasena/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjA2cDIAKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQGgnyPS/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0J0I280A4EP2VJV30N4/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/federal/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA0MzIAKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAYe29yM!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KGBB50QICV9UPL3086/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/diadesorte/!ut/p/a1/jc5BDsIgFATQs3gCptICXdKSfpA2ujFWNoaVIdHqwnh-sXFr9c_qJ2-SYYGNLEzxmc7xkW5TvLz_IE6WvCoUwZPwArpTnZWD4SCewTGDlrQtZQ-gVGs401gj6wFw4r8-vpzGr_6BhZmIoocFYUO7toLemqYGz0H1AUsTZ7Cw4X7dj0hu9QIyUWUw/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KO5GE0Q8PTB11800G3/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/timemania/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA1MzIEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VASrq9qk!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_61L0H0G0JGJVA0AKLR5T3K00M4/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/loteca/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbz8vTxNDRy9_Y2NQ13CDA3cDYEKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wBmoxN_FydLAGAgNTKEK8DkRrACPGwpyQyMMMj0VAbNnwlU!/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KOCO10AFFGUTGU0004/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
+        <item>
+            http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotogol/!ut/p/a1/04_Sj9CPykssy0xPLMnMz0vMAfGjzOLNDH0MPAzcDbwMPI0sDBxNXAOMwrzCjE18zYAKIoEKnN0dPUzMfQwMDEwsjAw8XZw8XMwtfQ0MPM2I02-AAzgaENIfrh-FqsQ9wNnUwNHfxcnSwBgIDUyhCvA5EawAjxsKckMjDDI9FQFTuNFd/dl5/d5/L2dBISEvZ0FBIS9nQSEh/pw/Z7_HGK818G0KGBQD0ARPT1QLG1041/res/id=buscaResultado/c=cacheLevelPage/=/
+        </item>
     </string-array>
 
     <string-array name="faixas_premiacoes">
@@ -184,8 +204,8 @@
         <item>20|19|18|17|16|15|0</item>    <!--LOTOMANIA-->
         <item>6|5|4|3#6|5|4|3</item>        <!--DUPLA SENA-->
         <item>-</item>                      <!--FEDERAL-->
-        <item>7|6|5|4</item>                <!--DIA DE SORTE-->
-        <item>7|6|5|4|3</item>              <!--TIMEMANIA-->
+        <item>7|6|5|4|-1</item>                <!--DIA DE SORTE-->
+        <item>7|6|5|4|3|-1</item>              <!--TIMEMANIA-->
         <item>14|13</item>                      <!--LOTECA-->
         <item>5|4|3</item>                      <!--LOTOGOL-->
     </string-array>
@@ -194,35 +214,55 @@
         <item>Quina|Quadra|Terno|Duque</item>                                                           <!--QUINA-->
         <item>15 acertos|14 acertos|13 acertos|12 acertos|11 acertos</item>                             <!--LOTOFÁCIL-->
         <item>20 acertos|19 acertos|18 acertos|17 acertos|16 acertos|15 acertos|Nenhum acerto</item>    <!--LOTOMANIA-->
-        <item>Sena|Quina|Quadra|Terno#Sena|Quina|Quadra|Terno</item>                                    <!--DUPLA SENA-->
+        <item>Sena|Quina|Quadra|Terno#Sena|Quina|Quadra|Terno
+        </item>                                    <!--DUPLA SENA-->
         <item>-</item>                                                                                  <!--FEDERAL-->
-        <item>7 acertos|6 acertos|5 acertos|4 acertos</item>                                            <!--DIA DE SORTE-->
-        <item>7 acertos|6 acertos|5 acertos|4 acertos|3 acertos</item>                                  <!--TIMEMANIA-->
-        <item>14 acertos|13 acertos</item>                                                                                  <!--LOTECA-->
-        <item>5 acertos|4 acertos|3 acertos</item>                                                                                  <!--LOTOGOL-->
+        <item>7 acertos|6 acertos|5 acertos|4 acertos|Mês da sorte
+        </item>                                            <!--DIA DE SORTE-->
+        <item>7 acertos|6 acertos|5 acertos|4 acertos|3 acertos|Time do coração
+        </item>                                  <!--TIMEMANIA-->
+        <item>14 acertos|13 acertos
+        </item>                                                                                  <!--LOTECA-->
+        <item>5 acertos|4 acertos|3 acertos
+        </item>                                                                                  <!--LOTOGOL-->
     </string-array>
     <string-array name="quantidade_ganhadores">
         <item>ganhadores|ganhadores_quina|ganhadores_quadra</item>  <!--MEGA-SENA-->
         <item>ganhadores|ganhadores_quadra|ganhadores_terno|qt_ganhador_duque</item>    <!--QUINA-->
-        <item>qt_ganhador_faixa1|qt_ganhador_faixa2|qt_ganhador_faixa3|qt_ganhador_faixa4|qt_ganhador_faixa5</item> <!--LOTOFÁCIL-->
-        <item>qtGanhadoresFaixa1|qtGanhadoresFaixa2|qtGanhadoresFaixa3|qtGanhadoresFaixa4|qtGanhadoresFaixa5|qtGanhadoresFaixa6|qtGanhadoresFaixa7</item>   <!--LOTOMANIA-->
-        <item>ganhadores_sena1|qt_ganhador_quina_faixa1|qt_ganhador_quadra_faixa1|qt_ganhador_terno_faixa1#ganhadores_sena2|ganhadores_quina2|ganhadores_quadra2|qt_ganhador_terno_faixa2</item>    <!--DUPLA SENA-->
+        <item>qt_ganhador_faixa1|qt_ganhador_faixa2|qt_ganhador_faixa3|qt_ganhador_faixa4|qt_ganhador_faixa5
+        </item> <!--LOTOFÁCIL-->
+        <item>
+            qtGanhadoresFaixa1|qtGanhadoresFaixa2|qtGanhadoresFaixa3|qtGanhadoresFaixa4|qtGanhadoresFaixa5|qtGanhadoresFaixa6|qtGanhadoresFaixa7
+        </item>   <!--LOTOMANIA-->
+        <item>
+            ganhadores_sena1|qt_ganhador_quina_faixa1|qt_ganhador_quadra_faixa1|qt_ganhador_terno_faixa1#ganhadores_sena2|ganhadores_quina2|ganhadores_quadra2|qt_ganhador_terno_faixa2
+        </item>    <!--DUPLA SENA-->
         <item>-</item>  <!--FEDERAL-->
-        <item></item>   <!--DIA DE SORTE-->
-        <item></item>   <!--TIMEMANIA-->
-        <item>qtGanhadorFaixa1|qtGanhadorFaixa2|qtGanhadorFaixa3</item> <!--LOTECA-->
+        <item>qt_GANHADOR_FAIXA_1|qt_GANHADOR_FAIXA_2|qt_GANHADOR_FAIXA_3|qt_GANHADOR_FAIXA_4|qt_GANHADOR_MES_DE_SORTE
+        </item>   <!--DIA DE SORTE-->
+        <item>
+            qt_GANHADOR_FAIXA_1|qt_GANHADOR_FAIXA_2|qt_GANHADOR_FAIXA_3|qt_GANHADOR_FAIXA_4|qt_GANHADOR_FAIXA_5|qt_GANHADOR_TIME_CORACAO
+        </item>   <!--TIMEMANIA-->
+        <item>qtGanhadorFaixa1|qtGanhadorFaixa2</item> <!--LOTECA-->
         <item>qt_ganhador_faixa1|qt_ganhador_faixa2|qt_ganhador_faixa3</item>   <!--LOTOGOL-->
     </string-array>
     <string-array name="valores_premiacoes">
         <item>valor|valor_quina|valor_quadra</item>     <!--MEGA-SENA-->
         <item>valor|valor_quadra|valor_terno|vr_rateio_duque</item>     <!--QUINA-->
-        <item>vr_rateio_faixa1|vr_rateio_faixa2|vr_rateio_faixa3|vr_rateio_faixa4|vr_rateio_faixa5</item>       <!--LOTOFÁCIL-->
-        <item>vrRateioFaixa1|vrRateioFaixa2|vrRateioFaixa3|vrRateioFaixa4|vrRateioFaixa5|vrRateioFaixa6|vrRateioFaixa7</item>       <!--LOTOMANIA-->
-        <item>valor_sena1|vr_quina_faixa1|vr_quadra_faixa1|vr_terno_faixa1#valor_sena2|valor_quina2|valor_quadra2|vr_terno_faixa2</item>        <!--DUPLA SENA-->
+        <item>vr_rateio_faixa1|vr_rateio_faixa2|vr_rateio_faixa3|vr_rateio_faixa4|vr_rateio_faixa5
+        </item>       <!--LOTOFÁCIL-->
+        <item>vrRateioFaixa1|vrRateioFaixa2|vrRateioFaixa3|vrRateioFaixa4|vrRateioFaixa5|vrRateioFaixa6|vrRateioFaixa7
+        </item>       <!--LOTOMANIA-->
+        <item>
+            valor_sena1|vr_quina_faixa1|vr_quadra_faixa1|vr_terno_faixa1#valor_sena2|valor_quina2|valor_quadra2|vr_terno_faixa2
+        </item>        <!--DUPLA SENA-->
         <item>-</item>      <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item>vrRateioFaixa1|vrRateioFaixa2|vrRateioFaixa3</item>       <!--LOTECA-->
+        <item>vr_RATEIO_FAIXA_1|vr_RATEIO_FAIXA_2|vr_RATEIO_FAIXA_3|vr_RATEIO_FAIXA_4|vr_RATEIO_MES_DE_SORTE
+        </item>       <!--DIA DE SORTE-->
+        <item>
+            vr_RATEIO_FAIXA_1|vr_RATEIO_FAIXA_2|vr_RATEIO_FAIXA_3|vr_RATEIO_FAIXA_4|vr_RATEIO_FAIXA_5|vr_RATEIO_TIME_CORACAO
+        </item>       <!--TIMEMANIA-->
+        <item>vrRateioFaixa1|vrRateioFaixa2</item>       <!--LOTECA-->
         <item>vr_rateio_faixa1|vr_rateio_faixa2|vr_rateio_faixa3</item>     <!--LOTOGOL-->
     </string-array>
 
@@ -231,11 +271,11 @@
         <item>resultado</item>      <!--QUINA-->
         <item>de_resultado</item>       <!--LOTOFÁCIL-->
         <item>deResultado</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
+        <item>resultado_sorteio1#resultado_sorteio2</item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item></item>       <!--LOTECA-->
+        <item>de_RESULTADO</item>       <!--DIA DE SORTE-->
+        <item>de_RESULTADO</item>       <!--TIMEMANIA-->
+        <item>jogos</item>       <!--LOTECA-->
         <item></item>       <!--LOTOGOL-->
     </string-array>
     <string-array name="resultado_ordenado">
@@ -243,12 +283,40 @@
         <item>resultadoOrdenado</item>      <!--QUINA-->
         <item>resultadoOrdenado</item>       <!--LOTOFÁCIL-->
         <item>resultadoOrdenado</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
+        <item>resultadoOrdenadoSorteio1#resultadoOrdenadoSorteio2</item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item></item>       <!--LOTECA-->
+        <item>resultadoOrdenado</item>       <!--DIA DE SORTE-->
+        <item>resultadoOrdenado</item>       <!--TIMEMANIA-->
+        <item>jogos</item>       <!--LOTECA-->
         <item></item>       <!--LOTOGOL-->
+    </string-array>
+    <string-array name="resultado_adicional">
+        <item>#</item><!--MEGA-SENA-->
+        <item>#</item><!--QUINA-->
+        <item>#</item><!--LOTOFÁCIL-->
+        <item>#</item><!--LOTOMANIA-->
+        <item>#</item><!--DUPLA SENA-->
+        <item>#</item><!--FEDERAL-->
+        <item>mes_DE_SORTE</item><!--DIA DE SORTE-->
+        <item>timeCoracao</item><!--TIMEMANIA-->
+        <item>#</item><!--LOTECA-->
+        <item>#</item><!--LOTOGOL-->
+    </string-array>
+
+    <string-array name="parametros_loteca">
+        <item>noTime1</item>
+        <item>noTime2</item>
+        <item>qt_gol_time1</item>
+        <item>qt_gol_time2</item>
+        <item>diaDaSemana</item>
+    </string-array>
+
+    <string-array name="parametros_lotogol">
+        <item>time1</item>
+        <item>time2</item>
+        <item>qt_gol_time1</item>
+        <item>qt_gol_time2</item>
+        <item>diaDaSemana</item>
     </string-array>
 
     <string-array name="dataConcurso">
@@ -281,12 +349,12 @@
         <item>sorteioAcumulado</item>                           <!--QUINA-->
         <item>sorteioAcumulado</item>       <!--LOTOFÁCIL-->
         <item>sorteioAcumulado</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
+        <item>acumulado</item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item></item>       <!--LOTECA-->
-        <item></item>       <!--LOTOGOL-->
+        <item>sorteioAcumulado</item>       <!--DIA DE SORTE-->
+        <item>sorteioAcumulado</item>       <!--TIMEMANIA-->
+        <item>sorteioAcumulado</item>       <!--LOTECA-->
+        <item>sorteioAcumulado</item>       <!--LOTOGOL-->
     </string-array>
 
     <string-array name="localSorteio">
@@ -296,10 +364,10 @@
         <item>icLocalSorteio</item>       <!--LOTOMANIA-->
         <item>descricaoLocalSorteio</item>      <!--DUPLA SENA-->
         <item>-</item>      <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item>-</item>      <!--LOTECA-->
-        <item>-</item>      <!--LOTOGOL-->
+        <item>de_local_sorteio</item>       <!--DIA DE SORTE-->
+        <item>de_local_sorteio</item>       <!--TIMEMANIA-->
+        <item>localSorteio</item>      <!--LOTECA-->
+        <item>localSorteio</item>      <!--LOTOGOL-->
     </string-array>
     <string-array name="cidadeSorteio">
         <item>no_cidade</item>      <!--MEGA-SENA-->
@@ -308,10 +376,10 @@
         <item>noCidade</item>       <!--LOTOMANIA-->
         <item>no_cidade</item>      <!--DUPLA SENA-->
         <item>cidade</item>     <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item>-</item>      <!--LOTECA-->
-        <item>-</item>      <!--LOTOGOL-->
+        <item>no_CIDADE</item>       <!--DIA DE SORTE-->
+        <item>no_CIDADE</item>       <!--TIMEMANIA-->
+        <item>#</item>      <!--LOTECA-->
+        <item>#</item>      <!--LOTOGOL-->
     </string-array>
     <string-array name="ufSorteio">
         <item>sg_uf</item>      <!--MEGA-SENA-->
@@ -320,10 +388,10 @@
         <item>sgUf</item>       <!--LOTOMANIA-->
         <item>sg_uf</item>      <!--DUPLA SENA-->
         <item>ufSorteio</item>      <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item>-</item>      <!--LOTECA-->
-        <item>-</item>      <!--LOTOGOL-->
+        <item>sg_UF</item>       <!--DIA DE SORTE-->
+        <item>sg_UF</item>       <!--TIMEMANIA-->
+        <item>#</item>      <!--LOTECA-->
+        <item>#</item>      <!--LOTOGOL-->
     </string-array>
 
     <string-array name="valorAcumuladoProxConcurso">
@@ -331,36 +399,24 @@
         <item>vrAcumulado</item>        <!--QUINA-->
         <item>vrAcumuladoFaixa1</item>       <!--LOTOFÁCIL-->
         <item>totalAcumulado</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
+        <item>valor_acumulado_sena1</item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item></item>       <!--LOTECA-->
-        <item></item>       <!--LOTOGOL-->
+        <item>vr_ACUMULADO</item>       <!--DIA DE SORTE-->
+        <item>vr_ACUMULADO_FAIXA_1</item>       <!--TIMEMANIA-->
+        <item>vrAcumuladoFaixa1</item>       <!--LOTECA-->
+        <item>vr_ACUMULADO_FAIXA1|vr_ACUMULADO_FAIXA2|vr_ACUMULADO_FAIXA3</item>       <!--LOTOGOL-->
     </string-array>
     <string-array name="estimativaProxConcurso">
         <item>vr_estimativa</item>  <!--MEGA-SENA-->
         <item>vrEstimado</item>     <!--QUINA-->
         <item>vrEstimativa</item>       <!--LOTOFÁCIL-->
         <item>vrEstimativa</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
+        <item>valor_estimativa</item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item></item>       <!--LOTECA-->
-        <item></item>       <!--LOTOGOL-->
-    </string-array>
-    <string-array name="valor_acumulado_especial">
-        <item>vr_acumulado_especial</item>
-        <item>vrAcumuladoEspecial</item>
-        <item>vrAcumuladoEspecial</item> <!--STRING-->
-        <item>#</item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>vr_ESTIMATIVA</item>       <!--DIA DE SORTE-->
+        <item>vr_ESTIMATIVA_FAIXA_1</item>       <!--TIMEMANIA-->
+        <item>vrEstimativa</item>       <!--LOTECA-->
+        <item>vr_estimativa</item>       <!--LOTOGOL-->
     </string-array>
     <string-array name="valorArrecadado">
         <item>vr_arrecadado</item>      <!--MEGA-SENA-->
@@ -369,47 +425,59 @@
         <item>vrArrecadado</item>       <!--LOTOMANIA-->
         <item>vr_arrecadado</item>      <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item>-</item>      <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
+        <item>vr_ARRECADADO</item>      <!--DIA DE SORTE-->
+        <item>vr_ARRECADADO</item>       <!--TIMEMANIA-->
         <item>vrArrecadado</item>       <!--LOTECA-->
         <item>vr_ARRECADADO</item>      <!--LOTOGOL-->
     </string-array>
 
+    <string-array name="valor_acumulado_especial">
+        <item>vr_acumulado_especial</item>
+        <item>vrAcumuladoEspecial</item>
+        <item>vrAcumuladoEspecial</item> <!--STRING-->
+        <item>#</item>
+        <item>vr_acumulado_especial</item>
+        <item>#</item>
+        <item>#</item>
+        <item>#</item>
+        <item>#</item>
+        <item>#</item>
+    </string-array>
     <string-array name="concurso_especial">
         <item>concursoEspecial</item> <!--INTEIRO-->
         <item>quinaSaoJoao</item> <!--BOOLEAN-->
         <item>ic_concurso_especial</item>
         <item>#</item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>ic_concurso_especial</item>
+        <item>#</item>
+        <item>#</item>
+        <item>#</item>
+        <item>#</item>
+        <item>#</item>
     </string-array>
     <string-array name="valor_acumulado_final_x">
         <item>ac_final_zero</item>      <!--MEGA-SENA-->
         <item>#</item>       <!--QUINA-->
         <item>#</item>       <!--LOTOFÁCIL-->
         <item>#</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
+        <item>#</item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item></item>       <!--LOTECA-->
-        <item></item>
+        <item>#</item>       <!--DIA DE SORTE-->
+        <item>vr_ACUMULADO_PROXIMO_CONCURSO</item>       <!--TIMEMANIA-->
+        <item>vrConcursoAcumulado</item>       <!--LOTECA-->
+        <item>#</item>
     </string-array> <!--#####-->
     <string-array name="proximo_concurso_final_x"> <!--#####-->
         <item>prox_final_zero</item>
         <item>#</item>
         <item>#</item>
         <item>#</item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>#</item>
+        <item>#</item>
+        <item>#</item>
+        <item>nu_PROXIMO_CONCURSO_FINAL_0_5</item>
+        <item>nuConcursoAcumulado</item>
+        <item>#</item>
     </string-array>
 
     <string-array name="observacao">
@@ -419,8 +487,8 @@
         <item>deObservacao</item>       <!--LOTOMANIA-->
         <item>observacao</item>     <!--DUPLA SENA-->
         <item>observacao</item>     <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
+        <item>de_OBSERVACAO</item>       <!--DIA DE SORTE-->
+        <item>de_OBSERVACAO</item>       <!--TIMEMANIA-->
         <item>de_observacao</item>      <!--LOTECA-->
         <item>de_OBSERVACAO</item>      <!--LOTOGOL-->
     </string-array>
@@ -431,8 +499,8 @@
         <item>error</item>       <!--LOTOMANIA-->
         <item></item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
+        <item>error</item>       <!--DIA DE SORTE-->
+        <item>error</item>       <!--TIMEMANIA-->
         <item>error</item>      <!--LOTECA-->
         <item>error</item>      <!--LOTOGOL-->
     </string-array>
@@ -443,10 +511,10 @@
         <item>mensagens</item>       <!--LOTOMANIA-->
         <item></item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item></item>       <!--LOTECA-->
-        <item></item>       <!--LOTOGOL-->
+        <item>mensagens</item>       <!--DIA DE SORTE-->
+        <item>mensagens</item>       <!--TIMEMANIA-->
+        <item>mensagens</item>       <!--LOTECA-->
+        <item>mensagens</item>       <!--LOTOGOL-->
     </string-array>
 
     <string-array name="info_ganhadores">
@@ -454,60 +522,63 @@
         <item>ganhadoresPorUf</item>        <!--QUINA-->
         <item>ganhadoresPorUf</item>       <!--LOTOFÁCIL-->
         <item>ganhadoresPorRegiao1|ganhadoresPorRegiao2</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
+        <item>ganhadoresPorRegiao1|ganhadoresPorRegiao2</item>       <!--DUPLA SENA-->
         <item></item>       <!--FEDERAL-->
-        <item></item>       <!--DIA DE SORTE-->
-        <item></item>       <!--TIMEMANIA-->
-        <item></item>       <!--LOTECA-->
-        <item></item>       <!--LOTOGOL-->
+        <item>ganhadoresPorUf</item>       <!--DIA DE SORTE-->
+        <item>ganhadoresPorUf</item>       <!--TIMEMANIA-->
+        <item>ganhadoresPorUf</item>       <!--LOTECA-->
+        <item>ganhadoresPorUf</item>       <!--LOTOGOL-->
     </string-array>
     <string-array name="info_ganhadores_uf">
         <item>sgUf</item>
         <item>sgUf</item>
         <item>sgUf</item>
         <item>sgUf</item>
+        <item>sgUf</item>
         <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>sgUf</item>
+        <item>sgUf</item>
+        <item>sgUf</item>
+        <item>sgUf</item>
     </string-array>
     <string-array name="info_ganhadores_cidade">
         <item>noCidade</item>
         <item>noCidade</item>
         <item>noCidade</item>
         <item>noCidade</item>
+        <item>noCidade</item>
         <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>noCidade</item>
+        <item>noCidade</item>
+        <item>noCidade</item>
+        <item>noCidade</item>
     </string-array>
     <string-array name="info_ganhadores_quantidade">
         <item>qtGanhadores</item>
         <item>qtGanhadores</item>
         <item>qtGanhadores</item>
         <item>qtGanhadores</item>
+        <item>qtGanhadores</item>
         <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>qtGanhadores</item>
+        <item>qtGanhadores</item>
+        <item>qtGanhadores</item>
+        <item>qtGanhadores</item>
     </string-array>
     <string-array name="info_ganhadores_canal_eletronico">
         <item>icCanalEletronico</item> <!--BOOLEAN-->
         <item>icCanalEletronico</item>
         <item>icCanalEletronico</item> <!--BOOLEAN-->
         <item>icCanalEletronico</item>
+        <item>icCanalEletronico</item>
         <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
-        <item></item>
+        <item>icCanalEletronico</item>
+        <item>icCanalEletronico</item>
+        <item>icCanalEletronico</item>
+        <item>icCanalEletronico</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

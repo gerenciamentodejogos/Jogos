@@ -67,7 +67,6 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
         val tipoJogo = VMResultados.tipoJogoAtual.value?: 0
         viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageAdapter(PROXIMO_CONCURSO[tipoJogo], tipoJogo, childFragmentManager)
         viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO[tipoJogo] - 1) - 1
-
     }
 
     fun setUpListeners() {

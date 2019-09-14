@@ -6,34 +6,9 @@
               tools:context=".principal.FragmentoPrincipal"
               android:orientation="vertical">
 
-        <fragment
+        <android.support.v4.view.ViewPager
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="com.example.gerenciamentodejogos.principal.FragmentoPrincResultados"
-                android:id="@+id/area_fragmento_1" tools:layout="@layout/fragmento_princ_resultados"/>
-
-        <View
-                android:id="@+id/divider_ganhadores"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-        />
-        <fragment
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="com.example.gerenciamentodejogos.principal.FragmentoPrincProxJogo"
-                android:id="@+id/area_fragmento_2" tools:layout="@layout/fragmento_princ_prox_jogo"/>
-
-        <View
-                android:id="@+id/divider2"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider"
-        />
-        <fragment
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:name="com.example.gerenciamentodejogos.principal.FragmentoPrincAposta"
-                android:id="@+id/area_fragmento_3" tools:layout="@layout/fragmento_princ_aposta"/>
+                android:layout_height="match_parent" android:id="@+id/viewpager_principal">
+        </android.support.v4.view.ViewPager>
 
 </LinearLayout>
