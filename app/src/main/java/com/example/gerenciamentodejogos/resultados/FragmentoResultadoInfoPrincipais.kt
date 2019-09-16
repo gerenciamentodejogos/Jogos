@@ -3,30 +3,39 @@ package com.example.gerenciamentodejogos.resultados
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.graphics.Point
+import android.graphics.Rect
+import android.graphics.drawable.Drawable
+import android.hardware.display.DisplayManager
+import android.icu.text.DisplayContext
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.hardware.display.DisplayManagerCompat
+import android.support.v4.view.DisplayCutoutCompat
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.DisplayMetrics
+import android.view.*
 import android.widget.LinearLayout
+import android.widget.TextView
+import android.widget.Toast
 
 import com.example.gerenciamentodejogos.R
+import com.example.gerenciamentodejogos.dados.MESES
 import com.example.gerenciamentodejogos.modelos.DadosDoJogo
+import com.example.gerenciamentodejogos.modelos.Jogo
 import com.example.gerenciamentodejogos.modelos.TipoDeJogo
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
-import kotlinx.android.synthetic.main.fragment_fragmento_resultado_info_principais.*
-import kotlinx.android.synthetic.main.fragment_fragmento_resultado_info_principais.linearlayout_container_res
-import kotlinx.android.synthetic.main.fragment_fragmento_resultado_info_principais.recyclerview_loteca_lotogol
 import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
-import kotlinx.android.synthetic.main.fragmento_resultados.*
+import kotlinx.android.synthetic.main.fragmento_resultado_info_principais.*
 
 class FragmentoResultadoInfoPrincipais : Fragment() {
 
     lateinit var VMResultados: ResultadosViewModel
     private var tipoJogo: Int = 0
     private var numConcurso: Int = 0
+
+    private lateinit var propriedadesDoJogo: DadosDoJogo
 
     private var lineares: MutableList<LinearLayout> = mutableListOf()
     private var dezenas: MutableList<CardView> = mutableListOf()
@@ -37,18 +46,55 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
             numConcurso = it.getInt(NUMERO_CONCURSO)
         }
 
-        return inflater.inflate(R.layout.fragment_fragmento_resultado_info_principais, container, false)
+        activity?.let {
+            VMResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
+
+            val propriedades = VMResultados.propriedadesDosJogos.value
+
+            if (propriedades != null) {
+                propriedadesDoJogo = propriedades[tipoJogo]
+            }
+        }
+
+        return inflater.inflate(R.layout.fragmento_resultado_info_principais, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (tipoJogo!= TipoDeJogo().LOTECA && tipoJogo!= TipoDeJogo().LOTOGOL) {
+        if (tipoJogo!= TipoDeJogo().LOTECA && tipoJogo!= TipoDeJogo().LOTOGOL  && tipoJogo!= TipoDeJogo().FEDERAL) {
             criarDezenas()
             adicionarDezenas()
+        } else {
+            configurarRecyclerView()
         }
 
-        configurarRecyclerView()
+        configurarObserverVM()
+        atualizarTextConcurso()
+    }
+
+    private fun atualizarTextConcurso() {
+        textView_concurso.setTextColor(propriedadesDoJogo.corPrimaria)
+        textView_concurso.text = numConcurso.toString()
+    }
+
+    private fun configurarObserverVM() {
+        VMResultados.getResultado(tipoJogo, numConcurso)?.let {
+            atualizarDadosPrincipais(it)
+            return
+        }
+
+        activity?.let {
+            VMResultados.jogos.observe(this, Observer {
+                verificaJogo()
+            })
+        }
+    }
+
+    private fun verificaJogo() {
+        VMResultados.getResultado(tipoJogo, numConcurso)?.let { jogo ->
+            atualizarDadosPrincipais(jogo)
+        }
     }
 
     private fun adicionarDezenas() {
@@ -63,15 +109,15 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         lineares.add(linear)
 
         var textViewDezena: View
+        val dezenasSorteadas = propriedadesDoJogo.dezenasSorteadas
 
-        val dezenasTotal = DadosDoJogo(tipoJogo, resources).dezenasSorteadas
         var dezenasPorLinha: Int// = 0
         val linhasNecessarias: Double// = 0.0
         val quantasLinhas: Int// = 0
 
         textViewDezena = layoutInflater.inflate(R.layout.textview_dezena2, linear,false) as CardView
         dezenasPorLinha = calcularDezenasQueCabem(linear, textViewDezena)
-        linhasNecessarias = dezenasTotal.toDouble().div(dezenasPorLinha)
+        linhasNecessarias = dezenasSorteadas.toDouble().div(dezenasPorLinha)
 
         quantasLinhas = if (linhasNecessarias - linhasNecessarias.toInt() != 0.0) {
             (linhasNecessarias - (linhasNecessarias - linhasNecessarias.toInt())).toInt() + 1
@@ -79,7 +125,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
             linhasNecessarias.toInt()
         }
 
-        val dezenasLinhas = dezenasTotal.toDouble().div(quantasLinhas)
+        val dezenasLinhas = dezenasSorteadas.toDouble().div(quantasLinhas)
 
         dezenasPorLinha = if (dezenasLinhas - dezenasLinhas.toInt() != 0.0) {
             dezenasLinhas.toInt() + 1
@@ -93,7 +139,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
             lineares.add(linear)
         }
 
-        for (d in 2..dezenasTotal) {
+        for (d in 2..dezenasSorteadas) {
             textViewDezena = layoutInflater.inflate(R.layout.textview_dezena2, linear, false) as CardView
             dezenas.add(textViewDezena)
         }
@@ -103,21 +149,101 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         for (lin in lineares) {
             for (d in 1..dezenasPorLinha) {
                 lin.addView(dezenas[dezenasAdicionadas++])
-                if (dezenasAdicionadas == dezenasTotal) break
+                if (dezenasAdicionadas == dezenasSorteadas) break
             }
         }
     }
 
-    private fun calcularDezenasQueCabem(linear: LinearLayout, cardView: CardView): Int {
+    private fun calcularDezenasQueCabem(linear: View, cardView: View): Int {
+        view?.let {
+            val measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.AT_MOST)
+
+            it.measure(measureSpec, measureSpec)
+            linear.measure(measureSpec, measureSpec)
+            cardView.measure(measureSpec, measureSpec)
+
+            val metricas = DisplayMetrics()
+            val pontos = Point()
+            val c = Rect(0,0,0,0)
+            context?.let {contexto ->
+                val a = DisplayManagerCompat.getInstance(contexto)
+                it.getHitRect(c)
+                a.displays[0].getRealMetrics(metricas)
+                a.displays[0].getRealSize(pontos)
+            }
+
+        }
+
         //TODO - OBTER TAMANHO DA TELA E DOS ELEMENTOS LINEARLAYOUT E TEXTVIEW DAS DEZENAS
         return 6
     }
 
     private fun configurarRecyclerView(){
-        recyclerview_loteca_lotogol.adapter = LotecaLotogolAdapter()
-        recyclerview_loteca_lotogol.layoutManager = LinearLayoutManager(context)
+        if (tipoJogo == TipoDeJogo().LOTECA || tipoJogo == TipoDeJogo().LOTOGOL) {
+            recyclerview_resultado_deferencial.adapter = LotecaLotogolAdapter()
+        } else if (tipoJogo == TipoDeJogo().FEDERAL) {
+            recyclerview_resultado_deferencial.adapter = FederalAdapter()
+        }
+        recyclerview_resultado_deferencial.layoutManager = LinearLayoutManager(context)
     }
 
+    private fun textoPlural(quant: Int, idRecurso: Int, textoInicial: String = "", textoFinal: String = ""): String {
+        val plural = resources.getQuantityString(idRecurso, quant)
+        return "${textoInicial}${quant} ${plural}${textoFinal}"
+    }
+
+    private fun exibirResultadoAdicional(jogo: Jogo) {
+        textView_label_resultado_adicional.setTextColor(jogo.corPrimaria)
+        textView_label_resultado_adicional.text = jogo.textoResultadoAdicinal
+
+        textView_resultado_adicional.setTextColor(jogo.corPrimaria)
+
+        textView_resultado_adicional.text = if (tipoJogo == TipoDeJogo().DIA_DE_SORTE) {
+            MESES[jogo.resultadoAdicional.toInt()]
+        } else {
+            jogo.resultadoAdicional
+        }
+
+        textView_label_resultado_adicional.visibility = View.VISIBLE
+        textView_resultado_adicional.visibility = View.VISIBLE
+    }
+
+    private fun atualizarDadosPrincipais(jogo: Jogo) {
+        if (tipoJogo == TipoDeJogo().LOTECA || tipoJogo == TipoDeJogo().LOTOGOL) {
+            val lotecal_lotogol_adapter = recyclerview_resultado_deferencial.adapter
+            if (lotecal_lotogol_adapter is LotecaLotogolAdapter) {
+                lotecal_lotogol_adapter.alterarDados(jogo.resultadoLotogolLoteca)
+            }
+            recyclerview_resultado_deferencial.visibility = View.VISIBLE
+        } else if (tipoJogo == TipoDeJogo().FEDERAL) {
+            val federal_adapter = recyclerview_resultado_deferencial.adapter
+            if (federal_adapter is FederalAdapter) {
+                federal_adapter.alterarDados(jogo.resultadoFederal)
+            }
+            recyclerview_resultado_deferencial.visibility = View.VISIBLE
+        } else {
+            for (d in 0 until jogo.resultadoOrdenado.count()) {
+                val text = dezenas[d].findViewById<TextView>(R.id.tv_dezena)
+                text.text = jogo.resultadoOrdenado[d]
+                text.setBackgroundColor(jogo.corPrimaria)
+            }
+            if (tipoJogo == TipoDeJogo().DIA_DE_SORTE || tipoJogo == TipoDeJogo().TIMEMANIA) {
+                exibirResultadoAdicional(jogo)
+            }
+        }
+
+        textView_ganhadores.setTextColor(jogo.corPrimaria)
+        textView_ganhadores.text = if (jogo.acumulou) {
+            getText(R.string.texto_acumulou)
+        } else {
+            textoPlural(jogo.premiacoes[0].numGanhadores, R.plurals.texto_ganhador, textoFinal = "!")
+        }
+        textView_ganhadores.visibility = View.VISIBLE
+
+        view?.let {
+            it.visibility = View.VISIBLE
+        }
+    }
 
     companion object {
         val NUMERO_CONCURSO = "numero_concurso"

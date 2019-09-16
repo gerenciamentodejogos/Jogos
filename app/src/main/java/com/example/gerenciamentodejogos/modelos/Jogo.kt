@@ -41,6 +41,8 @@ open class DadosDoJogo(val tipoJogo: Int, val recursos: Resources) {
     val textoAcumuladoConcursoEspecial: String = recursos.getString(R.string.texto_acumulado_especial)
     val textoValorArrecadacao: String = recursos.getString(R.string.texto_valor_arrecadado)
 
+    val textoResultadoAdicinal: String = recursos.getStringArray(R.array.texto_resultado_adicional)[tipoJogo]
+
     protected val CARECTER_NULO = recursos.getString(R.string.caracter_nulo)
 
     protected val chaveDataConcurso: String get() {return recursos.getStringArray(R.array.dataConcurso)[tipoJogo]}
@@ -156,6 +158,7 @@ class DadosJSON(stringJSON: String, lista: Boolean = false) {
 
 open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJogo(tipoJogo, recursos) {
     data class ResultadoLotecaLotogol(val time1: String, val time2: String, val gols_time1: Int, val gols_time2: Int, val diaDaSemana: String)
+    data class ResultadoFederal(val valor: String)
     data class Valores(val texto: String, val valor: Double)
     data class Ganhadores(val uf: String, val cidade: String, val quantidade: Int, val meioEletronico: Boolean)
     data class Premiacoes(val numAcertos: Int, val textoFaixa: String, val numGanhadores: Int, val valorIndividual: Double) {
@@ -259,6 +262,10 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 
     }
 
+    private fun gerarResultadosFederal(): List<ResultadoFederal> {
+        return listOf()
+    }
+
     private fun gerarResultadosLotecaLotogol(): List<ResultadoLotecaLotogol>{
         val lista: MutableList<ResultadoLotecaLotogol> = mutableListOf()
 
@@ -356,6 +363,7 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
     val resultadoAdicional: String = if (resAdicional != "ERRO!") resAdicional else ""
 
     val resultadoLotogolLoteca: List<ResultadoLotecaLotogol> = gerarResultadosLotecaLotogol()
+    val resultadoFederal: List<ResultadoFederal> = gerarResultadosFederal()
 
     val temConcursoEspecial: Boolean = (chaveConcursoEspecial != CARECTER_NULO)
     val concursoEspecial: Boolean = dadosJSON.getBoolean(chaveConcursoEspecial)

@@ -1,15 +1,19 @@
 package com.example.gerenciamentodejogos.resultados
 
+import android.content.res.Resources
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ResourceCursorTreeAdapter
 import android.widget.TextView
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.modelos.Jogo
 
 
 class GanhadoresAdapter(var items: List<Jogo.Ganhadores> = mutableListOf()): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    var recursos: Resources? = null
 
     fun alterarDados(ganhadores: List<Jogo.Ganhadores>){
         items = ganhadores
@@ -23,6 +27,7 @@ class GanhadoresAdapter(var items: List<Jogo.Ganhadores> = mutableListOf()): Rec
     override fun getItemCount() = items.count()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        recursos = parent.context.resources
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.detalhes_ganhadores, parent, false)
         return GanhadoresViewHolder(itemView)
     }
@@ -36,7 +41,8 @@ class GanhadoresAdapter(var items: List<Jogo.Ganhadores> = mutableListOf()): Rec
             } else {
                 "${ganhador.cidade} - ${ganhador.uf}"
             }
-            holder.textViewQuantidadeGanhadores.text = "${ganhador.quantidade} ganhadores"
+//            holder.textViewQuantidadeGanhadores.text = "${ganhador.quantidade} ganhadores"
+            holder.textViewQuantidadeGanhadores.text = recursos?.let {it.getQuantityText(R.plurals.texto_ganhador, ganhador.quantidade)}
 
             if (position == itemCount - 1) {
                 holder.divider.visibility = View.GONE

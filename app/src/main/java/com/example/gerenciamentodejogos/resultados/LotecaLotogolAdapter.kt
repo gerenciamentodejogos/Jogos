@@ -34,10 +34,6 @@ class LotecaLotogolAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holder.time2.text = jogo.time2
             holder.gols_time_1.text = jogo.gols_time1.toString()
             holder.gols_time_2.text = jogo.gols_time2.toString()
-
-            if (position == itemCount - 1) {
-                holder.divider.visibility = View.GONE
-            }
         }
     }
 

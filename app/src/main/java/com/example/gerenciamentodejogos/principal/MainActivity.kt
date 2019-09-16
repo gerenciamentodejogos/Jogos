@@ -4,21 +4,17 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.ResultReceiver
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.view.GravityCompat
 import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.apostas.FragmentoApostas
-import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
+import com.example.gerenciamentodejogos.dados.PROXIMOS_CONCURSOS
 import com.example.gerenciamentodejogos.resultados.*
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -52,12 +48,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configurarVMResultados() {
-        VMResultados = ViewModelProviders.of(this).get(ResultadosViewModel::class.java)
-        VMResultados.tipoJogoSelecionado.observe(this, Observer {tipoJogo ->
+        VMResultados = ViewModelProviders.of(this)[ResultadosViewModel::class.java].apply { carregarPropriedadesDosJogos(resources) }
+        VMResultados.jogoSelecionadoResultados.observe(this, Observer { tipoJogo ->
             tipoJogo?.let {it ->
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.container_fragmentos, FragmentoResultados())
                 fragmentTransaction.commit()
+
+                VMResultados.getPropriedade(tipoJogo)?.let {
+                    navigationView.setBackgroundColor(it.corPrimaria)
+                }
             }
         })
 
@@ -99,6 +99,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun obterUltimosConcursos(): List<Int> {
-        return PROXIMO_CONCURSO
+        PROXIMOS_CONCURSOS.forEachIndexed { tipo, numConcurso ->
+            VMResultados.getResultado(tipo, numConcurso, resources)
+        }
+        return PROXIMOS_CONCURSOS
     }
 }

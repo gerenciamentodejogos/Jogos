@@ -13,10 +13,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 
 import com.example.gerenciamentodejogos.R
-import com.example.gerenciamentodejogos.dados.PROXIMO_CONCURSO
+import com.example.gerenciamentodejogos.dados.PROXIMOS_CONCURSOS
 import com.example.gerenciamentodejogos.modelos.DadosDoJogo
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_resultados.*
@@ -40,7 +39,7 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
     private fun configurarVMResultados() {
         activity?.let {
             VMResultados = ViewModelProviders.of(it).get(ResultadosViewModel::class.java)
-            VMResultados.tipoJogoSelecionado.observe(it, Observer {tipoJogo ->
+            VMResultados.jogoSelecionadoResultados.observe(it, Observer { tipoJogo ->
                 if (tipoJogo != null) {
                     context?.let {
                         val dados = DadosDoJogo(tipoJogo, it.resources)
@@ -65,8 +64,8 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
 
     private fun setUpPageView() {
         val tipoJogo = VMResultados.tipoJogoAtual.value?: 0
-        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageAdapter(PROXIMO_CONCURSO[tipoJogo], tipoJogo, childFragmentManager)
-        viewpage_detalhes_sorteio.currentItem = (PROXIMO_CONCURSO[tipoJogo] - 1) - 1
+        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageAdapter(PROXIMOS_CONCURSOS[tipoJogo], tipoJogo, childFragmentManager)
+        viewpage_detalhes_sorteio.currentItem = (PROXIMOS_CONCURSOS[tipoJogo] - 1) - 1
     }
 
     fun setUpListeners() {
@@ -82,7 +81,7 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
                 val builder = AlertDialog.Builder(it)
                 builder.setTitle("Selecione um tipo de jogo")
                     .setItems(R.array.nomes_jogos, DialogInterface.OnClickListener { dialog, idJogo ->
-                        VMResultados.tipoJogoSelecionado.value = idJogo
+                        VMResultados.jogoSelecionadoResultados.value = idJogo
                         VMResultados.tipoJogoAtual.value = idJogo
                     })
                 builder.create()

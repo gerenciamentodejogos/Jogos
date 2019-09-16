@@ -10,6 +10,13 @@
     <string name="label_ganhadores">Ganhadores</string>
     <string name="label_concurso">Concurso:</string>
     <string name="texto_acumulou">Acumulou!</string>
+    <string name="texto_carregando_dados_concurso">Carregando dados\ndo concurso</string>
+
+    <plurals name="texto_ganhador">
+        <item quantity="zero">ganhadores</item>
+        <item quantity="one">ganhador</item>
+        <item quantity="other">ganhadores</item>
+    </plurals>
 
     <string name="texto_estimativa_proximo_concurso">Estimativa para o próximo concurso:</string>
     <string name="texto_acumulado_proximo_concurso">Acumulado para o próximo concurso:</string>
@@ -303,6 +310,19 @@
         <item>#</item><!--LOTOGOL-->
     </string-array>
 
+    <string-array name="texto_resultado_adicional">
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item></item>
+        <item>Mês da sorte</item>
+        <item>Time do coração</item>
+        <item></item>
+        <item></item>
+    </string-array>
+
     <string-array name="parametros_loteca">
         <item>noTime1</item>
         <item>noTime2</item>
@@ -577,8 +597,4 @@
         <item>icCanalEletronico</item>
         <item>icCanalEletronico</item>
     </string-array>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
 </resources>

@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context=".principal.FragmentoPrincipal"
-              android:orientation="vertical">
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             xmlns:tools="http://schemas.android.com/tools"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             tools:context=".principal.FragmentoPrincipal"
+>
 
-        <android.support.v4.view.ViewPager
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" android:id="@+id/viewpager_principal">
-        </android.support.v4.view.ViewPager>
+    <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager_principal"
+            android:layout_width="0dp"
+            android:layout_height="300dp"
+            android:padding="16dp"
+            app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:animateLayoutChanges="false"
+            android:pointerIcon="horizontal_double_arrow"
+    >
+    </android.support.v4.view.ViewPager>
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>
