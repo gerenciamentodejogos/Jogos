@@ -26,12 +26,16 @@ import com.example.gerenciamentodejogos.modelos.DadosDoJogo
 import com.example.gerenciamentodejogos.modelos.Jogo
 import com.example.gerenciamentodejogos.modelos.TipoDeJogo
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
+import com.example.gerenciamentodejogos.view_models.TelaPrincipalViewModel
 import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
 import kotlinx.android.synthetic.main.fragmento_resultado_info_principais.*
+import java.text.SimpleDateFormat
 
 class FragmentoResultadoInfoPrincipais : Fragment() {
 
     lateinit var VMResultados: ResultadosViewModel
+    lateinit var VMTelaPrincipal: TelaPrincipalViewModel
+
     private var tipoJogo: Int = 0
     private var numConcurso: Int = 0
 
@@ -53,6 +57,10 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
 
             if (propriedades != null) {
                 propriedadesDoJogo = propriedades[tipoJogo]
+            }
+
+            parentFragment?.let {
+                VMTelaPrincipal = ViewModelProviders.of(it)[TelaPrincipalViewModel::class.java]
             }
         }
 
@@ -199,9 +207,9 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         textView_resultado_adicional.setTextColor(jogo.corPrimaria)
 
         textView_resultado_adicional.text = if (tipoJogo == TipoDeJogo().DIA_DE_SORTE) {
-            MESES[jogo.resultadoAdicional.toInt()]
+            MESES[jogo.resultadoAdicional[0].toInt()]
         } else {
-            jogo.resultadoAdicional
+            jogo.resultadoAdicional[0]
         }
 
         textView_label_resultado_adicional.visibility = View.VISIBLE
@@ -232,18 +240,38 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
             }
         }
 
-        textView_ganhadores.setTextColor(jogo.corPrimaria)
-        textView_ganhadores.text = if (jogo.acumulou) {
-            getText(R.string.texto_acumulou)
-        } else {
-            textoPlural(jogo.premiacoes[0].numGanhadores, R.plurals.texto_ganhador, textoFinal = "!")
-        }
-        textView_ganhadores.visibility = View.VISIBLE
+        atualizarNumGanhadores(jogo)
+        atualizarInfoSorteio(jogo)
 
         view?.let {
             it.visibility = View.VISIBLE
         }
+        VMTelaPrincipal.dadosFragDetalhesCarregados.value = true
     }
+
+    private fun atualizarInfoSorteio(jogo: Jogo) {
+        textView_data_sorteio.text = formatarData(jogo.dataConcurso)
+        textView_local_sorteio.text = "${jogo.cidadeSorteio} - ${jogo.ufSorteio}\n${jogo.localSorteio}"
+
+        constraintLayout_info_sorteio.visibility = View.VISIBLE
+    }
+
+    private fun atualizarNumGanhadores(jogo: Jogo) {
+        if (jogo.tipoJogo != TipoDeJogo().FEDERAL && jogo.tipoJogo != TipoDeJogo().DUPLA_SENA) {
+            textView_ganhadores.setTextColor(jogo.corPrimaria)
+            textView_ganhadores.text = if (jogo.acumulou) {
+                getText(R.string.texto_acumulou)
+            } else {
+                textoPlural(jogo.premiacoes[0].numGanhadores, R.plurals.texto_ganhador, textoFinal = "!")
+            }
+            textView_ganhadores.visibility = View.VISIBLE
+        }
+    }
+
+    private fun formatarData(valor: Long): String {
+        return  SimpleDateFormat("dd/MM/yyyy").format(valor)
+    }
+
 
     companion object {
         val NUMERO_CONCURSO = "numero_concurso"

@@ -27,13 +27,8 @@ import java.text.SimpleDateFormat
 class FragmentoDetalhesResultado : Fragment() {
     private lateinit var VMResultados: ResultadosViewModel
 
-    private var lineares: MutableList<LinearLayout> = mutableListOf()
-    private var dezenas: MutableList<CardView> = mutableListOf()
-
     private var tipoJogo: Int = 0
     private var numeroConcurso:Int = 1
-
-    //private var tarefa: AsyncTask<Unit, Unit, Jogo> = DownloadTask()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         arguments?.let {
@@ -101,7 +96,7 @@ class FragmentoDetalhesResultado : Fragment() {
 
     private fun atualizarDadosNaTela(jogo: Jogo) {
         //TODO -  RETIRAR '&& jogo.concurso < PROXIMOS_CONCURSOS[tipoJogo]'
-        if (jogo.encerrado && jogo.concurso < PROXIMOS_CONCURSOS[tipoJogo]) {
+        if (jogo.encerrado && jogo.concurso < PROXIMOS_CONCURSOS[tipoJogo] && tipoJogo != TipoDeJogo().FEDERAL && tipoJogo != TipoDeJogo().DUPLA_SENA) {
                 textview_total_premiacoes.setTextColor(jogo.corPrimaria)
                 textView_label_total_premiacoes.setTextColor(jogo.corPrimaria)
                 // ######################################
@@ -131,17 +126,11 @@ class FragmentoDetalhesResultado : Fragment() {
                 }
                 cardView_valores.visibility = View.VISIBLE
                 // ######################################
-
-                textView_data_sorteio.text = formatarData(jogo.dataConcurso)
-                textView_local_sorteio.text = "${jogo.cidadeSorteio} - ${jogo.ufSorteio}\n${jogo.localSorteio}"
-
-                constraintLayout_info_sorteio.visibility = View.VISIBLE
         } else {
             //CARREGAR INFORMAÇÕES DO PRÓXIMO CONCURSO
-            textView_data_sorteio.text = ""
         }
 
-        linear_progresso.visibility = View.GONE
+        linear_progresso_res_principal.visibility = View.GONE
     }
 
     private fun formatarData(valor: Long): String {

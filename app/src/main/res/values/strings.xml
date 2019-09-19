@@ -1,4 +1,6 @@
 <resources>
+    <!--http://www1.caixa.gov.br/lotericos/_arquivos/GGE/3a.pdf-->
+
     <string name="app_name">Jogos da Loteria</string>
 
     <string name="texto_abrir_menu">Abrir menu</string>
@@ -11,6 +13,7 @@
     <string name="label_concurso">Concurso:</string>
     <string name="texto_acumulou">Acumulou!</string>
     <string name="texto_carregando_dados_concurso">Carregando dados\ndo concurso</string>
+    <string name="texto_carregando_ultimo_concurso">Carregando dados\ndo último concurso</string>
 
     <plurals name="texto_ganhador">
         <item quantity="zero">ganhadores</item>
@@ -279,7 +282,7 @@
         <item>de_resultado</item>       <!--LOTOFÁCIL-->
         <item>deResultado</item>       <!--LOTOMANIA-->
         <item>resultado_sorteio1#resultado_sorteio2</item>       <!--DUPLA SENA-->
-        <item></item>       <!--FEDERAL-->
+        <item>premios</item>       <!--FEDERAL-->
         <item>de_RESULTADO</item>       <!--DIA DE SORTE-->
         <item>de_RESULTADO</item>       <!--TIMEMANIA-->
         <item>jogos</item>       <!--LOTECA-->
@@ -291,7 +294,7 @@
         <item>resultadoOrdenado</item>       <!--LOTOFÁCIL-->
         <item>resultadoOrdenado</item>       <!--LOTOMANIA-->
         <item>resultadoOrdenadoSorteio1#resultadoOrdenadoSorteio2</item>       <!--DUPLA SENA-->
-        <item></item>       <!--FEDERAL-->
+        <item>premios</item>       <!--FEDERAL-->
         <item>resultadoOrdenado</item>       <!--DIA DE SORTE-->
         <item>resultadoOrdenado</item>       <!--TIMEMANIA-->
         <item>jogos</item>       <!--LOTECA-->
@@ -339,6 +342,12 @@
         <item>diaDaSemana</item>
     </string-array>
 
+    <string-array name="parametros_federal">
+        <item>faixa</item>
+        <item>bilhete</item>
+        <item>valor</item>
+    </string-array>
+
     <string-array name="dataConcurso">
         <item>data</item>       <!--MEGA-SENA-->
         <item>data</item>       <!--QUINA-->
@@ -383,7 +392,7 @@
         <item>localSorteio</item>       <!--LOTOFÁCIL-->
         <item>icLocalSorteio</item>       <!--LOTOMANIA-->
         <item>descricaoLocalSorteio</item>      <!--DUPLA SENA-->
-        <item>-</item>      <!--FEDERAL-->
+        <item>icLocalSorteio</item>      <!--FEDERAL-->
         <item>de_local_sorteio</item>       <!--DIA DE SORTE-->
         <item>de_local_sorteio</item>       <!--TIMEMANIA-->
         <item>localSorteio</item>      <!--LOTECA-->
@@ -395,7 +404,7 @@
         <item>no_cidade</item>       <!--LOTOFÁCIL-->
         <item>noCidade</item>       <!--LOTOMANIA-->
         <item>no_cidade</item>      <!--DUPLA SENA-->
-        <item>cidade</item>     <!--FEDERAL-->
+        <item>noCidade</item>     <!--FEDERAL-->
         <item>no_CIDADE</item>       <!--DIA DE SORTE-->
         <item>no_CIDADE</item>       <!--TIMEMANIA-->
         <item>#</item>      <!--LOTECA-->
@@ -407,7 +416,7 @@
         <item>sg_uf</item>       <!--LOTOFÁCIL-->
         <item>sgUf</item>       <!--LOTOMANIA-->
         <item>sg_uf</item>      <!--DUPLA SENA-->
-        <item>ufSorteio</item>      <!--FEDERAL-->
+        <item>sgUf</item>      <!--FEDERAL-->
         <item>sg_UF</item>       <!--DIA DE SORTE-->
         <item>sg_UF</item>       <!--TIMEMANIA-->
         <item>#</item>      <!--LOTECA-->
@@ -481,7 +490,7 @@
         <item>#</item>       <!--LOTOFÁCIL-->
         <item>#</item>       <!--LOTOMANIA-->
         <item>#</item>       <!--DUPLA SENA-->
-        <item></item>       <!--FEDERAL-->
+        <item>#</item>       <!--FEDERAL-->
         <item>#</item>       <!--DIA DE SORTE-->
         <item>vr_ACUMULADO_PROXIMO_CONCURSO</item>       <!--TIMEMANIA-->
         <item>vrConcursoAcumulado</item>       <!--LOTECA-->
@@ -517,8 +526,8 @@
         <item>error</item>      <!--QUINA-->
         <item>error</item>       <!--LOTOFÁCIL-->
         <item>error</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
-        <item></item>       <!--FEDERAL-->
+        <item>error</item>       <!--DUPLA SENA-->
+        <item>error</item>       <!--FEDERAL-->
         <item>error</item>       <!--DIA DE SORTE-->
         <item>error</item>       <!--TIMEMANIA-->
         <item>error</item>      <!--LOTECA-->
@@ -529,8 +538,8 @@
         <item>mensagens</item>      <!--QUINA-->
         <item>mensagens</item>       <!--LOTOFÁCIL-->
         <item>mensagens</item>       <!--LOTOMANIA-->
-        <item></item>       <!--DUPLA SENA-->
-        <item></item>       <!--FEDERAL-->
+        <item>mensagens</item>       <!--DUPLA SENA-->
+        <item>mensagens</item>       <!--FEDERAL-->
         <item>mensagens</item>       <!--DIA DE SORTE-->
         <item>mensagens</item>       <!--TIMEMANIA-->
         <item>mensagens</item>       <!--LOTECA-->
@@ -543,7 +552,7 @@
         <item>ganhadoresPorUf</item>       <!--LOTOFÁCIL-->
         <item>ganhadoresPorRegiao1|ganhadoresPorRegiao2</item>       <!--LOTOMANIA-->
         <item>ganhadoresPorRegiao1|ganhadoresPorRegiao2</item>       <!--DUPLA SENA-->
-        <item></item>       <!--FEDERAL-->
+        <item>#</item>       <!--FEDERAL-->
         <item>ganhadoresPorUf</item>       <!--DIA DE SORTE-->
         <item>ganhadoresPorUf</item>       <!--TIMEMANIA-->
         <item>ganhadoresPorUf</item>       <!--LOTECA-->
@@ -555,7 +564,7 @@
         <item>sgUf</item>
         <item>sgUf</item>
         <item>sgUf</item>
-        <item></item>
+        <item>#</item>
         <item>sgUf</item>
         <item>sgUf</item>
         <item>sgUf</item>
@@ -567,7 +576,7 @@
         <item>noCidade</item>
         <item>noCidade</item>
         <item>noCidade</item>
-        <item></item>
+        <item>#</item>
         <item>noCidade</item>
         <item>noCidade</item>
         <item>noCidade</item>
@@ -579,7 +588,7 @@
         <item>qtGanhadores</item>
         <item>qtGanhadores</item>
         <item>qtGanhadores</item>
-        <item></item>
+        <item>#</item>
         <item>qtGanhadores</item>
         <item>qtGanhadores</item>
         <item>qtGanhadores</item>
@@ -591,10 +600,13 @@
         <item>icCanalEletronico</item> <!--BOOLEAN-->
         <item>icCanalEletronico</item>
         <item>icCanalEletronico</item>
-        <item></item>
+        <item>#</item>
         <item>icCanalEletronico</item>
         <item>icCanalEletronico</item>
         <item>icCanalEletronico</item>
         <item>icCanalEletronico</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

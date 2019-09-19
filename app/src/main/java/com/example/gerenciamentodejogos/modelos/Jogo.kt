@@ -74,6 +74,7 @@ open class DadosDoJogo(val tipoJogo: Int, val recursos: Resources) {
     protected val chaveResultadoOrdenado: String get() {return recursos.getStringArray(R.array.resultado_ordenado)[tipoJogo]}
     protected val chaveResultadoAdicional: String get() {return recursos.getStringArray(R.array.resultado_adicional)[tipoJogo]}
 
+    protected val chaveParametrosFederal: Array<String> get() {return recursos.getStringArray(R.array.parametros_federal)}
     protected val chaveParametrosLoteca: Array<String> get() {return recursos.getStringArray(R.array.parametros_loteca)}
     protected val chaveParametrosLotogol: Array<String> get() {return recursos.getStringArray(R.array.parametros_lotogol)}
 
@@ -158,9 +159,22 @@ class DadosJSON(stringJSON: String, lista: Boolean = false) {
 
 open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJogo(tipoJogo, recursos) {
     data class ResultadoLotecaLotogol(val time1: String, val time2: String, val gols_time1: Int, val gols_time2: Int, val diaDaSemana: String)
-    data class ResultadoFederal(val valor: String)
+    data class ResultadoFederal(val destino: String, val bilhete: String, val valor: String)
     data class Valores(val texto: String, val valor: Double)
-    data class Ganhadores(val uf: String, val cidade: String, val quantidade: Int, val meioEletronico: Boolean)
+    data class Ganhadores(val uf: String, val cidade: String, val quantidade: Int, val meioEletronico: Boolean){
+        fun getLocalGanhadores(): String {
+            var retorno = ""
+
+            if (meioEletronico) {
+                retorno = "Canal eletrônico"
+            } else {
+                retorno = "$cidade - $uf"
+                retorno = retorno.replace("null - ", "")
+                retorno = retorno.replace(" - null", "")
+            }
+            return retorno
+        }
+    }
     data class Premiacoes(val numAcertos: Int, val textoFaixa: String, val numGanhadores: Int, val valorIndividual: Double) {
         val totalPago = numGanhadores * valorIndividual
     }
@@ -180,8 +194,6 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
             dadosJSON = DadosJSON(stringJSON)
         }
     }
-
-    private val resAdicional: String = dadosJSON.getString(chaveResultadoAdicional)
 
     private fun obterFaixasPremiacoes(): List<Int> {
         val faixasPremiacoes: List<String> = chaveFaixasPremiacoes.split("|")
@@ -234,14 +246,16 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
     }
 
     private fun gerarListaPremiacoes(): List<Premiacoes> {
-        val faixas = obterFaixasPremiacoes()
-        val textoFaixas = obterTextoFaixasPremiacoes()
-        val quantGanhadores = obterQuantidadeGanhadores()
-        val valoresPremios = obterValoresPremiacoes()
-
         val lista: MutableList<Premiacoes> = mutableListOf()
-        faixas.forEachIndexed { index, faixa ->
-            lista.add(Premiacoes(faixa, textoFaixas[index], quantGanhadores[index], valoresPremios[index]))
+        if (tipoJogo != TipoDeJogo().FEDERAL && tipoJogo != TipoDeJogo().DUPLA_SENA) {
+            val faixas = obterFaixasPremiacoes()
+            val textoFaixas = obterTextoFaixasPremiacoes()
+            val quantGanhadores = obterQuantidadeGanhadores()
+            val valoresPremios = obterValoresPremiacoes()
+
+            faixas.forEachIndexed { index, faixa ->
+                lista.add(Premiacoes(faixa, textoFaixas[index], quantGanhadores[index], valoresPremios[index]))
+            }
         }
         return lista
     }
@@ -262,8 +276,37 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 
     }
 
+    private fun gerarResultadoAdicional(ordenado: Boolean = true, separador: Char = '-'): List<String> {
+        return if (tipoJogo == TipoDeJogo().DUPLA_SENA) {
+            val resultado = dadosJSON.getString(chaveResultadoOrdenado.split("#")[1])
+
+
+            resultado.split("-").toList()
+        } else {
+            val resultado = dadosJSON.getString(chaveResultadoAdicional)
+            if (resultado == "ERRO!") {
+                listOf()
+            } else {
+                listOf(resultado)
+            }
+        }
+    }
+
     private fun gerarResultadosFederal(): List<ResultadoFederal> {
-        return listOf()
+        val lista: MutableList<ResultadoFederal> = mutableListOf()
+
+        val listaJogos = dadosJSON.getLista(chaveResultado)
+
+        for (j in 0 until listaJogos.length()) {
+            val dados = DadosJSON(listaJogos.getJSONObject(j).toString())
+
+            val destino = dados.getString(chaveParametrosFederal[0])
+            val bilhete = dados.getString(chaveParametrosFederal[1])
+            val valor = dados.getString(chaveParametrosFederal[2])
+
+            lista.add(ResultadoFederal(destino, bilhete, valor))
+        }
+        return lista
     }
 
     private fun gerarResultadosLotecaLotogol(): List<ResultadoLotecaLotogol>{
@@ -306,9 +349,18 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 
     private fun gerarListaResultados(ordenado: Boolean = true, separador: Char = '-'): List<String> {
         return if (ordenado) {
-            dadosJSON.getString(chaveResultadoOrdenado)
+            if (tipoJogo == TipoDeJogo().DUPLA_SENA) {
+                dadosJSON.getString(chaveResultadoOrdenado.split("#")[0])
+            } else {
+                dadosJSON.getString(chaveResultadoOrdenado)
+            }
         } else {
-            dadosJSON.getString(chaveResultado)
+            if (tipoJogo == TipoDeJogo().DUPLA_SENA) {
+                dadosJSON.getString(chaveResultado.split("#")[0])
+            } else {
+                dadosJSON.getString(chaveResultado)
+            }
+
         }.split(separador)
     }
     fun ListaValoresTotais(): List<Valores> {
@@ -360,7 +412,8 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 
     val resultado: List<String> = gerarListaResultados(false)
     val resultadoOrdenado: List<String> = gerarListaResultados(true)
-    val resultadoAdicional: String = if (resAdicional != "ERRO!") resAdicional else ""
+    val resultadoAdicional: List<String> = gerarResultadoAdicional()
+    val resultadoAdicionalOrdenado: List<String> = gerarResultadoAdicional(true)
 
     val resultadoLotogolLoteca: List<ResultadoLotecaLotogol> = gerarResultadosLotecaLotogol()
     val resultadoFederal: List<ResultadoFederal> = gerarResultadosFederal()

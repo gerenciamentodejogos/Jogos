@@ -36,19 +36,23 @@ class GanhadoresAdapter(var items: List<Jogo.Ganhadores> = mutableListOf()): Rec
         if (holder is GanhadoresViewHolder) {
             val ganhador = items[position]
 
-            holder.textViewLocalGanhadores.text = if (ganhador.meioEletronico) {
-                "Canal Eletrônico"
-            } else {
-                "${ganhador.cidade} - ${ganhador.uf}"
-            }
-//            holder.textViewQuantidadeGanhadores.text = "${ganhador.quantidade} ganhadores"
-            holder.textViewQuantidadeGanhadores.text = recursos?.let {it.getQuantityText(R.plurals.texto_ganhador, ganhador.quantidade)}
+            holder.textViewLocalGanhadores.text = ganhador.getLocalGanhadores()
+            holder.textViewQuantidadeGanhadores.text = textoPlural(ganhador.quantidade, R.plurals.texto_ganhador)
 
             if (position == itemCount - 1) {
                 holder.divider.visibility = View.GONE
             }
         }
     }
+
+    private fun textoPlural(quant: Int, idRecurso: Int, textoInicial: String = "", textoFinal: String = ""): String {
+        val plural = recursos?.let {
+            it.getQuantityString(idRecurso, quant)
+        }
+        return "${textoInicial}${quant} ${plural}${textoFinal}"
+    }
+
+
 
     class GanhadoresViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val textViewLocalGanhadores: TextView = itemView.findViewById(R.id.textview_local_ganhadores)

@@ -2,7 +2,10 @@ package com.example.gerenciamentodejogos.resultados
 
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.view.ViewGroup
+import com.example.gerenciamentodejogos.principal.FragmentoPrincipalViewPage
 
 class DetalhesResultadoPageAdapter(private val proximoConcurso: Int, private val tipoJogo: Int, fm: FragmentManager): FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
@@ -12,22 +15,11 @@ class DetalhesResultadoPageAdapter(private val proximoConcurso: Int, private val
     override fun getCount() = proximoConcurso
 }
 
-class ResultadoPrincipalPageAdapter(private val ultimosConcursos: List<Int>, private val tiposJogos: List<Int>, fm: FragmentManager): FragmentStatePagerAdapter(fm) {
-    var fragmentos: MutableList<Fragment> = mutableListOf()
-
-    private fun gerarListaFragmentos() {
-        ultimosConcursos.forEachIndexed { index, concurso ->
-            fragmentos.add(FragmentoResultadoInfoPrincipais.newInstance(concurso, tiposJogos[index]))
-        }
-    }
-
-    init {
-        gerarListaFragmentos()
-    }
-
+class FragmentoPrincipalPageAdapter(private val ultimosConcursos: List<Int>, private val tiposJogos: List<Int>, fm: FragmentManager): FragmentStatePagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
-        return fragmentos[position]
+//        return FragmentoResultadoInfoPrincipais.newInstance(ultimosConcursos[position], tiposJogos[position])
+        return FragmentoPrincipalViewPage.newInstance(ultimosConcursos[position], tiposJogos[position])
     }
 
-    override fun getCount() = fragmentos.size
+    override fun getCount() = tiposJogos.size
 }

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados.PROXIMOS_CONCURSOS
-import com.example.gerenciamentodejogos.resultados.ResultadoPrincipalPageAdapter
+import com.example.gerenciamentodejogos.resultados.FragmentoPrincipalPageAdapter
 import kotlinx.android.synthetic.main.fragmento_principal.*
 
 
@@ -26,7 +26,7 @@ class FragmentoPrincipal : Fragment() {
     }
 
     private fun configurarViewPager() {
-        viewpager_principal.adapter = ResultadoPrincipalPageAdapter(PROXIMOS_CONCURSOS, definirOrdermJogos(), childFragmentManager)
+        viewpager_principal.adapter = FragmentoPrincipalPageAdapter(PROXIMOS_CONCURSOS, definirOrdermJogos(), childFragmentManager)
         viewpager_principal.currentItem = 0
     }
 

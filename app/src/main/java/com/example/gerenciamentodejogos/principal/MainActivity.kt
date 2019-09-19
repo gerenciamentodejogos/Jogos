@@ -54,10 +54,6 @@ class MainActivity : AppCompatActivity() {
                 val fragmentTransaction = supportFragmentManager.beginTransaction()
                 fragmentTransaction.replace(R.id.container_fragmentos, FragmentoResultados())
                 fragmentTransaction.commit()
-
-                VMResultados.getPropriedade(tipoJogo)?.let {
-                    navigationView.setBackgroundColor(it.corPrimaria)
-                }
             }
         })
 
