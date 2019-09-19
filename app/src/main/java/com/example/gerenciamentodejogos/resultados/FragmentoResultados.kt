@@ -33,7 +33,6 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
         setUpListeners()
         configurarVMResultados()
         setUpPageView()
-        configurarSpiner()
     }
 
     private fun configurarVMResultados() {
@@ -48,17 +47,6 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
                     }
                 }
             })
-        }
-    }
-
-    private fun configurarSpiner() {
-        context?.let {
-            ArrayAdapter.createFromResource(it, R.array.nomes_jogos, android.R.layout.simple_spinner_item).also { adapter ->
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                spinner_jogo_res.adapter = adapter
-                spinner_jogo_res.onItemSelectedListener = this
-                spinner_jogo_res.setSelection(VMResultados.tipoJogoAtual.value?: 0)
-            }
         }
     }
 
@@ -96,6 +84,5 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         VMResultados.tipoJogoAtual.value = p2
-        //setUpPageView()
     }
 }

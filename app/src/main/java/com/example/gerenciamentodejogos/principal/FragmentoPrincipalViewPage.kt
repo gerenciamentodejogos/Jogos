@@ -44,18 +44,18 @@ class FragmentoPrincipalViewPage : Fragment() {
 //        fragApostaPrincipal.commit()
 
         configurarVM()
-        atualizarInterface()
 
         return inflater.inflate(R.layout.fragmento_principal_view_page, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        atualizarInterface()
     }
 
     private fun atualizarInterface() {
         textView_label_progresso_principal.text = getString(R.string.texto_carregando_ultimo_concurso)
-        textView_nome_jogo_tela_principal.text = propriedadesDoJogo.nome
+        textView_nome_jogo_tela_principal.text = propriedadesDoJogo.nome + "testse"
         textView_nome_jogo_tela_principal.setTextColor(propriedadesDoJogo.corPrimaria)
     }
 

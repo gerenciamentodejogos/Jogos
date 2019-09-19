@@ -64,14 +64,13 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             val id = menuItem.itemId
 
-            val novoFragmento: Fragment?
+            var novoFragmento: Fragment? = null
 
             when (id) {
                 R.id.menu_item_inicio -> novoFragmento = FragmentoPrincipal()
                 R.id.menu_item_apostas -> novoFragmento = FragmentoApostas()
-                R.id.menu_item_resultados -> novoFragmento = FragmentoResultados()
-
-                else -> novoFragmento = null
+//                R.id.menu_item_resultados -> novoFragmento = FragmentoResultados()
+                R.id.menu_item_resultados -> VMResultados.jogoSelecionadoResultados.value = 0
             }
 
             if (novoFragmento != null) {
