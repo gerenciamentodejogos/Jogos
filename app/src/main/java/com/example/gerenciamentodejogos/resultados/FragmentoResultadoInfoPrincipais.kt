@@ -61,6 +61,10 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
                 propriedadesDoJogo = propriedades[tipoJogo]
             }
 
+            if (propriedades != null) {
+                propriedadesDoJogo = propriedades[tipoJogo]
+            }
+
             parentFragment?.let {
                 VMTelaPrincipal = ViewModelProviders.of(it)[TelaPrincipalViewModel::class.java]
             }
@@ -271,16 +275,6 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
     }
 
     private fun formatarData(valor: Long): String {
-//        val hoje = LocalDate.now()
-//        val diaa = LocalDate.ofEpochDay(valor)
-
-//        val dia = when (diaa) {
-//            hoje.minusDays(1.toLong()) -> "Ontem, "
-//            hoje -> "Hoje, "
-//            hoje.plusDays(1.toLong()) -> "Amanhã, "
-//            else -> "tertsdfgsdfgdg"
-//        }
-
         return  SimpleDateFormat("dd/MMMM/yyyy").format(valor)
     }
 

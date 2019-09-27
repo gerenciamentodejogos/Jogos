@@ -49,35 +49,59 @@ class MainActivity : AppCompatActivity() {
 
     private fun configurarVMResultados() {
         vmResultados = ViewModelProviders.of(this)[ResultadosViewModel::class.java].apply { carregarPropriedadesDosJogos(resources) }
-        vmResultados.tipoResultadoSelecionado.observe(this, Observer { tipoJogo ->
-            tipoJogo?.let {
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.container_fragmentos, FragmentoResultados())
-                    commit()
-                }
+        vmResultados.tipoResultadoSelecionado.observe(this, Observer {
+//            tipoJogo?.let {
+//                supportFragmentManager.beginTransaction().apply {
+//                    replace(R.id.container_fragmentos, FragmentoResultados())
+//                    commit()
+//                }
+//            }
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.container_fragmentos, FragmentoResultados())
+                commit()
             }
         })
 
-        vmResultados.ultimoConcurso.value = obterUltimosConcursos()
+        vmResultados.tipoApostaSelecionada.observe(this, Observer {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.container_fragmentos, FragmentoApostas())
+                commit()
+            }
+        })
+
+        vmResultados.telaPrincipal.observe(this, Observer {
+            supportFragmentManager.beginTransaction().apply {
+                replace(R.id.container_fragmentos, FragmentoPrincipal())
+                commit()
+            }
+        })
+
+        vmResultados.ultimosConcursos.value = obterUltimosConcursos()
     }
 
     private fun setUpListeners() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             val id = menuItem.itemId
 
-            var novoFragmento: Fragment? = null
+//            var novoFragmento: Fragment? = null
+//
+//            when (id) {
+//                R.id.menu_item_inicio -> novoFragmento = FragmentoPrincipal()
+//                R.id.menu_item_apostas -> novoFragmento = FragmentoApostas()
+//                R.id.menu_item_resultados -> vmResultados.tipoResultadoSelecionado.value = vmResultados.tipoResultadoSelecionado.value?:0
+//            }
+//
+//            if (novoFragmento != null) {
+//                supportFragmentManager.beginTransaction().apply {
+//                    replace(R.id.container_fragmentos, novoFragmento)
+//                    commit()
+//                }
+//            }
 
             when (id) {
-                R.id.menu_item_inicio -> novoFragmento = FragmentoPrincipal()
-                R.id.menu_item_apostas -> novoFragmento = FragmentoApostas()
-                R.id.menu_item_resultados -> vmResultados.tipoResultadoSelecionado.value = vmResultados.tipoResultadoSelecionado.value?:0
-            }
-
-            if (novoFragmento != null) {
-                supportFragmentManager.beginTransaction().apply {
-                    replace(R.id.container_fragmentos, novoFragmento)
-                    commit()
-                }
+                R.id.menu_item_inicio -> vmResultados.irParaTelaPrincipal()
+                R.id.menu_item_apostas -> vmResultados.irParaApostas()
+                R.id.menu_item_resultados -> vmResultados.irParaResultados()
             }
 
             drawerLayout.closeDrawer(GravityCompat.START)

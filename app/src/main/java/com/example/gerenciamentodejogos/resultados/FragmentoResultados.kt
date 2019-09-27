@@ -27,23 +27,14 @@ class FragmentoResultados : Fragment() {//}, AdapterView.OnItemSelectedListener 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setUpListeners()
         configurarVMResultados()
         setUpPageView()
+        setUpListeners()
     }
 
     private fun configurarVMResultados() {
         activity?.let {
             VMResultados = ViewModelProviders.of(it).get(ResultadosViewModel::class.java)
-//            VMResultados.jogoSelecionadoResultados.observe(it, Observer { tipoJogo ->
-//                if (tipoJogo != null) {
-//                    context?.let {
-//                        val dados = DadosDoJogo(tipoJogo, it.resources)
-//                        textView_nome_jogo_resultados.text = dados.nome
-//                        textView_nome_jogo_resultados.setTextColor(dados.corPrimaria)
-//                    }
-//                }
-//            })
             VMResultados.tipoResultadoSelecionado.observe(it, Observer { tipoJogo ->
                 if (tipoJogo != null) {
                     context?.let {
@@ -63,32 +54,17 @@ class FragmentoResultados : Fragment() {//}, AdapterView.OnItemSelectedListener 
     }
 
     fun setUpListeners() {
-        viewpage_detalhes_sorteio.addOnPageChangeListener (object: ViewPager.OnPageChangeListener{
-            override fun onPageScrollStateChanged(p0: Int) {}
-            override fun onPageScrolled(p0: Int, p1: Float, p2: Int) {}
-            override fun onPageSelected(position: Int) {}
-        })
-
         textView_nome_jogo_resultados.setOnClickListener {
             context?.let {
 
                 val builder = AlertDialog.Builder(it)
                 builder.setTitle("Selecione um tipo de jogo")
-                    .setItems(R.array.nomes_jogos) { dialog, idJogo ->
-//                        VMResultados.jogoSelecionadoResultados.value = idJogo
-                        VMResultados.tipoResultadoSelecionado.value = idJogo
+                    .setItems(R.array.nomes_jogos) { _, idJogo ->
+                        VMResultados.irParaResultados(idJogo)
                     }
                 builder.create()
                 builder.show()
             }
         }
     }
-
-//    override fun onNothingSelected(p0: AdapterView<*>?) {
-//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-//    }
-//
-//    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-//        VMResultados.tipoResultadoSelecionado.value = p2
-//    }
 }
