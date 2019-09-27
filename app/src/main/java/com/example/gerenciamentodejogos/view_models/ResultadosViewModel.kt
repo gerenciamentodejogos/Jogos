@@ -13,16 +13,16 @@ class ResultadosViewModel: ViewModel() {
     val propriedadesDosJogos = MutableLiveData<List<DadosDoJogo>>()
 
     val jogos = MutableLiveData<List<Jogo>>()
-    val tipoJogoAtual = MutableLiveData<Int>()
-    val jogoSelecionadoResultados = MutableLiveData<Int>()
-    val concursoAtual = MutableLiveData<Int>()
+    val tipoResultadoSelecionado = MutableLiveData<Int>()
+    //val jogoSelecionadoResultados = MutableLiveData<Int>()
+    //val concursoAtual = MutableLiveData<Int>()
     val ultimoConcurso = MutableLiveData<List<Int>>()
 
     fun carregarPropriedadesDosJogos(recursos: Resources) {
         val jogos: Array<String> = recursos.getStringArray(R.array.nomes_jogos)
         val lista: MutableList<DadosDoJogo> = mutableListOf()
 
-        jogos.forEachIndexed { index, nomeJogo ->
+        jogos.forEachIndexed { index, _ ->
             lista.add(DadosDoJogo(index, recursos))
         }
 

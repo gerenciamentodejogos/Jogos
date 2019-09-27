@@ -4,24 +4,19 @@ package com.example.gerenciamentodejogos.resultados
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.res.ColorStateList
-import android.os.AsyncTask
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import com.example.gerenciamentodejogos.R
 
-import com.example.gerenciamentodejogos.dados.PROXIMOS_CONCURSOS
+import com.example.gerenciamentodejogos.dados.ULTIMOS_CONCURSOS
 import com.example.gerenciamentodejogos.modelos.*
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
 import java.text.NumberFormat
-import java.text.SimpleDateFormat
 
 
 class FragmentoDetalhesResultado : Fragment() {
@@ -40,7 +35,7 @@ class FragmentoDetalhesResultado : Fragment() {
             VMResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
         }
 
-        tipoJogo = VMResultados.tipoJogoAtual.value?: 0
+//        tipoJogo = VMResultados.tipoResultadoSelecionado.value?: 0
 
         carregarFragmentos()
 
@@ -95,8 +90,8 @@ class FragmentoDetalhesResultado : Fragment() {
     }
 
     private fun atualizarDadosNaTela(jogo: Jogo) {
-        //TODO -  RETIRAR '&& jogo.concurso < PROXIMOS_CONCURSOS[tipoJogo]'
-        if (jogo.encerrado && jogo.concurso < PROXIMOS_CONCURSOS[tipoJogo] && tipoJogo != TipoDeJogo().FEDERAL && tipoJogo != TipoDeJogo().DUPLA_SENA) {
+        //TODO -  RETIRAR '&& jogo.concurso < ULTIMOS_CONCURSOS[tipoJogo]'
+        if (jogo.encerrado && tipoJogo != TipoDeJogo().FEDERAL && tipoJogo != TipoDeJogo().DUPLA_SENA) {
                 textview_total_premiacoes.setTextColor(jogo.corPrimaria)
                 textView_label_total_premiacoes.setTextColor(jogo.corPrimaria)
                 // ######################################
@@ -131,10 +126,6 @@ class FragmentoDetalhesResultado : Fragment() {
         }
 
         linear_progresso_res_principal.visibility = View.GONE
-    }
-
-    private fun formatarData(valor: Long): String {
-        return  SimpleDateFormat("dd/MM/yyyy").format(valor)
     }
 
     companion object {

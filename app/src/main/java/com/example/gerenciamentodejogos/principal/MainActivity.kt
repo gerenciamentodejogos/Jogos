@@ -12,17 +12,16 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.apostas.FragmentoApostas
-import com.example.gerenciamentodejogos.dados.PROXIMOS_CONCURSOS
+import com.example.gerenciamentodejogos.dados.ULTIMOS_CONCURSOS
 import com.example.gerenciamentodejogos.resultados.*
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 
 class MainActivity : AppCompatActivity() {
-
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var navigationView: NavigationView
 
-    private lateinit var VMResultados: ResultadosViewModel
+    private lateinit var vmResultados: ResultadosViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,9 +29,10 @@ class MainActivity : AppCompatActivity() {
 
         configurarVMResultados()
 
-        val fragmentTransaction = supportFragmentManager.beginTransaction()
-        fragmentTransaction.add(R.id.container_fragmentos, FragmentoPrincipal())
-        fragmentTransaction.commit()
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.container_fragmentos, FragmentoPrincipal())
+            commit()
+        }
 
 
         drawerLayout = findViewById(R.id.activity_main)
@@ -48,16 +48,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configurarVMResultados() {
-        VMResultados = ViewModelProviders.of(this)[ResultadosViewModel::class.java].apply { carregarPropriedadesDosJogos(resources) }
-        VMResultados.jogoSelecionadoResultados.observe(this, Observer { tipoJogo ->
-            tipoJogo?.let {it ->
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.container_fragmentos, FragmentoResultados())
-                fragmentTransaction.commit()
+        vmResultados = ViewModelProviders.of(this)[ResultadosViewModel::class.java].apply { carregarPropriedadesDosJogos(resources) }
+        vmResultados.tipoResultadoSelecionado.observe(this, Observer { tipoJogo ->
+            tipoJogo?.let {
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.container_fragmentos, FragmentoResultados())
+                    commit()
+                }
             }
         })
 
-        VMResultados.ultimoConcurso.value = obterUltimosConcursos()
+        vmResultados.ultimoConcurso.value = obterUltimosConcursos()
     }
 
     private fun setUpListeners() {
@@ -69,14 +70,14 @@ class MainActivity : AppCompatActivity() {
             when (id) {
                 R.id.menu_item_inicio -> novoFragmento = FragmentoPrincipal()
                 R.id.menu_item_apostas -> novoFragmento = FragmentoApostas()
-//                R.id.menu_item_resultados -> novoFragmento = FragmentoResultados()
-                R.id.menu_item_resultados -> VMResultados.jogoSelecionadoResultados.value = 0
+                R.id.menu_item_resultados -> vmResultados.tipoResultadoSelecionado.value = vmResultados.tipoResultadoSelecionado.value?:0
             }
 
             if (novoFragmento != null) {
-                val fragmentTransaction = supportFragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.container_fragmentos, novoFragmento)
-                fragmentTransaction.commit()
+                supportFragmentManager.beginTransaction().apply {
+                    replace(R.id.container_fragmentos, novoFragmento)
+                    commit()
+                }
             }
 
             drawerLayout.closeDrawer(GravityCompat.START)
@@ -94,9 +95,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun obterUltimosConcursos(): List<Int> {
-        PROXIMOS_CONCURSOS.forEachIndexed { tipo, numConcurso ->
-            VMResultados.getResultado(tipo, numConcurso, resources)
+        ULTIMOS_CONCURSOS.forEachIndexed { tipo, numConcurso ->
+            vmResultados.getResultado(tipo, numConcurso, resources)
         }
-        return PROXIMOS_CONCURSOS
+
+        return ULTIMOS_CONCURSOS
     }
 }

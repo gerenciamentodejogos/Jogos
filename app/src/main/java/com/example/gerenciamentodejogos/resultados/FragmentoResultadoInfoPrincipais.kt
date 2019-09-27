@@ -30,6 +30,8 @@ import com.example.gerenciamentodejogos.view_models.TelaPrincipalViewModel
 import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
 import kotlinx.android.synthetic.main.fragmento_resultado_info_principais.*
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.util.*
 
 class FragmentoResultadoInfoPrincipais : Fragment() {
 
@@ -269,7 +271,17 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
     }
 
     private fun formatarData(valor: Long): String {
-        return  SimpleDateFormat("dd/MM/yyyy").format(valor)
+//        val hoje = LocalDate.now()
+//        val diaa = LocalDate.ofEpochDay(valor)
+
+//        val dia = when (diaa) {
+//            hoje.minusDays(1.toLong()) -> "Ontem, "
+//            hoje -> "Hoje, "
+//            hoje.plusDays(1.toLong()) -> "Amanhã, "
+//            else -> "tertsdfgsdfgdg"
+//        }
+
+        return  SimpleDateFormat("dd/MMMM/yyyy").format(valor)
     }
 
 

@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.modelos.DadosDoJogo
 import com.example.gerenciamentodejogos.resultados.FragmentoDetalhesResultado
+import com.example.gerenciamentodejogos.resultados.FragmentoProximoConcurso
 import com.example.gerenciamentodejogos.resultados.FragmentoResultadoInfoPrincipais
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 import com.example.gerenciamentodejogos.view_models.TelaPrincipalViewModel
@@ -39,6 +40,10 @@ class FragmentoPrincipalViewPage : Fragment() {
         fragResPrincipal.replace(R.id.container_res_principal, FragmentoResultadoInfoPrincipais.newInstance(numeroConcurso, tipoJogo))
         fragResPrincipal.commit()
 
+        val fragProxConcurso = childFragmentManager.beginTransaction()
+        fragProxConcurso.replace(R.id.container_proximo_concurso, FragmentoProximoConcurso.newInstance(tipoJogo))
+        fragProxConcurso.commit()
+
 //        val fragApostaPrincipal = childFragmentManager.beginTransaction()
 //        fragApostaPrincipal.add(R.id.container_aposta_principal, FragmentoAPOSTA.newInstance(numeroConcurso, tipoJogo))
 //        fragApostaPrincipal.commit()
@@ -55,7 +60,7 @@ class FragmentoPrincipalViewPage : Fragment() {
 
     private fun atualizarInterface() {
         textView_label_progresso_principal.text = getString(R.string.texto_carregando_ultimo_concurso)
-        textView_nome_jogo_tela_principal.text = propriedadesDoJogo.nome + "testse"
+        textView_nome_jogo_tela_principal.text = propriedadesDoJogo.nome
         textView_nome_jogo_tela_principal.setTextColor(propriedadesDoJogo.corPrimaria)
     }
 

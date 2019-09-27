@@ -3,7 +3,6 @@ package com.example.gerenciamentodejogos.resultados
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.view.ViewPager
@@ -11,16 +10,14 @@ import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
 
 import com.example.gerenciamentodejogos.R
-import com.example.gerenciamentodejogos.dados.PROXIMOS_CONCURSOS
+import com.example.gerenciamentodejogos.dados.ULTIMOS_CONCURSOS
 import com.example.gerenciamentodejogos.modelos.DadosDoJogo
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_resultados.*
 
-class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
+class FragmentoResultados : Fragment() {//}, AdapterView.OnItemSelectedListener {
     private lateinit var VMResultados: ResultadosViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -38,7 +35,16 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
     private fun configurarVMResultados() {
         activity?.let {
             VMResultados = ViewModelProviders.of(it).get(ResultadosViewModel::class.java)
-            VMResultados.jogoSelecionadoResultados.observe(it, Observer { tipoJogo ->
+//            VMResultados.jogoSelecionadoResultados.observe(it, Observer { tipoJogo ->
+//                if (tipoJogo != null) {
+//                    context?.let {
+//                        val dados = DadosDoJogo(tipoJogo, it.resources)
+//                        textView_nome_jogo_resultados.text = dados.nome
+//                        textView_nome_jogo_resultados.setTextColor(dados.corPrimaria)
+//                    }
+//                }
+//            })
+            VMResultados.tipoResultadoSelecionado.observe(it, Observer { tipoJogo ->
                 if (tipoJogo != null) {
                     context?.let {
                         val dados = DadosDoJogo(tipoJogo, it.resources)
@@ -51,9 +57,9 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
     }
 
     private fun setUpPageView() {
-        val tipoJogo = VMResultados.tipoJogoAtual.value?: 0
-        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageAdapter(PROXIMOS_CONCURSOS[tipoJogo], tipoJogo, childFragmentManager)
-        viewpage_detalhes_sorteio.currentItem = (PROXIMOS_CONCURSOS[tipoJogo] - 1) - 1
+        val tipoJogo = VMResultados.tipoResultadoSelecionado.value?: 0
+        viewpage_detalhes_sorteio.adapter = DetalhesResultadoPageAdapter(ULTIMOS_CONCURSOS[tipoJogo], tipoJogo, childFragmentManager)
+        viewpage_detalhes_sorteio.currentItem = (ULTIMOS_CONCURSOS[tipoJogo]) - 1
     }
 
     fun setUpListeners() {
@@ -68,21 +74,21 @@ class FragmentoResultados : Fragment(), AdapterView.OnItemSelectedListener {
 
                 val builder = AlertDialog.Builder(it)
                 builder.setTitle("Selecione um tipo de jogo")
-                    .setItems(R.array.nomes_jogos, DialogInterface.OnClickListener { dialog, idJogo ->
-                        VMResultados.jogoSelecionadoResultados.value = idJogo
-                        VMResultados.tipoJogoAtual.value = idJogo
-                    })
+                    .setItems(R.array.nomes_jogos) { dialog, idJogo ->
+//                        VMResultados.jogoSelecionadoResultados.value = idJogo
+                        VMResultados.tipoResultadoSelecionado.value = idJogo
+                    }
                 builder.create()
                 builder.show()
             }
         }
     }
 
-    override fun onNothingSelected(p0: AdapterView<*>?) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
-        VMResultados.tipoJogoAtual.value = p2
-    }
+//    override fun onNothingSelected(p0: AdapterView<*>?) {
+//        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//    }
+//
+//    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+//        VMResultados.tipoResultadoSelecionado.value = p2
+//    }
 }
