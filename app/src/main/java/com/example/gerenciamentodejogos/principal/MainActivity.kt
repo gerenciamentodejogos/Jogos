@@ -48,14 +48,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun configurarVMResultados() {
-        vmResultados = ViewModelProviders.of(this)[ResultadosViewModel::class.java].apply { carregarPropriedadesDosJogos(resources) }
+        vmResultados = ViewModelProviders.of(this)[ResultadosViewModel::class.java].apply { carregarPropriedadesDosJogos(baseContext) }
         vmResultados.tipoResultadoSelecionado.observe(this, Observer {
-//            tipoJogo?.let {
-//                supportFragmentManager.beginTransaction().apply {
-//                    replace(R.id.container_fragmentos, FragmentoResultados())
-//                    commit()
-//                }
-//            }
             supportFragmentManager.beginTransaction().apply {
                 replace(R.id.container_fragmentos, FragmentoResultados())
                 commit()
@@ -83,21 +77,6 @@ class MainActivity : AppCompatActivity() {
         navigationView.setNavigationItemSelectedListener { menuItem ->
             val id = menuItem.itemId
 
-//            var novoFragmento: Fragment? = null
-//
-//            when (id) {
-//                R.id.menu_item_inicio -> novoFragmento = FragmentoPrincipal()
-//                R.id.menu_item_apostas -> novoFragmento = FragmentoApostas()
-//                R.id.menu_item_resultados -> vmResultados.tipoResultadoSelecionado.value = vmResultados.tipoResultadoSelecionado.value?:0
-//            }
-//
-//            if (novoFragmento != null) {
-//                supportFragmentManager.beginTransaction().apply {
-//                    replace(R.id.container_fragmentos, novoFragmento)
-//                    commit()
-//                }
-//            }
-
             when (id) {
                 R.id.menu_item_inicio -> vmResultados.irParaTelaPrincipal()
                 R.id.menu_item_apostas -> vmResultados.irParaApostas()
@@ -120,7 +99,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun obterUltimosConcursos(): List<Int> {
         ULTIMOS_CONCURSOS.forEachIndexed { tipo, numConcurso ->
-            vmResultados.getResultado(tipo, numConcurso, resources)
+            vmResultados.getResultado(tipo, numConcurso, baseContext)
         }
 
         return ULTIMOS_CONCURSOS

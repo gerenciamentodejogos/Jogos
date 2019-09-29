@@ -12,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.gerenciamentodejogos.R
 
-import com.example.gerenciamentodejogos.dados.ULTIMOS_CONCURSOS
 import com.example.gerenciamentodejogos.modelos.*
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
@@ -20,7 +19,7 @@ import java.text.NumberFormat
 
 
 class FragmentoDetalhesResultado : Fragment() {
-    private lateinit var VMResultados: ResultadosViewModel
+    private lateinit var vmResultados: ResultadosViewModel
 
     private var tipoJogo: Int = 0
     private var numeroConcurso:Int = 1
@@ -32,11 +31,8 @@ class FragmentoDetalhesResultado : Fragment() {
         }
 
         activity?.let {
-            VMResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
+            vmResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
         }
-
-//        tipoJogo = VMResultados.tipoResultadoSelecionado.value?: 0
-
         carregarFragmentos()
 
         return inflater.inflate(R.layout.fragmento_detalhes_resultado, container, false)
@@ -54,15 +50,15 @@ class FragmentoDetalhesResultado : Fragment() {
         configurarRecyclerView()
         configurarVMResultados()
 
-        progressBar_detalhes_res.indeterminateTintList = ColorStateList.valueOf(DadosDoJogo(tipoJogo, resources).corPrimaria)
+        progressBar_detalhes_res.indeterminateTintList = ColorStateList.valueOf(vmResultados.getPropriedade(tipoJogo).corPrimaria)
         textView_label_progresso.text = "${getString(R.string.texto_carregando_dados_concurso)} ${numeroConcurso}"
     }
 
     private fun configurarVMResultados() {
-        activity?.let {
-            val jogo = VMResultados.getResultado(tipoJogo, numeroConcurso, resources)
+        context?.let {
+            val jogo = vmResultados.getResultado(tipoJogo, numeroConcurso, it)
             if (jogo == null) {
-                VMResultados.jogos.observe(this, Observer {
+                vmResultados.jogos.observe(this, Observer {
                     verificaJogo()
                 })
 
@@ -73,7 +69,7 @@ class FragmentoDetalhesResultado : Fragment() {
     }
 
     private fun verificaJogo() {
-        VMResultados.getResultado(tipoJogo, numeroConcurso)?.let { jogo ->
+        vmResultados.getResultado(tipoJogo, numeroConcurso)?.let { jogo ->
             atualizarDadosNaTela(jogo)
         }
     }
@@ -91,7 +87,7 @@ class FragmentoDetalhesResultado : Fragment() {
 
     private fun atualizarDadosNaTela(jogo: Jogo) {
         //TODO -  RETIRAR '&& jogo.concurso < ULTIMOS_CONCURSOS[tipoJogo]'
-        if (jogo.encerrado && tipoJogo != TipoDeJogo().FEDERAL && tipoJogo != TipoDeJogo().DUPLA_SENA) {
+        if (jogo.encerrado && tipoJogo != TipoDeJogo.FEDERAL && tipoJogo != TipoDeJogo.DUPLA_SENA) {
                 textview_total_premiacoes.setTextColor(jogo.corPrimaria)
                 textView_label_total_premiacoes.setTextColor(jogo.corPrimaria)
                 // ######################################

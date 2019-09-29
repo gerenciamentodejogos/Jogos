@@ -38,7 +38,7 @@ class FragmentoResultados : Fragment() {//}, AdapterView.OnItemSelectedListener 
             VMResultados.tipoResultadoSelecionado.observe(it, Observer { tipoJogo ->
                 if (tipoJogo != null) {
                     context?.let {
-                        val dados = DadosDoJogo(tipoJogo, it.resources)
+                        val dados = DadosDoJogo(tipoJogo, it)
                         textView_nome_jogo_resultados.text = dados.nome
                         textView_nome_jogo_resultados.setTextColor(dados.corPrimaria)
                     }

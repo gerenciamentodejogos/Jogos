@@ -1,88 +1,94 @@
 package com.example.gerenciamentodejogos.modelos
 
+import android.content.Context
 import android.content.res.Resources
 import android.graphics.Color
 import android.util.Log
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados_web.DadosWeb
+import com.example.gerenciamentodejogos.persistencia.IPersistencia
+import com.example.gerenciamentodejogos.persistencia.PersistenciaLocal
+import com.example.gerenciamentodejogos.persistencia.PersistenciaSQLite
 import org.json.JSONArray
 import org.json.JSONObject
 import java.lang.Exception
 import java.util.*
 
-class TipoDeJogo {
-    val MEGA_SENA = 0
-    val QUINA = 1
-    val LOTOFACIL = 2
-    val LOTOMANIA = 3
-    val DUPLA_SENA = 4
-    val FEDERAL = 5
-    val DIA_DE_SORTE = 6
-    val TIMEMANIA = 7
-    val LOTECA = 8
-    val LOTOGOL = 9
+final class TipoDeJogo {
+    companion object {
+        val MEGA_SENA = 0
+        val QUINA = 1
+        val LOTOFACIL = 2
+        val LOTOMANIA = 3
+        val DUPLA_SENA = 4
+        val FEDERAL = 5
+        val DIA_DE_SORTE = 6
+        val TIMEMANIA = 7
+        val LOTECA = 8
+        val LOTOGOL = 9
+    }
 }
 
-open class DadosDoJogo(val tipoJogo: Int, val recursos: Resources) {
-    val nome: String = recursos.getStringArray(R.array.nomes_jogos)[tipoJogo]
-    val nomeEspecial: String = recursos.getStringArray(R.array.nomes_especiais)[tipoJogo]
-    val url_resultado: String = recursos.getStringArray(R.array.urls_resultados)[tipoJogo]
-    val corPrimaria:Int = Color.parseColor(recursos.getStringArray(R.array.cores_primarias)[tipoJogo])
-    val corSecundaria:Int = Color.parseColor(recursos.getStringArray(R.array.cores_primarias)[tipoJogo])
+open class DadosDoJogo(val tipoJogo: Int, val contexto: Context) {
+    val nome: String = contexto.resources.getStringArray(R.array.nomes_jogos)[tipoJogo]
+    val nomeEspecial: String = contexto.resources.getStringArray(R.array.nomes_especiais)[tipoJogo]
+    val url_resultado: String = contexto.resources.getStringArray(R.array.urls_resultados)[tipoJogo]
+    val corPrimaria:Int = Color.parseColor(contexto.resources.getStringArray(R.array.cores_primarias)[tipoJogo])
+    val corSecundaria:Int = Color.parseColor(contexto.resources.getStringArray(R.array.cores_primarias)[tipoJogo])
 
-    val dezenasSorteadas: Int = recursos.getIntArray(R.array.dezenas_sorteadas)[tipoJogo]
-    val dezenasMinima: Int = recursos.getIntArray(R.array.dezenas_minima)[tipoJogo]
-    val dezenasMaxima: Int = recursos.getIntArray(R.array.dezenas_maxima)[tipoJogo]
-    val dezenasTotal: Int = recursos.getIntArray(R.array.dezenas_total)[tipoJogo]
+    val dezenasSorteadas: Int = contexto.resources.getIntArray(R.array.dezenas_sorteadas)[tipoJogo]
+    val dezenasMinima: Int = contexto.resources.getIntArray(R.array.dezenas_minima)[tipoJogo]
+    val dezenasMaxima: Int = contexto.resources.getIntArray(R.array.dezenas_maxima)[tipoJogo]
+    val dezenasTotal: Int = contexto.resources.getIntArray(R.array.dezenas_total)[tipoJogo]
 
-    val textoEstimativaProximoConcurso: String = recursos.getString(R.string.texto_estimativa_proximo_concurso)
-    val textoAcumuladoProximoConcurso: String = recursos.getString(R.string.texto_acumulado_proximo_concurso)
-    val textoAcumuladoFinalX: String = recursos.getString(R.string.texto_acumulado_final_x)
-    val textoAcumuladoConcursoEspecial: String = recursos.getString(R.string.texto_acumulado_especial)
-    val textoValorArrecadacao: String = recursos.getString(R.string.texto_valor_arrecadado)
+    val textoEstimativaProximoConcurso: String = contexto.resources.getString(R.string.texto_estimativa_proximo_concurso)
+    val textoAcumuladoProximoConcurso: String = contexto.resources.getString(R.string.texto_acumulado_proximo_concurso)
+    val textoAcumuladoFinalX: String = contexto.resources.getString(R.string.texto_acumulado_final_x)
+    val textoAcumuladoConcursoEspecial: String = contexto.resources.getString(R.string.texto_acumulado_especial)
+    val textoValorArrecadacao: String = contexto.resources.getString(R.string.texto_valor_arrecadado)
 
-    val textoResultadoAdicinal: String = recursos.getStringArray(R.array.texto_resultado_adicional)[tipoJogo]
+    val textoResultadoAdicinal: String = contexto.resources.getStringArray(R.array.texto_resultado_adicional)[tipoJogo]
 
-    protected val CARECTER_NULO = recursos.getString(R.string.caracter_nulo)
+    protected val CARECTER_NULO = contexto.resources.getString(R.string.caracter_nulo)
 
-    protected val chaveDataConcurso: String get() {return recursos.getStringArray(R.array.dataConcurso)[tipoJogo]}
-    protected val chaveDataProximoConcurso: String get() {return recursos.getStringArray(R.array.dataProximoConcurso)[tipoJogo]}
+    protected val chaveDataConcurso: String get() {return contexto.resources.getStringArray(R.array.dataConcurso)[tipoJogo]}
+    protected val chaveDataProximoConcurso: String get() {return contexto.resources.getStringArray(R.array.dataProximoConcurso)[tipoJogo]}
 
-    protected val chaveQuantidadeGanhadores: String get() {return recursos.getStringArray(R.array.quantidade_ganhadores)[tipoJogo]}
-    protected val chaveValoresPremiacoes: String get() {return recursos.getStringArray(R.array.valores_premiacoes)[tipoJogo]}
-    protected val chaveFaixasPremiacoes: String get() {return recursos.getStringArray(R.array.faixas_premiacoes)[tipoJogo]}
-    protected val chaveTextoFaixasPremiacoes: String get() {return recursos.getStringArray(R.array.texto_faixas_premiacoes)[tipoJogo]}
+    protected val chaveQuantidadeGanhadores: String get() {return contexto.resources.getStringArray(R.array.quantidade_ganhadores)[tipoJogo]}
+    protected val chaveValoresPremiacoes: String get() {return contexto.resources.getStringArray(R.array.valores_premiacoes)[tipoJogo]}
+    protected val chaveFaixasPremiacoes: String get() {return contexto.resources.getStringArray(R.array.faixas_premiacoes)[tipoJogo]}
+    protected val chaveTextoFaixasPremiacoes: String get() {return contexto.resources.getStringArray(R.array.texto_faixas_premiacoes)[tipoJogo]}
 
-    protected val chaveAcumulou: String get() {return recursos.getStringArray(R.array.acumulou)[tipoJogo]}
-    protected val chaveLocalSorteio: String get() {return recursos.getStringArray(R.array.localSorteio)[tipoJogo]}
-    protected val chaveCidadeSorteio: String get() {return recursos.getStringArray(R.array.cidadeSorteio)[tipoJogo]}
-    protected val chaveUfSorteio: String get() {return recursos.getStringArray(R.array.ufSorteio)[tipoJogo]}
-    protected val chaveValorArrecadado: String get() {return recursos.getStringArray(R.array.valorArrecadado)[tipoJogo]}
-    protected val chaveObservacao: String get() {return recursos.getStringArray(R.array.observacao)[tipoJogo]}
-    protected val chaveErro: String get() {return recursos.getStringArray(R.array.erro)[tipoJogo]}
-    protected val chaveValorAcumuladoProxConcurso: String get() {return recursos.getStringArray(R.array.valorAcumuladoProxConcurso)[tipoJogo]}
-    protected val chaveEstimativaProxConcurso: String get() {return recursos.getStringArray(R.array.estimativaProxConcurso)[tipoJogo]}
-    protected val chaveMensagens: String get() {return recursos.getStringArray(R.array.mensagens)[tipoJogo]}
+    protected val chaveAcumulou: String get() {return contexto.resources.getStringArray(R.array.acumulou)[tipoJogo]}
+    protected val chaveLocalSorteio: String get() {return contexto.resources.getStringArray(R.array.localSorteio)[tipoJogo]}
+    protected val chaveCidadeSorteio: String get() {return contexto.resources.getStringArray(R.array.cidadeSorteio)[tipoJogo]}
+    protected val chaveUfSorteio: String get() {return contexto.resources.getStringArray(R.array.ufSorteio)[tipoJogo]}
+    protected val chaveValorArrecadado: String get() {return contexto.resources.getStringArray(R.array.valorArrecadado)[tipoJogo]}
+    protected val chaveObservacao: String get() {return contexto.resources.getStringArray(R.array.observacao)[tipoJogo]}
+    protected val chaveErro: String get() {return contexto.resources.getStringArray(R.array.erro)[tipoJogo]}
+    protected val chaveValorAcumuladoProxConcurso: String get() {return contexto.resources.getStringArray(R.array.valorAcumuladoProxConcurso)[tipoJogo]}
+    protected val chaveEstimativaProxConcurso: String get() {return contexto.resources.getStringArray(R.array.estimativaProxConcurso)[tipoJogo]}
+    protected val chaveMensagens: String get() {return contexto.resources.getStringArray(R.array.mensagens)[tipoJogo]}
 
-    protected val chaveInfoGanhadores: String get() {return recursos.getStringArray(R.array.info_ganhadores)[tipoJogo]}
-    protected val chaveInfoGanhadoresUf: String get() {return recursos.getStringArray(R.array.info_ganhadores_uf)[tipoJogo]}
-    protected val chaveInfoGanhadoresCidade: String get() {return recursos.getStringArray(R.array.info_ganhadores_cidade)[tipoJogo]}
-    protected val chaveInfoGanhadoresQuantidade: String get() {return recursos.getStringArray(R.array.info_ganhadores_quantidade)[tipoJogo]}
-    protected val chaveInfoGanhadoresCanalEletronico: String get() {return recursos.getStringArray(R.array.info_ganhadores_canal_eletronico)[tipoJogo]}
+    protected val chaveInfoGanhadores: String get() {return contexto.resources.getStringArray(R.array.info_ganhadores)[tipoJogo]}
+    protected val chaveInfoGanhadoresUf: String get() {return contexto.resources.getStringArray(R.array.info_ganhadores_uf)[tipoJogo]}
+    protected val chaveInfoGanhadoresCidade: String get() {return contexto.resources.getStringArray(R.array.info_ganhadores_cidade)[tipoJogo]}
+    protected val chaveInfoGanhadoresQuantidade: String get() {return contexto.resources.getStringArray(R.array.info_ganhadores_quantidade)[tipoJogo]}
+    protected val chaveInfoGanhadoresCanalEletronico: String get() {return contexto.resources.getStringArray(R.array.info_ganhadores_canal_eletronico)[tipoJogo]}
 
-    protected val chaveResultado: String get() {return recursos.getStringArray(R.array.resultado)[tipoJogo]}
-    protected val chaveResultadoOrdenado: String get() {return recursos.getStringArray(R.array.resultado_ordenado)[tipoJogo]}
-    protected val chaveResultadoAdicional: String get() {return recursos.getStringArray(R.array.resultado_adicional)[tipoJogo]}
+    protected val chaveResultado: String get() {return contexto.resources.getStringArray(R.array.resultado)[tipoJogo]}
+    protected val chaveResultadoOrdenado: String get() {return contexto.resources.getStringArray(R.array.resultado_ordenado)[tipoJogo]}
+    protected val chaveResultadoAdicional: String get() {return contexto.resources.getStringArray(R.array.resultado_adicional)[tipoJogo]}
 
-    protected val chaveParametrosFederal: Array<String> get() {return recursos.getStringArray(R.array.parametros_federal)}
-    protected val chaveParametrosLoteca: Array<String> get() {return recursos.getStringArray(R.array.parametros_loteca)}
-    protected val chaveParametrosLotogol: Array<String> get() {return recursos.getStringArray(R.array.parametros_lotogol)}
+    protected val chaveParametrosFederal: Array<String> get() {return contexto.resources.getStringArray(R.array.parametros_federal)}
+    protected val chaveParametrosLoteca: Array<String> get() {return contexto.resources.getStringArray(R.array.parametros_loteca)}
+    protected val chaveParametrosLotogol: Array<String> get() {return contexto.resources.getStringArray(R.array.parametros_lotogol)}
 
-    protected val chaveConcursoEspecial: String get() {return recursos.getStringArray(R.array.concurso_especial)[tipoJogo]}
-    protected val chaveValorAcumuladoEspecial: String get() {return recursos.getStringArray(R.array.valor_acumulado_especial)[tipoJogo]}
+    protected val chaveConcursoEspecial: String get() {return contexto.resources.getStringArray(R.array.concurso_especial)[tipoJogo]}
+    protected val chaveValorAcumuladoEspecial: String get() {return contexto.resources.getStringArray(R.array.valor_acumulado_especial)[tipoJogo]}
 
-    protected val chaveValorAcumuladoFinalX: String get() {return recursos.getStringArray(R.array.valor_acumulado_final_x)[tipoJogo]}
-    protected val chaveProximoConcursoFinalX: String get() {return recursos.getStringArray(R.array.proximo_concurso_final_x)[tipoJogo]}
+    protected val chaveValorAcumuladoFinalX: String get() {return contexto.resources.getStringArray(R.array.valor_acumulado_final_x)[tipoJogo]}
+    protected val chaveProximoConcursoFinalX: String get() {return contexto.resources.getStringArray(R.array.proximo_concurso_final_x)[tipoJogo]}
 }
 
 class DadosJSON(stringJSON: String, lista: Boolean = false) {
@@ -157,7 +163,11 @@ class DadosJSON(stringJSON: String, lista: Boolean = false) {
     }
 }
 
-open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJogo(tipoJogo, recursos) {
+open class Jogo(val concurso: Int, tipoJogo: Int, context: Context): DadosDoJogo(tipoJogo, context) {
+    
+    private val persistencia: IPersistencia = PersistenciaSQLite(context)
+    private var dadoLocal = false
+    
     data class ResultadoLotecaLotogol(val time1: String, val time2: String, val gols_time1: Int, val gols_time2: Int, val diaDaSemana: String)
     data class ResultadoFederal(val destino: String, val bilhete: String, val valor: String)
     data class Valores(val texto: String, val valor: Double)
@@ -179,19 +189,24 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
         val totalPago = numGanhadores * valorIndividual
     }
 
-    private var dadosJSON: DadosJSON
-    private var stringJSON: String
-    init {
-        stringJSON = buscalDadosLocalmente()
-        if (stringJSON.isEmpty()) {
-            stringJSON = buscarDadosWeb()
-            salvarDadosLocalmente(stringJSON)
-        }
+    private val stringJSON = buscarDados()?.let {
+        Log.e("BUSCA", "Dados locais: $nome - $concurso")
+        dadoLocal = true
+        it
+    }?: buscarDadosWeb()
 
-        if (tipoJogo == TipoDeJogo().LOTOGOL) {
-            dadosJSON = DadosJSON(stringJSON, true)
-        } else {
-            dadosJSON = DadosJSON(stringJSON)
+    private val dadosJSON = if (tipoJogo == TipoDeJogo.LOTOGOL) {
+        DadosJSON(stringJSON, true)
+    } else {
+        DadosJSON(stringJSON)
+    }
+
+    val erro: Boolean = dadosJSON.getBoolean(chaveErro)
+
+    init {
+        if (!dadoLocal && !erro) salvarDados(stringJSON)
+        if (tipoJogo == TipoDeJogo.LOTOGOL) {
+            val a = tipoJogo
         }
     }
 
@@ -247,7 +262,7 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 
     private fun gerarListaPremiacoes(): List<Premiacoes> {
         val lista: MutableList<Premiacoes> = mutableListOf()
-        if (tipoJogo != TipoDeJogo().FEDERAL && tipoJogo != TipoDeJogo().DUPLA_SENA) {
+        if (tipoJogo != TipoDeJogo.FEDERAL && tipoJogo != TipoDeJogo.DUPLA_SENA) {
             val faixas = obterFaixasPremiacoes()
             val textoFaixas = obterTextoFaixasPremiacoes()
             val quantGanhadores = obterQuantidadeGanhadores()
@@ -277,7 +292,7 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
     }
 
     private fun gerarResultadoAdicional(ordenado: Boolean = true, separador: Char = '-'): List<String> {
-        return if (tipoJogo == TipoDeJogo().DUPLA_SENA) {
+        return if (tipoJogo == TipoDeJogo.DUPLA_SENA) {
             val resultado = dadosJSON.getString(chaveResultadoOrdenado.split("#")[1])
 
 
@@ -313,7 +328,7 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
         val lista: MutableList<ResultadoLotecaLotogol> = mutableListOf()
 
         when (tipoJogo) {
-            TipoDeJogo().LOTECA -> {
+            TipoDeJogo.LOTECA -> {
                 val listaJogos = dadosJSON.getLista(chaveResultado)
 
                 for (j in 0..listaJogos.length() - 1) {
@@ -328,7 +343,7 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
                     lista.add(ResultadoLotecaLotogol(time1, time2, gols_time1.toInt(), gols_time2.toInt(), diaDaSemana))
                 }
             }
-            TipoDeJogo().LOTOGOL -> {
+            TipoDeJogo.LOTOGOL -> {
                 val listaJogos = JSONArray(stringJSON)
 
                 for (j in 0..listaJogos.length() - 1) {
@@ -349,13 +364,13 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 
     private fun gerarListaResultados(ordenado: Boolean = true, separador: Char = '-'): List<String> {
         return if (ordenado) {
-            if (tipoJogo == TipoDeJogo().DUPLA_SENA) {
+            if (tipoJogo == TipoDeJogo.DUPLA_SENA) {
                 dadosJSON.getString(chaveResultadoOrdenado.split("#")[0])
             } else {
                 dadosJSON.getString(chaveResultadoOrdenado)
             }
         } else {
-            if (tipoJogo == TipoDeJogo().DUPLA_SENA) {
+            if (tipoJogo == TipoDeJogo.DUPLA_SENA) {
                 dadosJSON.getString(chaveResultado.split("#")[0])
             } else {
                 dadosJSON.getString(chaveResultado)
@@ -403,7 +418,6 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
     val estimativaProxConcurso: Double = dadosJSON.getDouble(chaveEstimativaProxConcurso)
 
     val observacao: String = dadosJSON.getString(chaveObservacao)
-    val erro: String = dadosJSON.getString(chaveErro)
 
     val premiacoes: List<Premiacoes> = gerarListaPremiacoes()
     val valorTotalPremiacoes: Double = calcularValorTotalPremiacoes(premiacoes)
@@ -433,14 +447,11 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 //    TODO - OBTER LISTA DE MENSAGENS
 //    val mensagens: List<String> = listOf()
 
-    private fun salvarDadosLocalmente(stringJSON: String) {
-        //TODO - SALVAR DADOS NO BANCO LOCAL
+    private fun salvarDados(stringJSON: String) {
+        persistencia.salvarResultado(tipoJogo, concurso, stringJSON)
     }
 
-    private fun buscalDadosLocalmente(): String {
-        // TODO - BUSCAR DADOS DO BANCO LOCAL
-        return ""
-    }
+    private fun buscarDados() = persistencia.buscarResultado(tipoJogo, concurso)
 
     private fun buscarDadosWeb(): String {
         var stringJSON = DadosWeb(obterURLResultado()).ObterResultados()
@@ -452,8 +463,8 @@ open class Jogo(val concurso: Int, tipoJogo: Int, recursos: Resources): DadosDoJ
 
     protected fun obterURLResultado(): String {
         var url_temp = url_resultado
-        url_temp += recursos.getString(R.string.url_parametro_1) + Date().time
-        url_temp += recursos.getString(R.string.url_parametro_2) + concurso.toString()
+        url_temp += contexto.getString(R.string.url_parametro_1) + Date().time
+        url_temp += contexto.getString(R.string.url_parametro_2) + concurso.toString()
         return url_temp
     }
 }

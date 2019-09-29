@@ -11,7 +11,6 @@ import android.view.ViewGroup
 
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.modelos.DadosDoJogo
-import com.example.gerenciamentodejogos.resultados.FragmentoDetalhesResultado
 import com.example.gerenciamentodejogos.resultados.FragmentoProximoConcurso
 import com.example.gerenciamentodejogos.resultados.FragmentoResultadoInfoPrincipais
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
@@ -20,10 +19,9 @@ import kotlinx.android.synthetic.main.fragmento_principal_view_page.*
 
 class FragmentoPrincipalViewPage : Fragment() {
 
-    lateinit var VMTelaPrincipal: TelaPrincipalViewModel
-    lateinit var VMResultados: ResultadosViewModel
+    private lateinit var vmTelaPrincipal: TelaPrincipalViewModel
+    private lateinit var vmResultados: ResultadosViewModel
 
-    private lateinit var propriedadesDoJogo: DadosDoJogo
     private var tipoJogo: Int = 0
     private var numeroConcurso:Int = 1
 
@@ -60,36 +58,31 @@ class FragmentoPrincipalViewPage : Fragment() {
 
     private fun atualizarInterface() {
         textView_label_progresso_principal.text = getString(R.string.texto_carregando_ultimo_concurso)
-        textView_nome_jogo_tela_principal.text = propriedadesDoJogo.nome
-        textView_nome_jogo_tela_principal.setTextColor(propriedadesDoJogo.corPrimaria)
+        textView_nome_jogo_tela_principal.text = vmResultados.getPropriedade(tipoJogo).nome
+        textView_nome_jogo_tela_principal.setTextColor(vmResultados.getPropriedade(tipoJogo).corPrimaria)
     }
 
     private fun configurarVM() {
         activity?.let {
-            VMResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
-            val propriedades = VMResultados.propriedadesDosJogos.value
-
-            if (propriedades != null) {
-                propriedadesDoJogo = propriedades[tipoJogo]
-            }
+            vmResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
         }
 
-        VMTelaPrincipal = ViewModelProviders.of(this)[TelaPrincipalViewModel::class.java]
+        vmTelaPrincipal = ViewModelProviders.of(this)[TelaPrincipalViewModel::class.java]
 
-        VMTelaPrincipal.dadosFragDetalhesCarregados.observe(this, Observer {telaCarregada ->
+        vmTelaPrincipal.dadosFragDetalhesCarregados.observe(this, Observer { telaCarregada ->
             if (telaCarregada != null) {
                 if (telaCarregada) {
                     resCarregado = telaCarregada
-                    VMTelaPrincipal.dadosFragDetalhesCarregados.removeObservers(this)
+                    vmTelaPrincipal.dadosFragDetalhesCarregados.removeObservers(this)
                     esconderProgresso()
                 }
             }
         })
-        VMTelaPrincipal.dadosFragApostasCarregados.observe(this, Observer {telaCarregada ->
+        vmTelaPrincipal.dadosFragApostasCarregados.observe(this, Observer { telaCarregada ->
             if (telaCarregada != null) {
                 if (true) {
                     apostaCarregada = true//telaCarregada
-                    VMTelaPrincipal.dadosFragApostasCarregados.removeObservers(this)
+                    vmTelaPrincipal.dadosFragApostasCarregados.removeObservers(this)
                     esconderProgresso()
                 }
             }

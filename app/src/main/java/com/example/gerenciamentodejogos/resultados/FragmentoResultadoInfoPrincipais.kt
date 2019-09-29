@@ -5,43 +5,32 @@ import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.Point
 import android.graphics.Rect
-import android.graphics.drawable.Drawable
-import android.hardware.display.DisplayManager
-import android.icu.text.DisplayContext
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.hardware.display.DisplayManagerCompat
-import android.support.v4.view.DisplayCutoutCompat
 import android.support.v7.widget.CardView
 import android.support.v7.widget.LinearLayoutManager
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 
 import com.example.gerenciamentodejogos.R
 import com.example.gerenciamentodejogos.dados.MESES
-import com.example.gerenciamentodejogos.modelos.DadosDoJogo
 import com.example.gerenciamentodejogos.modelos.Jogo
 import com.example.gerenciamentodejogos.modelos.TipoDeJogo
 import com.example.gerenciamentodejogos.view_models.ResultadosViewModel
 import com.example.gerenciamentodejogos.view_models.TelaPrincipalViewModel
-import kotlinx.android.synthetic.main.fragmento_detalhes_resultado.*
 import kotlinx.android.synthetic.main.fragmento_resultado_info_principais.*
 import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.*
 
 class FragmentoResultadoInfoPrincipais : Fragment() {
 
-    lateinit var VMResultados: ResultadosViewModel
-    lateinit var VMTelaPrincipal: TelaPrincipalViewModel
+    private lateinit var vmResultados: ResultadosViewModel
+    private lateinit var vmTelaPrincipal: TelaPrincipalViewModel
 
     private var tipoJogo: Int = 0
     private var numConcurso: Int = 0
-
-    private lateinit var propriedadesDoJogo: DadosDoJogo
 
     private var lineares: MutableList<LinearLayout> = mutableListOf()
     private var dezenas: MutableList<CardView> = mutableListOf()
@@ -53,20 +42,10 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         }
 
         activity?.let {
-            VMResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
-
-            val propriedades = VMResultados.propriedadesDosJogos.value
-
-            if (propriedades != null) {
-                propriedadesDoJogo = propriedades[tipoJogo]
-            }
-
-            if (propriedades != null) {
-                propriedadesDoJogo = propriedades[tipoJogo]
-            }
+            vmResultados = ViewModelProviders.of(it)[ResultadosViewModel::class.java]
 
             parentFragment?.let {
-                VMTelaPrincipal = ViewModelProviders.of(it)[TelaPrincipalViewModel::class.java]
+                vmTelaPrincipal = ViewModelProviders.of(it)[TelaPrincipalViewModel::class.java]
             }
         }
 
@@ -76,7 +55,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (tipoJogo!= TipoDeJogo().LOTECA && tipoJogo!= TipoDeJogo().LOTOGOL  && tipoJogo!= TipoDeJogo().FEDERAL) {
+        if (tipoJogo != TipoDeJogo.LOTECA && tipoJogo != TipoDeJogo.LOTOGOL  && tipoJogo != TipoDeJogo.FEDERAL) {
             criarDezenas()
             adicionarDezenas()
         } else {
@@ -88,25 +67,25 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
     }
 
     private fun atualizarTextConcurso() {
-        textView_concurso.setTextColor(propriedadesDoJogo.corPrimaria)
+        textView_concurso.setTextColor(vmResultados.getPropriedade(tipoJogo).corPrimaria)
         textView_concurso.text = numConcurso.toString()
     }
 
     private fun configurarObserverVM() {
-        VMResultados.getResultado(tipoJogo, numConcurso)?.let {
+        vmResultados.getResultado(tipoJogo, numConcurso)?.let {
             atualizarDadosPrincipais(it)
             return
         }
 
         activity?.let {
-            VMResultados.jogos.observe(this, Observer {
+            vmResultados.jogos.observe(this, Observer {
                 verificaJogo()
             })
         }
     }
 
     private fun verificaJogo() {
-        VMResultados.getResultado(tipoJogo, numConcurso)?.let { jogo ->
+        vmResultados.getResultado(tipoJogo, numConcurso)?.let { jogo ->
             atualizarDadosPrincipais(jogo)
         }
     }
@@ -123,7 +102,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         lineares.add(linear)
 
         var textViewDezena: View
-        val dezenasSorteadas = propriedadesDoJogo.dezenasSorteadas
+        val dezenasSorteadas = vmResultados.getPropriedade(tipoJogo).dezenasSorteadas
 
         var dezenasPorLinha: Int// = 0
         val linhasNecessarias: Double// = 0.0
@@ -193,9 +172,9 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
     }
 
     private fun configurarRecyclerView(){
-        if (tipoJogo == TipoDeJogo().LOTECA || tipoJogo == TipoDeJogo().LOTOGOL) {
+        if (tipoJogo == TipoDeJogo.LOTECA || tipoJogo == TipoDeJogo.LOTOGOL) {
             recyclerview_resultado_deferencial.adapter = LotecaLotogolAdapter()
-        } else if (tipoJogo == TipoDeJogo().FEDERAL) {
+        } else if (tipoJogo == TipoDeJogo.FEDERAL) {
             recyclerview_resultado_deferencial.adapter = FederalAdapter()
         }
         recyclerview_resultado_deferencial.layoutManager = LinearLayoutManager(context)
@@ -212,7 +191,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
 
         textView_resultado_adicional.setTextColor(jogo.corPrimaria)
 
-        textView_resultado_adicional.text = if (tipoJogo == TipoDeJogo().DIA_DE_SORTE) {
+        textView_resultado_adicional.text = if (tipoJogo == TipoDeJogo.DIA_DE_SORTE) {
             MESES[jogo.resultadoAdicional[0].toInt()]
         } else {
             jogo.resultadoAdicional[0]
@@ -223,13 +202,13 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
     }
 
     private fun atualizarDadosPrincipais(jogo: Jogo) {
-        if (tipoJogo == TipoDeJogo().LOTECA || tipoJogo == TipoDeJogo().LOTOGOL) {
+        if (tipoJogo == TipoDeJogo.LOTECA || tipoJogo == TipoDeJogo.LOTOGOL) {
             val lotecal_lotogol_adapter = recyclerview_resultado_deferencial.adapter
             if (lotecal_lotogol_adapter is LotecaLotogolAdapter) {
                 lotecal_lotogol_adapter.alterarDados(jogo.resultadoLotogolLoteca)
             }
             recyclerview_resultado_deferencial.visibility = View.VISIBLE
-        } else if (tipoJogo == TipoDeJogo().FEDERAL) {
+        } else if (tipoJogo == TipoDeJogo.FEDERAL) {
             val federal_adapter = recyclerview_resultado_deferencial.adapter
             if (federal_adapter is FederalAdapter) {
                 federal_adapter.alterarDados(jogo.resultadoFederal)
@@ -241,7 +220,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
                 text.text = jogo.resultadoOrdenado[d]
                 text.setBackgroundColor(jogo.corPrimaria)
             }
-            if (tipoJogo == TipoDeJogo().DIA_DE_SORTE || tipoJogo == TipoDeJogo().TIMEMANIA) {
+            if (tipoJogo == TipoDeJogo.DIA_DE_SORTE || tipoJogo == TipoDeJogo.TIMEMANIA) {
                 exibirResultadoAdicional(jogo)
             }
         }
@@ -252,7 +231,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         view?.let {
             it.visibility = View.VISIBLE
         }
-        VMTelaPrincipal.dadosFragDetalhesCarregados.value = true
+        vmTelaPrincipal.dadosFragDetalhesCarregados.value = true
     }
 
     private fun atualizarInfoSorteio(jogo: Jogo) {
@@ -263,7 +242,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
     }
 
     private fun atualizarNumGanhadores(jogo: Jogo) {
-        if (jogo.tipoJogo != TipoDeJogo().FEDERAL && jogo.tipoJogo != TipoDeJogo().DUPLA_SENA) {
+        if (jogo.tipoJogo != TipoDeJogo.FEDERAL && jogo.tipoJogo != TipoDeJogo.DUPLA_SENA) {
             textView_ganhadores.setTextColor(jogo.corPrimaria)
             textView_ganhadores.text = if (jogo.acumulou) {
                 getText(R.string.texto_acumulou)
