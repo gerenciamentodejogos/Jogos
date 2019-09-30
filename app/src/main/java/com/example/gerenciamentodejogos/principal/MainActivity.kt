@@ -102,6 +102,7 @@ class MainActivity : AppCompatActivity() {
             auth.signInWithEmailAndPassword(usuario.email, usuario.senha).addOnCompleteListener(this) { tarefa ->
                 if (tarefa.isSuccessful) {
                     vmResultados.alterarUsuario(tarefa.result?.user)
+                    vmResultados.irParaTela(TELA_INICIAL)
                 } else {
                     Toast.makeText(baseContext, "Erro ao fazer login!\nVerifique se o e-mail e senha digitados estão corretos!", Toast.LENGTH_SHORT).show()
                 }
@@ -112,6 +113,7 @@ class MainActivity : AppCompatActivity() {
     private fun fazerLogout() {
         FirebaseAuth.getInstance().signOut()
         vmResultados.alterarUsuario(null)
+        vmResultados.irParaTela(TELA_INICIAL)
     }
 
     private fun configurarVMResultados() {
