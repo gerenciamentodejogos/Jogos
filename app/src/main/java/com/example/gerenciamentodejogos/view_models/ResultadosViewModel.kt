@@ -1,5 +1,6 @@
 package com.example.gerenciamentodejogos.view_models
 
+import android.app.Activity
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
 import android.content.Context
@@ -7,23 +8,42 @@ import android.content.res.Resources
 import android.os.AsyncTask
 import android.util.Log
 import com.example.gerenciamentodejogos.R
+import com.example.gerenciamentodejogos.TELA_INICIAL
 import com.example.gerenciamentodejogos.modelos.DadosDoJogo
 import com.example.gerenciamentodejogos.modelos.Jogo
+import com.example.gerenciamentodejogos.modelos.TipoDeJogo
+import com.example.gerenciamentodejogos.modelos.Usuario
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 
 class ResultadosViewModel: ViewModel() {
     var propriedadesDosJogos: List<DadosDoJogo> = listOf()
+    val usuarioLogado = MutableLiveData<Boolean>().apply { value = false }
+    val usuario = MutableLiveData<FirebaseUser>()
+    val logar = MutableLiveData<Boolean>().apply { value = false }
+    var usuarioParaLogin = MutableLiveData<Usuario>()
 
     val jogos = MutableLiveData<List<Jogo>>()
 
-    val tipoResultadoSelecionado = MutableLiveData<Int>()
-    val tipoApostaSelecionada = MutableLiveData<Int>()
-    val telaPrincipal = MutableLiveData<Boolean>()
+    val tela = MutableLiveData<Int>().apply { value = TELA_INICIAL }
+
+    val tipoResultadoSelecionado = MutableLiveData<Int>().apply { value = TipoDeJogo.MEGA_SENA }
+    val tipoApostaSelecionada = MutableLiveData<Int>().apply { value = TipoDeJogo.MEGA_SENA }
 
     val ultimosConcursos = MutableLiveData<List<Int>>()
 
-    fun irParaTelaPrincipal() { telaPrincipal.value = true }
-    fun irParaResultados(tipoJogo: Int = tipoResultadoSelecionado.value?: 0) { tipoResultadoSelecionado.value = tipoJogo }
-    fun irParaApostas(tipoJogo: Int = tipoApostaSelecionada.value?: 0) { tipoApostaSelecionada.value = tipoJogo }
+    fun alterarUsuario(user: FirebaseUser?) {
+        usuario.value = user
+        usuarioLogado.value = user?.let { true }?: false
+    }
+
+    fun irParaTela(numTela: Int, tipoJogo: Int? = tipoResultadoSelecionado.value) {
+        tipoResultadoSelecionado.value = tipoJogo
+        tela.value = numTela
+    }
+
+    fun login() { logar.value = true }
+    fun logout() { logar.value = false }
 
     fun carregarPropriedadesDosJogos(contexto: Context) {
         val jogos: Array<String> = contexto.resources.getStringArray(R.array.nomes_jogos)

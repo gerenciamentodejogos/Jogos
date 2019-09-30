@@ -6,8 +6,11 @@ import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
+import com.example.gerenciamentodejogos.NOME_DB
+import com.example.gerenciamentodejogos.SCRIPT_CRIAR_TABELA_RESULTADOS
+import com.example.gerenciamentodejogos.TABELA_RESULTADOS
+import com.example.gerenciamentodejogos.VERSAO_DB
 import java.io.Serializable
-import java.sql.Array
 
 class PersistenciaSQLite(override val context: Context): IPersistencia {
     private val gw = DBGateway.getInstance(context)
@@ -47,7 +50,10 @@ class TBResultado(val id: Int, val tipoJogo: Int, val numConcurso: Int, val resu
 
 class DBGateway(context: Context) {
 //    private val db: SQLiteDatabase = PersistenciaSQLite(context).writableDatabase
-    private val db: SQLiteDatabase = (object: SQLiteOpenHelper(context, NOME_DB, null, VERSAO_DB){
+    private val db: SQLiteDatabase = (object: SQLiteOpenHelper(context,
+    NOME_DB, null,
+    VERSAO_DB
+){
         override fun onCreate(db: SQLiteDatabase?) { db?.execSQL(SCRIPT_CRIAR_TABELA_RESULTADOS) }
         override fun onUpgrade(db: SQLiteDatabase?, oldVersion: Int, newVersion: Int) {}
     }).writableDatabase

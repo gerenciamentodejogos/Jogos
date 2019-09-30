@@ -607,6 +607,27 @@
         <item>icCanalEletronico</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_nome">Nome</string>
+    <string name="hint_email">E-mail</string>
+    <string name="hint_senha">Senha</string>
+    <string name="hint_confirmar_senha">Confirmar senha</string>
+    <string name="texto_botao_cadastrar">Cadastrar</string>
+    <string name="texto_botao_entrar">Entrar</string>
+    <string name="texto_fazer_cadastro">Ainda não tem cadastro? Faça aqui!</string>
+    <string name="texto_esqueci_senha">Esqueci minha senha</string>
+    <string name="contDesc_foto_de_perfil">Foto de perfil</string>
+    <string name="label_nome">Nome:</string>
+    <string name="label_login_email">Login (e-mail)</string>
+    <string name="hint_confirmar_nova_senha">Confirmar nova senha</string>
+    <string name="hint_nova_senha">Nova senha</string>
+    <string name="hint_senha_atual">Senha atual</string>
+    <string name="label_alterar_senha">Alterar senha</string>
+    <string name="texto_botao_alterar_senha">Alterar senha</string>
+    <string name="texto_botao_salvar_alteracoes">Salvar alterações</string>
+    <string name="texto_logout">Logout</string>
+    <string name="texto_login">Login</string>
+    <string name="texto_editar_perfil">Editar perfil</string>
+    <string name="texto_criar_conta">Criar conta</string>
+
+    <string name="texto_usuario_anonimo">Convidado</string>
 </resources>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".login.FragmentoLogin"
+        android:padding="16dp">
+
+    <EditText
+            android:id="@+id/editText_email_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:hint="@string/hint_email"
+            android:ems="10"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/editText_senha_login"
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="8dp" android:layout_marginBottom="8dp"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+    <EditText
+            android:id="@+id/editText_senha_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword"
+            android:hint="@string/hint_senha"
+            android:ems="10"
+            app:layout_constraintTop_toBottomOf="@+id/editText_email_login"
+            app:layout_constraintBottom_toTopOf="@+id/button_login" app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+    <Button
+            android:id="@+id/button_login"
+            android:text="@string/texto_botao_entrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/editText_senha_login"
+            app:layout_constraintBottom_toTopOf="@+id/textView3" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+    <TextView
+            android:text="@string/texto_esqueci_senha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/button_login"
+            app:layout_constraintBottom_toTopOf="@+id/textView" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+    <TextView
+            android:text="@string/texto_fazer_cadastro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toBottomOf="@+id/textView3"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="8dp" android:layout_marginBottom="8dp"/>
+
+
+</android.support.constraint.ConstraintLayout>
