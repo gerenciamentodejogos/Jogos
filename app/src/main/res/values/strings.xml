@@ -630,4 +630,5 @@
     <string name="texto_criar_conta">Criar conta</string>
 
     <string name="texto_usuario_anonimo">Convidado</string>
+    <string name="texto_sem_local_sorteio">Não informado</string>
 </resources>

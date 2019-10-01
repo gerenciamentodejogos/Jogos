@@ -70,4 +70,22 @@
             android:layout_marginTop="8dp" android:layout_marginBottom="8dp" app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
+    <FrameLayout
+            android:id="@+id/frame_progresso_cadastro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:elevation="20dp"
+            android:background="@color/branco_transparente"
+            android:visibility="gone">
+        <ProgressBar
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"/>
+    </FrameLayout>
+
+
 </android.support.constraint.ConstraintLayout>
