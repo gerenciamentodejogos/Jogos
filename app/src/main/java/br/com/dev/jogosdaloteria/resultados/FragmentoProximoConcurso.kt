@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import br.com.dev.jogosdaloteria.R
-import br.com.dev.jogosdaloteria.modelos.Jogo
+import br.com.dev.jogosdaloteria.modelos.Resultado
 import br.com.dev.jogosdaloteria.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_proximo_concurso.*
 import java.text.NumberFormat
@@ -58,7 +58,7 @@ class FragmentoProximoConcurso : Fragment() {
         }
     }
 
-    private fun atualizarDados(jogo: Jogo) {
+    private fun atualizarDados(jogo: Resultado) {
         textView_proximo_concurso.setTextColor(jogo.corPrimaria)
         textView_valor_estimativa.setTextColor(jogo.corPrimaria)
 

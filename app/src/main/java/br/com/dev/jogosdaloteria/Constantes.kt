@@ -2,6 +2,10 @@ package br.com.dev.jogosdaloteria
 
 val NOME_DB = "JogosLoteria.db"
 val VERSAO_DB = 2
+
+const val NOME_BANCO = "JogosDaLoteria"
+const val VERSAO_BANCO = 1
+
 val TABELA_RESULTADOS = "TBResultados"
 val TABELA_PERFIL = "TBPerfil"
 val SCRIPT_CRIAR_TABELAS = "CREATE TABLE $TABELA_RESULTADOS (ID INTEGER PRIMARY KEY AUTOINCREMENT," +

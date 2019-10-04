@@ -89,7 +89,7 @@ class FragmentoDetalhesResultado : Fragment() {
         recyclerview_valores.layoutManager = LinearLayoutManager(context)
     }
 
-    private fun atualizarDadosNaTela(jogo: Jogo) {
+    private fun atualizarDadosNaTela(jogo: Resultado) {
         //TODO -  RETIRAR '&& jogo.concurso < ULTIMOS_CONCURSOS[tipoJogo]'
         if (jogo.encerrado && tipoJogo != TipoDeJogo.FEDERAL && tipoJogo != TipoDeJogo.DUPLA_SENA) {
                 textview_total_premiacoes.setTextColor(jogo.corPrimaria)

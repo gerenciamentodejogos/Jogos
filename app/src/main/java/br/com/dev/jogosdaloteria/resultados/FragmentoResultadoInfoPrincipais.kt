@@ -17,7 +17,7 @@ import android.widget.TextView
 
 import br.com.dev.jogosdaloteria.R
 import br.com.dev.jogosdaloteria.dados.MESES
-import br.com.dev.jogosdaloteria.modelos.Jogo
+import br.com.dev.jogosdaloteria.modelos.Resultado
 import br.com.dev.jogosdaloteria.modelos.TipoDeJogo
 import br.com.dev.jogosdaloteria.view_models.ResultadosViewModel
 import br.com.dev.jogosdaloteria.view_models.TelaPrincipalViewModel
@@ -185,7 +185,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         return "${textoInicial}${quant} ${plural}${textoFinal}"
     }
 
-    private fun exibirResultadoAdicional(jogo: Jogo) {
+    private fun exibirResultadoAdicional(jogo: Resultado) {
         textView_label_resultado_adicional.setTextColor(jogo.corPrimaria)
         textView_label_resultado_adicional.text = jogo.textoResultadoAdicinal
 
@@ -201,7 +201,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         textView_resultado_adicional.visibility = View.VISIBLE
     }
 
-    private fun atualizarDadosPrincipais(jogo: Jogo) {
+    private fun atualizarDadosPrincipais(jogo: Resultado) {
         if (tipoJogo == TipoDeJogo.LOTECA || tipoJogo == TipoDeJogo.LOTOGOL) {
             val lotecal_lotogol_adapter = recyclerview_resultado_deferencial.adapter
             if (lotecal_lotogol_adapter is LotecaLotogolAdapter) {
@@ -234,7 +234,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         vmTelaPrincipal.dadosFragDetalhesCarregados.value = true
     }
 
-    private fun atualizarInfoSorteio(jogo: Jogo) {
+    private fun atualizarInfoSorteio(jogo: Resultado) {
         textView_data_sorteio.text = formatarData(jogo.dataConcurso)
         if (jogo.tipoJogo == TipoDeJogo.FEDERAL || jogo.tipoJogo == TipoDeJogo.LOTECA || jogo.tipoJogo == TipoDeJogo.LOTOGOL) {
             textView_local_sorteio.text = getString(R.string.texto_sem_local_sorteio)
@@ -245,7 +245,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         constraintLayout_info_sorteio.visibility = View.VISIBLE
     }
 
-    private fun atualizarNumGanhadores(jogo: Jogo) {
+    private fun atualizarNumGanhadores(jogo: Resultado) {
         if (jogo.tipoJogo != TipoDeJogo.FEDERAL && jogo.tipoJogo != TipoDeJogo.DUPLA_SENA) {
             textView_ganhadores.setTextColor(jogo.corPrimaria)
             textView_ganhadores.text = if (jogo.acumulou) {

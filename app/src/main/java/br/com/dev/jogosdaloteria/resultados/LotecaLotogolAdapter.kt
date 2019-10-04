@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import br.com.dev.jogosdaloteria.R
-import br.com.dev.jogosdaloteria.modelos.Jogo
+import br.com.dev.jogosdaloteria.modelos.Resultado
 
 class LotecaLotogolAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var itens: List<Jogo.ResultadoLotecaLotogol> = listOf()
+    var itens: List<Resultado.ResultadoLotecaLotogol> = listOf()
 
-    fun alterarDados(novosItens: List<Jogo.ResultadoLotecaLotogol>){
+    fun alterarDados(novosItens: List<Resultado.ResultadoLotecaLotogol>){
         this.itens = novosItens
         notifyDataSetChanged()
     }

@@ -10,7 +10,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 
 import br.com.dev.jogosdaloteria.R
-import br.com.dev.jogosdaloteria.modelos.Usuario
 import br.com.dev.jogosdaloteria.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_login.*
 
@@ -32,11 +31,11 @@ class FragmentoLogin : Fragment() {
         configurarListeners()
     }
 
-    private fun validarFormulario(): Usuario? {
+    private fun validarFormulario(): ResultadosViewModel.DadosLogin? {
         val email = editText_email_login.text.toString()
         val senha = editText_senha_login.text.toString()
 
-        return Usuario("", email, senha)
+        return ResultadosViewModel.DadosLogin(email, senha)
     }
 
     private fun configurarListeners() {
@@ -44,8 +43,7 @@ class FragmentoLogin : Fragment() {
             val usuario = validarFormulario()
             if (usuario != null) {
                 frame_progresso_login.visibility = View.VISIBLE
-                vmResultados.usuarioParaLogin.value = usuario
-                vmResultados.login()
+                vmResultados.dadosLogin.value = ResultadosViewModel.DadosLogin(usuario.email, usuario.senha)
             } else {
                 Toast.makeText(context, "Verifique se o e-mail e senha digitados estão corretos!", Toast.LENGTH_SHORT).show()
             }

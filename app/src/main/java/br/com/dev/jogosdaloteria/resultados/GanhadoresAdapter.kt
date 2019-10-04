@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import br.com.dev.jogosdaloteria.R
-import br.com.dev.jogosdaloteria.modelos.Jogo
+import br.com.dev.jogosdaloteria.modelos.Resultado
 
 
-class GanhadoresAdapter(var items: List<Jogo.Ganhadores> = mutableListOf()): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GanhadoresAdapter(var items: List<Resultado.Ganhadores> = mutableListOf()): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var recursos: Resources? = null
 
-    fun alterarDados(ganhadores: List<Jogo.Ganhadores>){
+    fun alterarDados(ganhadores: List<Resultado.Ganhadores>){
         items = ganhadores
         notifyDataSetChanged()
     }

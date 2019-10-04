@@ -1,8 +1,11 @@
 package br.com.dev.jogosdaloteria.modelos
 
+import android.app.Application
 import android.content.Context
 import android.graphics.Color
 import android.util.Log
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import br.com.dev.jogosdaloteria.R
 import br.com.dev.jogosdaloteria.dados_web.DadosWeb
 import br.com.dev.jogosdaloteria.persistencia.IPersistencia
@@ -26,6 +29,11 @@ final class TipoDeJogo {
         val LOTOGOL = 9
     }
 }
+
+@Entity(tableName = "TBResultadoJSON", primaryKeys = arrayOf("tipoJogo", "numConcurso"))
+class Jogo(val tipoJogo: Int,
+           val numConcurso: Int,
+           val resultado: String)
 
 open class DadosDoJogo(val tipoJogo: Int, val contexto: Context) {
     val nome: String = contexto.resources.getStringArray(R.array.nomes_jogos)[tipoJogo]
@@ -161,11 +169,11 @@ class DadosJSON(stringJSON: String, lista: Boolean = false) {
     }
 }
 
-open class Jogo(val concurso: Int, tipoJogo: Int, context: Context): DadosDoJogo(tipoJogo, context) {
-    
+open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): DadosDoJogo(tipoJogo, context) {
+
     private val persistencia: IPersistencia = PersistenciaSQLite(context)
     private var dadoLocal = false
-    
+
     data class ResultadoLotecaLotogol(val time1: String, val time2: String, val gols_time1: Int, val gols_time2: Int, val diaDaSemana: String)
     data class ResultadoFederal(val destino: String, val bilhete: String, val valor: String)
     data class Valores(val texto: String, val valor: Double)
@@ -497,3 +505,4 @@ open class Jogo(val concurso: Int, tipoJogo: Int, context: Context): DadosDoJogo
         return url_temp
     }
 }
+

@@ -3,30 +3,36 @@ package br.com.dev.jogosdaloteria.view_models
 import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.os.AsyncTask
 import android.util.Log
 import br.com.dev.jogosdaloteria.R
 import br.com.dev.jogosdaloteria.TELA_INICIAL
 import br.com.dev.jogosdaloteria.modelos.DadosDoJogo
-import br.com.dev.jogosdaloteria.modelos.Jogo
+import br.com.dev.jogosdaloteria.modelos.Resultado
 import br.com.dev.jogosdaloteria.modelos.TipoDeJogo
 import br.com.dev.jogosdaloteria.modelos.Usuario
 import br.com.dev.jogosdaloteria.persistencia.IPersistencia
+import br.com.dev.jogosdaloteria.persistencia.JogosDB
+import br.com.dev.jogosdaloteria.persistencia.PersistSQLite
 import br.com.dev.jogosdaloteria.persistencia.PersistenciaSQLite
-import com.google.firebase.auth.FirebaseUser
 
 class ResultadosViewModel(application: Application): AndroidViewModel(application) {
-    private val persistencia: IPersistencia = PersistenciaSQLite(application.applicationContext)
+    data class DadosLogin(val email: String, val senha: String)
+    private val persist: PersistSQLite
+
+    init {
+        val db = JogosDB.get(application.applicationContext)
+        persist = PersistSQLite(db.jogosDAO())
+    }
 
     var propriedadesDosJogos: List<DadosDoJogo> = listOf()
     val usuarioLogado = MutableLiveData<Boolean>().apply { value = false }
     val usuario = MutableLiveData<Usuario>()
     val logar = MutableLiveData<Boolean>().apply { value = false }
-    var usuarioParaLogin = MutableLiveData<Usuario>()
+    var dadosLogin = MutableLiveData<DadosLogin>()
 
-    val jogos = MutableLiveData<List<Jogo>>()
+    val jogos = MutableLiveData<List<Resultado>>()
 
     val tela = MutableLiveData<Int>().apply { value = TELA_INICIAL }
 
@@ -45,9 +51,6 @@ class ResultadosViewModel(application: Application): AndroidViewModel(applicatio
         tela.value = numTela
     }
 
-    fun login() { logar.value = true }
-    fun logout() { logar.value = false }
-
     fun carregarPropriedadesDosJogos(contexto: Context) {
         val jogos: Array<String> = contexto.resources.getStringArray(R.array.nomes_jogos)
         val lista: MutableList<DadosDoJogo> = mutableListOf()
@@ -59,15 +62,15 @@ class ResultadosViewModel(application: Application): AndroidViewModel(applicatio
         propriedadesDosJogos = lista
     }
 
-    fun getJogos(tipo: Int): List<Jogo>? {
+    fun getJogos(tipo: Int): List<Resultado>? {
         return jogos.value?.filterIndexed { index, jogo ->  jogo.tipoJogo == tipo}
     }
 
-    fun getResultado(tipo: Int, numConcurso: Int): Jogo? {
+    fun getResultado(tipo: Int, numConcurso: Int): Resultado? {
         return jogos.value?.find { jogo ->  jogo.tipoJogo == tipo && jogo.concurso == numConcurso}
     }
 
-    fun getResultado(tipo: Int, numConcurso: Int, contexto: Context): Jogo? {
+    fun getResultado(tipo: Int, numConcurso: Int, contexto: Context): Resultado? {
         val resultado = getResultado(tipo, numConcurso)
         if (resultado == null) {
             DownloadTask(numConcurso, tipo, contexto).execute()
@@ -79,7 +82,7 @@ class ResultadosViewModel(application: Application): AndroidViewModel(applicatio
         return propriedadesDosJogos[tipoJogo]
     }
 
-    fun adicionarJogo(jogo: Jogo) {
+    fun adicionarJogo(jogo: Resultado) {
         if (getResultado(jogo.tipoJogo, jogo.concurso) == null) {
             jogos.value = jogos.value?.plus(jogo)?: listOf(jogo)
         }
@@ -89,14 +92,21 @@ class ResultadosViewModel(application: Application): AndroidViewModel(applicatio
         DownloadTask(numConcurso, tipoJogo, contexto).execute()
     }
 
-    inner class DownloadTask(val concurso: Int, val tipoJogo: Int, val contexto: Context): AsyncTask<Int, Unit, Jogo>() {
+    inner class InstanciarDBTask(val context: Context): AsyncTask<Unit, Unit, PersistSQLite>() {
+        override fun doInBackground(vararg params: Unit?): PersistSQLite {
+            val db = JogosDB.get(context)
+            return PersistSQLite(db.jogosDAO())
+        }
+    }
 
-        override fun doInBackground(vararg params: Int?): Jogo? {
-            var result: Jogo? = null
+    inner class DownloadTask(val concurso: Int, val tipoJogo: Int, val contexto: Context): AsyncTask<Int, Unit, Resultado>() {
+
+        override fun doInBackground(vararg params: Int?): Resultado? {
+            var result: Resultado? = null
 
             if (!isCancelled) {
                 try {
-                    result = Jogo(concurso, tipoJogo, contexto)
+                    result = Resultado(concurso, tipoJogo, contexto)
                 } catch (e: Exception) {
                     Log.d("ERRO", e.message)
                     e.message
@@ -105,19 +115,27 @@ class ResultadosViewModel(application: Application): AndroidViewModel(applicatio
             return result
         }
 
-        override fun onPostExecute(result: Jogo?) {
+        override fun onPostExecute(result: Resultado?) {
             result?.let {
                 adicionarJogo(it)
             }
         }
     }
 
+    fun atualizarPerfil(usuario: Usuario): Boolean {
+        return if (persist.atualizarUsuario(usuario)) {
+            alterarUsuario(usuario)
+            true
+        } else {
+            false
+        }
+    }
+
     fun salvarPerfil(usuario: Usuario): Boolean {
-        return persistencia.salvarPerfil(usuario)
+        return persist.criarUsuario(usuario)
     }
 
     fun buscarPerfil(email: String): Usuario? {
-        return persistencia.buscarPerfil(email)
+        return persist.buscarUsuario(email)
     }
-
 }

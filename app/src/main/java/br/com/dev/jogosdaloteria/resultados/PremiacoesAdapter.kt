@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import br.com.dev.jogosdaloteria.R
-import br.com.dev.jogosdaloteria.modelos.Jogo
+import br.com.dev.jogosdaloteria.modelos.Resultado
 import java.text.NumberFormat
 
-class PremiacoesAdapter(var items: List<Jogo.Premiacoes> = mutableListOf()): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class PremiacoesAdapter(var items: List<Resultado.Premiacoes> = mutableListOf()): RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    fun alterarDados(premiacoes: List<Jogo.Premiacoes>){
+    fun alterarDados(premiacoes: List<Resultado.Premiacoes>){
         items = premiacoes
         notifyDataSetChanged()
     }

@@ -7,15 +7,18 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
 import br.com.dev.jogosdaloteria.R
 import br.com.dev.jogosdaloteria.modelos.Usuario
 import br.com.dev.jogosdaloteria.view_models.ResultadosViewModel
-import com.google.firebase.auth.FirebaseAuth
-import kotlinx.android.synthetic.main.fragmento_cadastro.*
-import kotlinx.android.synthetic.main.fragmento_login.*
 import kotlinx.android.synthetic.main.fragmento_perfil.*
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.widget.Toast
+import br.com.dev.jogosdaloteria.byteArrayToFoto
+import br.com.dev.jogosdaloteria.fotoToByteArray
+import java.io.ByteArrayOutputStream
+
 
 class FragmentoPerfil : Fragment() {
 
@@ -42,20 +45,29 @@ class FragmentoPerfil : Fragment() {
         val senha = editText_senha_perfil.text.toString()
         val novaSenha = editText_nova_senha.text.toString()
         val senhaConfirmacao = editText_nova_senha_confirma.text.toString()
-        val foto = ""
 
-        return Usuario(nome, email, novaSenha, foto)
+        val bitmap = (imageView_foto_perfil.drawable as BitmapDrawable).bitmap
+        val saida = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, saida)
+        val foto = fotoToByteArray(imageView_foto_perfil.drawable)
+
+        return Usuario(nome, email, foto)
     }
 
     private fun configurarListeners() {
         button_salvar_perfil.setOnClickListener {
-
+            val usuario = validarFormulario()
+            if (usuario != null) {
+                vmResultados.atualizarPerfil(usuario)
+            } else {
+                Toast.makeText(context, "Verifique se os dados estão corretos!", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
     private fun atualizarInterface() {
         vmResultados.usuario.value?.let {
-            imageView_foto_perfil.setImageResource(R.drawable.ic_avatar)
+            imageView_foto_perfil.setImageBitmap(byteArrayToFoto(it.foto))
             editText_nome_perfil.setText(it.nome)
             textView_email_perfil.text = it.email
         }

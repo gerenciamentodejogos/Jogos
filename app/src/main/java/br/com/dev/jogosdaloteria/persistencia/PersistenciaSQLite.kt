@@ -27,7 +27,7 @@ class PersistenciaSQLite(override val context: Context): IPersistencia {
         return if (cursor.moveToFirst()) {
             val nome = cursor.getString(cursor.getColumnIndex("Nome"))
             val foto = cursor.getString(cursor.getColumnIndex("Foto"))
-            Usuario(nome, email, "", foto)
+            Usuario(nome, email)
         } else {
             null
         }

@@ -1,3 +1,9 @@
 package br.com.dev.jogosdaloteria.modelos
 
-class Usuario(val nome: String, val email: String, val senha: String, val foto: String = "")
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "TBUsuarios")
+class Usuario(val nome: String = "",
+              @PrimaryKey val email: String,
+              val foto: ByteArray? = null)

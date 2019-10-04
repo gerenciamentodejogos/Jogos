@@ -6,13 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import br.com.dev.jogosdaloteria.R
-import br.com.dev.jogosdaloteria.modelos.Jogo
+import br.com.dev.jogosdaloteria.modelos.Resultado
 
 class FederalAdapter: RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    var itens: List<Jogo.ResultadoFederal> = listOf()
+    var itens: List<Resultado.ResultadoFederal> = listOf()
 
-    fun alterarDados(novosItens: List<Jogo.ResultadoFederal>){
-        val lista = mutableListOf(Jogo.ResultadoFederal("", "", ""))
+    fun alterarDados(novosItens: List<Resultado.ResultadoFederal>){
+        val lista = mutableListOf(Resultado.ResultadoFederal("", "", ""))
 //        novosItens.forEach {lista.add(it)}
         lista.addAll(novosItens)
         itens = lista

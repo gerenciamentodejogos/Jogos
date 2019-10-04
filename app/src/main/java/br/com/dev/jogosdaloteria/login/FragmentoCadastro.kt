@@ -38,9 +38,8 @@ class FragmentoCadastro : Fragment() {
         val email = editText_email_cadastro.text.toString()
         val senha = editText_senha_cadastro.text.toString()
         val confirmaSenha = editText_senha_confirmacao.text.toString()
-        val foto = ""
 
-        return Usuario(nome, email, senha, foto)
+        return Usuario(nome, email)
     }
 
     private fun configurarListeners() {
@@ -49,12 +48,12 @@ class FragmentoCadastro : Fragment() {
             if (usuario != null) {
                 activity?.let {
                     frame_progresso_cadastro.visibility = View.VISIBLE
+                    val senha = editText_senha_cadastro.text.toString()
                     val auth =  FirebaseAuth.getInstance()
-                    auth.createUserWithEmailAndPassword(usuario.email, usuario.senha).addOnCompleteListener(it) { tarefa ->
+                    auth.createUserWithEmailAndPassword(usuario.email, senha).addOnCompleteListener(it) { tarefa ->
                         if (tarefa.isSuccessful) {
                             vmResultados.salvarPerfil(usuario)
-                            vmResultados.usuarioParaLogin.value = usuario
-                            vmResultados.login()
+                            vmResultados.dadosLogin.value = ResultadosViewModel.DadosLogin(usuario.email, senha)
                         } else {
                             Toast.makeText(context, "Erro ao fazer login!\nVerifique se o e-mail e senha digitados estão corretos!", Toast.LENGTH_SHORT).show()
                         }

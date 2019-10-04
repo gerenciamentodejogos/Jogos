@@ -3,7 +3,6 @@ package br.com.dev.jogosdaloteria.principal
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.graphics.drawable.Drawable
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.view.GravityCompat
@@ -20,13 +19,12 @@ import br.com.dev.jogosdaloteria.dados.ULTIMOS_CONCURSOS
 import br.com.dev.jogosdaloteria.login.FragmentoCadastro
 import br.com.dev.jogosdaloteria.login.FragmentoLogin
 import br.com.dev.jogosdaloteria.login.FragmentoPerfil
-import br.com.dev.jogosdaloteria.modelos.Usuario
 import br.com.dev.jogosdaloteria.resultados.*
 import br.com.dev.jogosdaloteria.view_models.ResultadosViewModel
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity: AppCompatActivity() {
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var actionBarDrawerToggle: ActionBarDrawerToggle
     private lateinit var headerView: View
@@ -75,7 +73,7 @@ class MainActivity : AppCompatActivity() {
             textViewEmail.text = usuario.email
             buttomPerfil.text = getString(R.string.texto_editar_perfil)
             buttomLogin.text = getString(R.string.texto_logout)
-            imageViewFoto.setImageDrawable(obterFoto(usuario.foto))
+            imageViewFoto.setImageBitmap(byteArrayToFoto(usuario.foto))
         } else {
             textViewNome.text = getString(R.string.texto_usuario_anonimo)
             textViewEmail.text = ""
@@ -85,24 +83,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun obterFoto(url: String?): Drawable? {
-        return url?.let {
-            null
-        }
-    }
-
-    private fun fazerLogin() {
-        val usuario = vmResultados.usuarioParaLogin.value
-        if (usuario != null) {
-            val auth =  FirebaseAuth.getInstance()
-            auth.signInWithEmailAndPassword(usuario.email, usuario.senha).addOnCompleteListener(this) { tarefa ->
-                if (tarefa.isSuccessful) {
-                    val perfil = vmResultados.buscarPerfil(usuario.email)
-                    vmResultados.alterarUsuario(perfil)
-                    vmResultados.irParaTela(TELA_INICIAL)
-                } else {
-                    Toast.makeText(baseContext, "Erro ao fazer login!\nVerifique se o e-mail e senha digitados estão corretos!", Toast.LENGTH_SHORT).show()
-                }
+    private fun fazerLogin(dadosUsuario: ResultadosViewModel.DadosLogin) {
+        val auth =  FirebaseAuth.getInstance()
+        auth.signInWithEmailAndPassword(dadosUsuario.email, dadosUsuario.senha).addOnCompleteListener(this) { tarefa ->
+            if (tarefa.isSuccessful) {
+                val perfil = vmResultados.buscarPerfil(dadosUsuario.email)
+                vmResultados.alterarUsuario(perfil)
+                vmResultados.irParaTela(TELA_INICIAL)
+            } else {
+                Toast.makeText(baseContext, "Erro ao fazer login!\nVerifique se o e-mail e senha digitados estão corretos!", Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -119,13 +108,11 @@ class MainActivity : AppCompatActivity() {
             atualizarNavHeader()
         })
 
-        vmResultados.logar.observe(this, Observer {logar ->
-            logar?.let {
-                if (it) {
-                    fazerLogin()
-                } else {
-                    fazerLogout()
-                }
+        vmResultados.dadosLogin.observe(this, Observer {dadosUsuario ->
+            if (dadosUsuario != null) {
+                fazerLogin(dadosUsuario)
+            } else {
+                fazerLogout()
             }
         })
 
@@ -162,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         buttomLogin.setOnClickListener {
             vmResultados.usuarioLogado.value?.let { logado ->
                 if (logado) {
-                    vmResultados.logout()
+                    vmResultados.dadosLogin.value = null
                 } else {
                     vmResultados.irParaTela(TELA_LOGIN)
                 }
