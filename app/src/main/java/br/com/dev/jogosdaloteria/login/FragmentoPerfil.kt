@@ -1,9 +1,9 @@
 package br.com.dev.jogosdaloteria.login
 
 
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +13,7 @@ import br.com.dev.jogosdaloteria.modelos.Usuario
 import br.com.dev.jogosdaloteria.view_models.ResultadosViewModel
 import kotlinx.android.synthetic.main.fragmento_perfil.*
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.widget.Toast
 import br.com.dev.jogosdaloteria.byteArrayToFoto
@@ -67,7 +68,7 @@ class FragmentoPerfil : Fragment() {
 
     private fun atualizarInterface() {
         vmResultados.usuario.value?.let {
-            imageView_foto_perfil.setImageBitmap(byteArrayToFoto(it.foto))
+            imageView_foto_perfil.setImageBitmap(byteArrayToFoto(it.foto)?: BitmapFactory.decodeResource(resources, R.drawable.ic_avatar))
             editText_nome_perfil.setText(it.nome)
             textView_email_perfil.text = it.email
         }

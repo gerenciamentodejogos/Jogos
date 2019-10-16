@@ -1,15 +1,17 @@
 package br.com.dev.jogosdaloteria.resultados
 
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import android.annotation.TargetApi
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.Point
 import android.graphics.Rect
+import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.hardware.display.DisplayManagerCompat
-import android.support.v7.widget.CardView
-import android.support.v7.widget.LinearLayoutManager
+import androidx.fragment.app.Fragment
+import androidx.core.hardware.display.DisplayManagerCompat
+import androidx.cardview.widget.CardView
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.util.DisplayMetrics
 import android.view.*
 import android.widget.LinearLayout
@@ -147,6 +149,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         }
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     private fun calcularDezenasQueCabem(linear: View, cardView: View): Int {
         view?.let {
             val measureSpec = View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.AT_MOST)
@@ -192,7 +195,7 @@ class FragmentoResultadoInfoPrincipais : Fragment() {
         textView_resultado_adicional.setTextColor(jogo.corPrimaria)
 
         textView_resultado_adicional.text = if (tipoJogo == TipoDeJogo.DIA_DE_SORTE) {
-            MESES[jogo.resultadoAdicional[0].toInt()]
+            MESES[jogo.resultadoAdicional[0].toInt().plus(1)]
         } else {
             jogo.resultadoAdicional[0]
         }

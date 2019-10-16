@@ -6,7 +6,8 @@
               android:title="@string/texto_menu_inicio"/>
 
         <item android:id="@+id/menu_item_apostas"
-              android:title="@string/texto_menu_apostas"/>
+              android:title="@string/texto_menu_apostas"
+              android:visible="false"/>
 
         <item android:id="@+id/menu_item_resultados"
               android:title="@string/texto_menu_resultados"/>

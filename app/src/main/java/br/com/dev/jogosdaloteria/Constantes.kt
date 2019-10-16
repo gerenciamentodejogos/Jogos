@@ -1,7 +1,7 @@
 package br.com.dev.jogosdaloteria
 
 val NOME_DB = "JogosLoteria.db"
-val VERSAO_DB = 2
+val VERSAO_DB = 3
 
 const val NOME_BANCO = "JogosDaLoteria"
 const val VERSAO_BANCO = 1
@@ -9,7 +9,7 @@ const val VERSAO_BANCO = 1
 val TABELA_RESULTADOS = "TBResultados"
 val TABELA_PERFIL = "TBPerfil"
 val SCRIPT_CRIAR_TABELAS = "CREATE TABLE $TABELA_RESULTADOS (ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-        "TipoJogo INTEGER NOT NULL, Concurso INTEGER NOT NULL, Resultado TEXT NOT NULL);" +
+        "TipoJogo INTEGER NOT NULL, Concurso INTEGER NOT NULL, Data INTEGER NOT NULL, Resultado TEXT NOT NULL);" +
         "CREATE TABLE $TABELA_PERFIL (Email TEXT PRIMARY KEY NOT NULL, Nome TEXT, Foto TEXT);"
 
 val TELA_INICIAL = 0

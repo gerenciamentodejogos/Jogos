@@ -1,13 +1,15 @@
 package br.com.dev.jogosdaloteria.principal
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.graphics.drawable.Drawable
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.view.GravityCompat
-import android.support.v4.widget.DrawerLayout
-import android.support.v7.app.ActionBarDrawerToggle
+import androidx.core.view.GravityCompat
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.app.ActionBarDrawerToggle
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
@@ -69,12 +71,14 @@ class MainActivity: AppCompatActivity() {
         val usuario = vmResultados.usuario.value
 
         if (usuario != null) {
+            Toast.makeText(baseContext, "LOGADO", Toast.LENGTH_SHORT).show()
             textViewNome.text = usuario.nome
             textViewEmail.text = usuario.email
             buttomPerfil.text = getString(R.string.texto_editar_perfil)
             buttomLogin.text = getString(R.string.texto_logout)
-            imageViewFoto.setImageBitmap(byteArrayToFoto(usuario.foto))
+            imageViewFoto.setImageBitmap(byteArrayToFoto(usuario.foto)?: BitmapFactory.decodeResource(resources, R.drawable.ic_avatar))
         } else {
+            Toast.makeText(baseContext, "DESLOGADO", Toast.LENGTH_SHORT).show()
             textViewNome.text = getString(R.string.texto_usuario_anonimo)
             textViewEmail.text = ""
             buttomPerfil.text = getString(R.string.texto_criar_conta)

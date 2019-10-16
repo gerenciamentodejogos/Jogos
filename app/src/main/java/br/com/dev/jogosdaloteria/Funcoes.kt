@@ -1,9 +1,13 @@
 package br.com.dev.jogosdaloteria
 
+import android.app.Application
+import android.content.Context
+import android.content.res.Resources
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import br.com.dev.jogosdaloteria.modelos.DadosDoJogo
 import java.io.ByteArrayOutputStream
 
 fun fotoToByteArray(foto: Drawable, formato: Bitmap.CompressFormat = Bitmap.CompressFormat.PNG, qualidade: Int = 100): ByteArray? {
@@ -17,6 +21,21 @@ fun fotoToByteArray(foto: Drawable, formato: Bitmap.CompressFormat = Bitmap.Comp
     }
 }
 
-fun byteArrayToFoto(byteArray: ByteArray?): Bitmap {
-    return BitmapFactory.decodeByteArray(byteArray,0, byteArray?.size?:0)
+fun byteArrayToFoto(byteArray: ByteArray?): Bitmap? {
+    return if (byteArray != null) {
+        BitmapFactory.decodeByteArray(byteArray,0, byteArray.size)
+    } else {
+        null
+    }
+}
+
+fun listarTiposJogos(context: Context): List<DadosDoJogo> {
+    val quantJogos = context.resources.getStringArray(R.array.nomes_jogos).size
+    val lista = mutableListOf<DadosDoJogo>()
+
+    for (j in 0 until quantJogos) {
+        lista.add(DadosDoJogo(j, context))
+    }
+
+    return lista
 }

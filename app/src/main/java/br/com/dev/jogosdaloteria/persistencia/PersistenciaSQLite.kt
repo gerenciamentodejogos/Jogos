@@ -35,10 +35,11 @@ class PersistenciaSQLite(override val context: Context): IPersistencia {
 
     private val gw = DBGateway.getInstance(context)
 
-    override fun salvarResultado(tipoJogo: Int, numConcurso: Int, resultado: String): Boolean {
+    override fun salvarResultado(tipoJogo: Int, numConcurso: Int, data: Long, resultado: String): Boolean {
         val cv = ContentValues().apply {
             put("TipoJogo", tipoJogo)
             put("Concurso", numConcurso)
+            put("Data", data)
             put("Resultado", resultado)
         }
 
@@ -54,16 +55,15 @@ class PersistenciaSQLite(override val context: Context): IPersistencia {
             null
         }
     }
-}
 
-class TBResultado(val id: Int, val tipoJogo: Int, val numConcurso: Int, val resultado: String): Serializable {
-    override fun equals(other: Any?): Boolean {
-        val temp = other as TBResultado
-        return id == temp.id
-    }
+    override fun buscarUltimoResultado(tipoJogo: Int): String? {
+        val cursor: Cursor = gw.getDatabase().rawQuery("SELECT MAX(Concurso) FROM $TABELA_RESULTADOS WHERE TipoJogo = $tipoJogo", null)
 
-    override fun hashCode(): Int {
-        return id
+        return if (cursor.moveToFirst()) {
+            cursor.getString(cursor.getColumnIndex("Concurso"))
+        } else {
+            null
+        }
     }
 }
 
@@ -84,7 +84,6 @@ class DBGateway(context: Context) {
             if (gw == null) {
                 gw =
                     DBGateway(context)
-                Log.e("INSTANCIA", "CRIADO")
             }
             return gw!!
         }

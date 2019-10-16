@@ -1,21 +1,25 @@
 package br.com.dev.jogosdaloteria.modelos
 
-import android.app.Application
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.util.Log
+import androidx.annotation.DrawableRes
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import br.com.dev.jogosdaloteria.R
 import br.com.dev.jogosdaloteria.dados_web.DadosWeb
 import br.com.dev.jogosdaloteria.persistencia.IPersistencia
 import br.com.dev.jogosdaloteria.persistencia.PersistenciaSQLite
 import org.json.JSONArray
 import org.json.JSONObject
+import org.xmlpull.v1.XmlPullParser
 import java.lang.Exception
 import java.util.*
 
-final class TipoDeJogo {
+class TipoDeJogo {
     companion object {
         val MEGA_SENA = 0
         val QUINA = 1
@@ -33,6 +37,7 @@ final class TipoDeJogo {
 @Entity(tableName = "TBResultadoJSON", primaryKeys = arrayOf("tipoJogo", "numConcurso"))
 class Jogo(val tipoJogo: Int,
            val numConcurso: Int,
+           val data: Long,
            val resultado: String)
 
 open class DadosDoJogo(val tipoJogo: Int, val contexto: Context) {
@@ -41,6 +46,22 @@ open class DadosDoJogo(val tipoJogo: Int, val contexto: Context) {
     val url_resultado: String = contexto.resources.getStringArray(R.array.urls_resultados)[tipoJogo]
     val corPrimaria:Int = Color.parseColor(contexto.resources.getStringArray(R.array.cores_primarias)[tipoJogo])
     val corSecundaria:Int = Color.parseColor(contexto.resources.getStringArray(R.array.cores_primarias)[tipoJogo])
+
+    fun icone(): Int {
+        return when (tipoJogo) {
+            TipoDeJogo.MEGA_SENA ->  R.drawable.svg_mega_sena
+            TipoDeJogo.QUINA -> R.drawable.svg_quina
+            TipoDeJogo.LOTOFACIL -> R.drawable.svg_lotofacil
+            TipoDeJogo.LOTOMANIA -> R.drawable.svg_lotomania
+            TipoDeJogo.DUPLA_SENA -> R.drawable.svg_dupla_sena
+            TipoDeJogo.FEDERAL -> R.drawable.svg_federal
+            TipoDeJogo.DIA_DE_SORTE -> R.drawable.svg_dia_de_sorte
+            TipoDeJogo.TIMEMANIA -> R.drawable.svg_timemania
+            TipoDeJogo.LOTECA -> R.drawable.svg_loteca
+            TipoDeJogo.LOTOGOL -> R.drawable.svg_lotogol
+            else -> 0
+        }
+    }
 
     val dezenasSorteadas: Int = contexto.resources.getIntArray(R.array.dezenas_sorteadas)[tipoJogo]
     val dezenasMinima: Int = contexto.resources.getIntArray(R.array.dezenas_minima)[tipoJogo]
@@ -54,6 +75,14 @@ open class DadosDoJogo(val tipoJogo: Int, val contexto: Context) {
     val textoValorArrecadacao: String = contexto.resources.getString(R.string.texto_valor_arrecadado)
 
     val textoResultadoAdicinal: String = contexto.resources.getStringArray(R.array.texto_resultado_adicional)[tipoJogo]
+
+    val diasDeSorteio: List<Int> get() {
+        val dias = contexto.resources.getStringArray(R.array.dias_sorteio)[tipoJogo].split("|")
+        var retorno = mutableListOf<Int>()
+        dias.forEach { retorno.add(it.toInt())}
+
+        return retorno
+    }
 
     protected val CARECTER_NULO = contexto.resources.getString(R.string.caracter_nulo)
 
@@ -179,7 +208,7 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
     data class Valores(val texto: String, val valor: Double)
     data class Ganhadores(val uf: String, val cidade: String, val quantidade: Int, val meioEletronico: Boolean){
         fun getLocalGanhadores(): String {
-            var retorno = ""
+            var retorno: String
 
             if (meioEletronico) {
                 retorno = "Canal eletrônico"
@@ -196,7 +225,6 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
     }
 
     private val stringJSON = buscarDados()?.let {
-        Log.e("BUSCA", "Dados locais: $nome - $concurso")
         dadoLocal = true
         it
     }?: buscarDadosWeb()
@@ -211,9 +239,6 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
 
     init {
         if (!dadoLocal && !erro) salvarDados(stringJSON)
-        if (tipoJogo == TipoDeJogo.LOTOGOL) {
-            val a = tipoJogo
-        }
     }
 
     private fun obterFaixasPremiacoes(): List<Int> {
@@ -237,7 +262,7 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
             try {
                 valor = dadosJSON.getInt(chave)
             } catch (ex: Exception) {
-                Log.e("MEGASENA/obterQuantidadeGanhadores", ex.message)
+
             }
             lista.add(valor)
         }
@@ -252,7 +277,7 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
             try {
                 valor = dadosJSON.getDouble(chave)
             } catch (ex: Exception) {
-                Log.e("MEGASENA/obterValoresPremiacoes", ex.message)
+
             }
             lista.add(valor)
         }
@@ -265,7 +290,6 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
         }
         return total
     }
-
     private fun gerarListaPremiacoes(): List<Premiacoes> {
         val lista: MutableList<Premiacoes> = mutableListOf()
         if (tipoJogo != TipoDeJogo.FEDERAL && tipoJogo != TipoDeJogo.DUPLA_SENA) {
@@ -303,7 +327,6 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
         return lista
 
     }
-
     private fun gerarResultadoAdicional(ordenado: Boolean = true, separador: Char = '-'): List<String> {
         return if (tipoJogo == TipoDeJogo.DUPLA_SENA) {
             val resultado = dadosJSON.getString(chaveResultadoOrdenado.split("#")[1])
@@ -319,7 +342,6 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
             }
         }
     }
-
     private fun gerarResultadosFederal(): List<ResultadoFederal> {
         val lista: MutableList<ResultadoFederal> = mutableListOf()
 
@@ -336,7 +358,6 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
         }
         return lista
     }
-
     private fun gerarResultadosLotecaLotogol(): List<ResultadoLotecaLotogol>{
         val lista: MutableList<ResultadoLotecaLotogol> = mutableListOf()
 
@@ -390,7 +411,6 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
         }
         return lista
     }
-
     private fun gerarListaResultados(ordenado: Boolean = true, separador: Char = '-'): List<String> {
         return if (ordenado) {
             if (tipoJogo == TipoDeJogo.DUPLA_SENA) {
@@ -407,6 +427,7 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
 
         }.split(separador)
     }
+
     fun ListaValoresTotais(): List<Valores> {
         val lista = mutableListOf<Valores>()
 
@@ -480,12 +501,11 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
     //    TODO - DEFINIR COMO SERÁ O RETORNO DE 'encerrado'
     val encerrado: Boolean = true
 
-
 //    TODO - OBTER LISTA DE MENSAGENS
 //    val mensagens: List<String> = listOf()
 
     private fun salvarDados(stringJSON: String) {
-        persistencia.salvarResultado(tipoJogo, concurso, stringJSON)
+        persistencia.salvarResultado(tipoJogo, concurso, dataConcurso, stringJSON)
     }
 
     private fun buscarDados() = persistencia.buscarResultado(tipoJogo, concurso)
@@ -504,5 +524,32 @@ open class Resultado(val concurso: Int, tipoJogo: Int, var context: Context): Da
         url_temp += contexto.getString(R.string.url_parametro_2) + concurso.toString()
         return url_temp
     }
-}
 
+    companion object {
+        fun obterUltimoConcurso(tipoJogo: Int, context: Context): Resultado {
+            var concursoEstimado = calcularConcursoEstimado(tipoJogo, context)
+            var resultado = Resultado(tipoJogo, concursoEstimado, context)
+
+            return if (resultado.erro) {
+                while (resultado.erro) {
+                    resultado = Resultado(tipoJogo, --concursoEstimado, context)
+                }
+                resultado
+            } else {
+                var resTemp = Resultado(tipoJogo, ++concursoEstimado, context)
+                while (!resTemp.erro) {
+                    resultado = resTemp
+                    resTemp = Resultado(tipoJogo, ++concursoEstimado, context)
+                }
+                resultado
+            }
+        }
+
+        private fun calcularConcursoEstimado(tipoJogo: Int, context: Context): Int {
+            val diasDeSorteio = DadosDoJogo(tipoJogo, context).diasDeSorteio
+            val ultimoResultado = PersistenciaSQLite(context).buscarUltimoResultado(tipoJogo)
+            val dataUltimoRes = ultimoResultado
+            return 100
+        }
+    }
+}

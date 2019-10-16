@@ -79,6 +79,45 @@
         <item>#220086B7</item>      <!--LOTOGOL-->
     </string-array>
 
+    <array name="icones">
+        <item>@drawable/svg_mega_sena</item>
+        <item>@drawable/svg_quina</item>
+        <item>@drawable/svg_lotofacil</item>
+        <item>@drawable/svg_lotomania</item>
+        <item>@drawable/svg_dupla_sena</item>
+        <item>@drawable/svg_federal</item>
+        <item>@drawable/svg_dia_de_sorte</item>
+        <item>@drawable/svg_timemania</item>
+        <item>@drawable/svg_loteca</item>
+        <item>@drawable/svg_lotogol</item>
+    </array>
+
+    <integer-array name="iconess">
+        <item>@drawable/svg_mega_sena</item>
+        <item>@drawable/svg_quina</item>
+        <item>@drawable/svg_lotofacil</item>
+        <item>@drawable/svg_lotomania</item>
+        <item>@drawable/svg_dupla_sena</item>
+        <item>@drawable/svg_federal</item>
+        <item>@drawable/svg_dia_de_sorte</item>
+        <item>@drawable/svg_timemania</item>
+        <item>@drawable/svg_loteca</item>
+        <item>@drawable/svg_lotogol</item>
+    </integer-array>
+
+    <string-array name="dias_sorteio">
+        <item>4|7</item> <!--MEGA-SENA-->
+        <item>2|3|4|5|6|7</item> <!--QUINA-->
+        <item>2|4|6</item> <!--LOTOFÁCIL-->
+        <item>3|6</item> <!--LOTOMANIA-->
+        <item>3|5|7</item> <!--DUPLA SENA-->
+        <item>2|3|4|5|6|7</item> <!--FEDERAL-->
+        <item>3|5|7</item> <!--DIA DE SORTE-->
+        <item>3|5|7</item> <!--TIMEMANIA-->
+        <item>2</item> <!--LOTECA-->
+        <item>2</item> <!--LOTOGOL-->
+    </string-array>
+
     <string name="caracter_nulo">#</string>
 
     <!--
@@ -224,17 +263,12 @@
         <item>Quina|Quadra|Terno|Duque</item>                                                           <!--QUINA-->
         <item>15 acertos|14 acertos|13 acertos|12 acertos|11 acertos</item>                             <!--LOTOFÁCIL-->
         <item>20 acertos|19 acertos|18 acertos|17 acertos|16 acertos|15 acertos|Nenhum acerto</item>    <!--LOTOMANIA-->
-        <item>Sena|Quina|Quadra|Terno#Sena|Quina|Quadra|Terno
-        </item>                                    <!--DUPLA SENA-->
+        <item>Sena|Quina|Quadra|Terno#Sena|Quina|Quadra|Terno</item>                                    <!--DUPLA SENA-->
         <item>-</item>                                                                                  <!--FEDERAL-->
-        <item>7 acertos|6 acertos|5 acertos|4 acertos|Mês da sorte
-        </item>                                            <!--DIA DE SORTE-->
-        <item>7 acertos|6 acertos|5 acertos|4 acertos|3 acertos|Time do coração
-        </item>                                  <!--TIMEMANIA-->
-        <item>14 acertos|13 acertos
-        </item>                                                                                  <!--LOTECA-->
-        <item>5 acertos|4 acertos|3 acertos
-        </item>                                                                                  <!--LOTOGOL-->
+        <item>7 acertos|6 acertos|5 acertos|4 acertos|Mês da sorte</item>                                            <!--DIA DE SORTE-->
+        <item>7 acertos|6 acertos|5 acertos|4 acertos|3 acertos|Time do coração</item>                                  <!--TIMEMANIA-->
+        <item>14 acertos|13 acertos</item>                                                                                  <!--LOTECA-->
+        <item>5 acertos|4 acertos|3 acertos</item>                                                                                  <!--LOTOGOL-->
     </string-array>
     <string-array name="quantidade_ganhadores">
         <item>ganhadores|ganhadores_quina|ganhadores_quadra</item>  <!--MEGA-SENA-->
@@ -631,4 +665,10 @@
 
     <string name="texto_usuario_anonimo">Convidado</string>
     <string name="texto_sem_local_sorteio">Não informado</string>
+    <string name="label_valor_estimado">Valor estimado do prêmio</string>
+    <string name="label_data_do_sorteio">Data do sorteio:</string>
+    <string name="label_jogo">Jogo</string>
+    <string name="label_vz">x</string>
+    <string name="todo">TODO</string>
+    <string name="textview">TextView</string>
 </resources>

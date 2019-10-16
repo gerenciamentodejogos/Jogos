@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView
+<androidx.core.widget.NestedScrollView
         android:id="@+id/nestedScrollView"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         tools:context=".resultados.FragmentoDetalhesResultado">
 
-    <android.support.constraint.ConstraintLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -44,7 +44,7 @@
                 app:layout_constraintEnd_toEndOf="parent">
         </FrameLayout>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_premiacoes"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 app:cardElevation="4dp"
                 android:visibility="gone">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp">
@@ -84,7 +84,8 @@
                         app:layout_constraintStart_toStartOf="parent"
                         android:layout_marginStart="16dp"
                         android:textStyle="bold"
-                        app:layout_constraintTop_toBottomOf="@+id/recyclerview_premiacoes"/>
+                        app:layout_constraintTop_toBottomOf="@+id/recyclerview_premiacoes"
+                        android:layout_marginLeft="16dp"/>
                 <TextView
                         android:id="@+id/textview_total_premiacoes"
                         android:layout_width="wrap_content"
@@ -93,18 +94,19 @@
                         android:layout_marginEnd="16dp"
                         android:textStyle="bold"
                         app:layout_constraintTop_toTopOf="@+id/textView_label_total_premiacoes"
-                        app:layout_constraintBottom_toBottomOf="@+id/textView_label_total_premiacoes"/>
-                <android.support.v7.widget.RecyclerView
+                        app:layout_constraintBottom_toBottomOf="@+id/textView_label_total_premiacoes"
+                        android:layout_marginRight="16dp"/>
+                <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview_premiacoes"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView12"/>
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_ganhadores"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -118,7 +120,7 @@
                 android:layout_marginStart="8dp"
                 android:visibility="gone">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp">
@@ -134,7 +136,7 @@
                         android:layout_marginStart="8dp"
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="8dp"/>
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview_ganhadores"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -142,10 +144,10 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/textView14"
                         app:layout_constraintBottom_toBottomOf="parent"/>
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
                 android:id="@+id/cardView_valores"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -159,7 +161,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 android:visibility="gone">
 
-            <android.support.constraint.ConstraintLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingBottom="8dp">
@@ -176,7 +178,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         android:layout_marginEnd="8dp"/>
 
-                <android.support.v7.widget.RecyclerView
+                <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/recyclerview_valores"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
@@ -185,8 +187,8 @@
                         app:layout_constraintTop_toBottomOf="@+id/textView13"
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
-            </android.support.constraint.ConstraintLayout>
-        </android.support.v7.widget.CardView>
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
 
         <View
                 android:layout_width="match_parent"
@@ -195,6 +197,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cardView_valores"/>
 
-    </android.support.constraint.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-</android.support.v4.widget.NestedScrollView>
+</androidx.core.widget.NestedScrollView>

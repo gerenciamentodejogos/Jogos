@@ -1,8 +1,8 @@
 package br.com.dev.jogosdaloteria.view_models
 
 
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
 class TelaPrincipalViewModel: ViewModel() {
     val dadosFragDetalhesCarregados = MutableLiveData<Boolean>()
